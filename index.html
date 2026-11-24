@@ -1,0 +1,4228 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Educación Musical · Colegio Salesiano Valparaíso — Profe José</title>
+  <style>
+    :root {
+      --bg-arena: #E6DEC8;
+      --bg-cream: #FBFAF6;
+      --surface-card: #FFFDF9;
+      --surface-sand: #EFE8D6;
+      --surface-soft: #F7F2E6;
+      --ink: #1C1917;
+      --ink-strong: #141414;
+      --muted: #57534E;
+      --border: #141414;
+      --butter: #F5EE84;
+      --butter-deep: #E5DB56;
+      --terracotta: #EA580C;
+      --terracotta-strong: #C2410C;
+      --terracotta-soft: #FDECE4;
+      --sage: #2E6F5E;
+      --sage-soft: #E3F1EC;
+      --navy: #223447;
+      --danger: #B91C1C;
+      --danger-soft: #FEE2E2;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --radius-pill: 999px;
+      --shadow-manga: 4px 4px 0 #141414;
+      --shadow-manga-sm: 3px 3px 0 #141414;
+      --font-sans: "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-arena);
+      background-image: radial-gradient(rgba(20, 20, 20, 0.14) 1px, transparent 1px);
+      background-size: 16px 16px;
+      color: var(--ink);
+      line-height: 1.55;
+      min-height: 100vh;
+      padding: 16px 12px 64px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .app-shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--bg-cream);
+      border: 2px solid var(--border);
+      border-radius: 26px;
+      box-shadow: 6px 6px 0 var(--border);
+      padding: 20px 22px 34px;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 24px 20px 72px;
+      }
+      .app-shell {
+        padding: 26px 30px 40px;
+      }
+    }
+
+    /* Barra superior tipo píldora estilo manga */
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface-sand);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 10px 16px;
+      box-shadow: var(--shadow-manga-sm);
+      margin-bottom: 22px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: var(--ink-strong);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-bars {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--ink-strong);
+      color: var(--butter);
+      padding: 5px 8px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    .topbar-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      background: var(--surface-card);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ink-strong);
+    }
+
+    .pill-butter {
+      background: var(--butter);
+    }
+
+    .pill-terracotta {
+      background: var(--terracotta-soft);
+      color: var(--terracotta-strong);
+    }
+
+    /* Botones */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+      box-shadow: var(--shadow-manga-sm);
+      background: var(--surface-card);
+      color: var(--ink-strong);
+    }
+
+    .btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+
+    .btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--border);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background: var(--ink-strong);
+      color: #FFFFFF;
+    }
+
+    .btn-butter {
+      background: var(--butter);
+      color: var(--ink-strong);
+    }
+
+    .btn-terracotta {
+      background: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    .btn-sage {
+      background: var(--sage);
+      color: #FFFFFF;
+    }
+
+    .btn-outline {
+      background: var(--surface-card);
+      color: var(--ink-strong);
+    }
+
+    .btn-sm {
+      padding: 7px 13px;
+      font-size: 0.82rem;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* Tarjetas con estética Mangaka */
+    .card {
+      background: var(--surface-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-manga);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card-sand {
+      background: var(--surface-sand);
+      background-image: radial-gradient(rgba(20, 20, 20, 0.12) 1px, transparent 1px);
+      background-size: 12px 12px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-manga-sm);
+      padding: 16px;
+    }
+
+    .card-soft {
+      background: var(--surface-soft);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-manga-sm);
+      padding: 16px;
+    }
+
+    .accent-melodia {
+      border-top: 6px solid var(--navy);
+    }
+
+    .accent-ritmo {
+      border-top: 6px solid var(--terracotta);
+    }
+
+    .accent-historia {
+      border-top: 6px solid var(--sage);
+    }
+
+    .step-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--butter);
+      color: var(--ink-strong);
+    }
+
+    .kicker-terracotta {
+      background: var(--terracotta-soft);
+      color: var(--terracotta-strong);
+    }
+
+    .kicker-sage {
+      background: var(--sage-soft);
+      color: var(--sage);
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--ink-strong);
+    }
+
+    h2 {
+      font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink-strong);
+    }
+
+    h3 {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--ink-strong);
+    }
+
+    h4 {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--ink-strong);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Formularios */
+    .field-label {
+      display: block;
+      font-weight: 800;
+      font-size: 0.86rem;
+      margin-bottom: 6px;
+      color: var(--ink-strong);
+    }
+
+    .input-control {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      background: #FFFFFF;
+      font-family: inherit;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--ink-strong);
+      box-shadow: inset 2px 2px 0 rgba(20, 20, 20, 0.06);
+    }
+
+    .input-control:focus {
+      outline: 3px solid var(--butter);
+      outline-offset: 1px;
+    }
+
+    .error-banner {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      background: var(--danger-soft);
+      color: var(--danger);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    /* Barras de progreso */
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.86rem;
+      margin-bottom: 6px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 14px;
+      background: var(--surface-soft);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--terracotta);
+      transition: width 0.3s ease;
+    }
+
+    .pillars-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 700px) {
+      .pillars-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .compact-pillar {
+      background: var(--surface-soft);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+    }
+
+    /* Paso 1: Módulos y talleres */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 780px) {
+      .modules-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .module-card {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      background: var(--surface-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      cursor: pointer;
+      box-shadow: var(--shadow-manga);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      font-family: inherit;
+    }
+
+    .module-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--border);
+    }
+
+    .module-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .module-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: var(--butter);
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: var(--ink-strong);
+    }
+
+    .m-ritmo .module-num {
+      background: var(--terracotta-soft);
+      color: var(--terracotta-strong);
+    }
+
+    .m-historia .module-num {
+      background: var(--sage-soft);
+      color: var(--sage);
+    }
+
+    .manga-star-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      background: var(--surface-sand);
+      font-weight: 900;
+      font-size: 0.85rem;
+    }
+
+    .workshops-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    @media (min-width: 720px) {
+      .workshops-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .step-2-grid,
+    .step-3-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 760px) {
+      .step-2-grid,
+      .step-3-grid {
+        grid-template-columns: 1.3fr 0.9fr;
+        align-items: start;
+      }
+    }
+
+    /* Pestañas y controles */
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tab-btn {
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      background: var(--surface-card);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    .tab-btn.active {
+      background: var(--butter);
+      color: var(--ink-strong);
+    }
+
+    .guided-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface-soft);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+
+    .guided-caption {
+      font-size: 0.88rem;
+      color: var(--ink);
+      flex: 1 1 260px;
+    }
+
+    /* Cápsula 01: Mano Musical */
+    .note-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--ink-strong);
+      color: #FFFFFF;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+
+    .note-banner-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--butter);
+    }
+
+    .note-banner-sub {
+      font-size: 0.88rem;
+      color: #E7E5E4;
+      margin-left: 8px;
+    }
+
+    .note-banner-chip {
+      background: var(--terracotta);
+      color: #FFFFFF;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 800;
+      border: 1.5px solid #FFFFFF;
+    }
+
+    .hand-stage-frame {
+      background: #FFFFFF;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      box-shadow: var(--shadow-manga-sm);
+    }
+
+    .note-selector-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .note-chip {
+      padding: 8px 13px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      background: var(--surface-card);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--border);
+      transition: transform 0.1s ease, background 0.12s ease;
+    }
+
+    .note-chip:hover {
+      transform: translateY(-1px);
+    }
+
+    .note-chip.active {
+      background: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    /* Cápsula 02: Lectura Rítmica */
+    .tempo-group {
+      display: inline-flex;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      background: var(--surface-card);
+    }
+
+    .tempo-btn {
+      padding: 6px 11px;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--ink-strong);
+    }
+
+    .tempo-btn.active {
+      background: var(--butter);
+    }
+
+    .rhythm-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .rhythm-chip {
+      padding: 7px 12px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      background: var(--surface-card);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.8rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    .rhythm-chip.active {
+      background: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    .rhythm-lab-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 820px) {
+      .rhythm-lab-grid {
+        grid-template-columns: 1.25fr 0.95fr;
+        align-items: start;
+      }
+    }
+
+    .beat-cells {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .beat-cells.cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .beat-cell {
+      padding: 10px 4px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      background: #FFFFFF;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.82rem;
+      box-shadow: 2px 2px 0 var(--border);
+      transition: transform 0.1s ease, background 0.1s ease;
+      line-height: 1.25;
+    }
+
+    .beat-cell.sound {
+      background: var(--butter);
+      color: var(--ink-strong);
+    }
+
+    .beat-cell.hold {
+      background: var(--surface-sand);
+      color: var(--muted);
+    }
+
+    .beat-cell.rest {
+      background: var(--surface-soft);
+      color: var(--terracotta-strong);
+      font-style: italic;
+    }
+
+    .beat-cell.active-step {
+      background: var(--terracotta-strong);
+      color: #FFFFFF;
+      transform: scale(1.05);
+    }
+
+    .hand-pointer-track {
+      position: relative;
+      height: 32px;
+      margin-top: 8px;
+      background: var(--surface-soft);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .hand-pointer-indicator {
+      position: absolute;
+      top: 50%;
+      left: 7%;
+      transform: translate(-50%, -50%);
+      background: var(--butter);
+      color: var(--ink-strong);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 2px 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      transition: left 0.12s linear, opacity 0.15s ease;
+      white-space: nowrap;
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    /* Cápsula 03: Formato Manga y Glosario por viñeta */
+    .manga-panel-card {
+      background: var(--surface-card);
+      border: 2.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-manga);
+      padding: 18px;
+      margin-top: 12px;
+    }
+
+    .manga-panel-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      border-bottom: 2px dashed rgba(20, 20, 20, 0.25);
+    }
+
+    .manga-comic-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 740px) {
+      .manga-comic-layout {
+        grid-template-columns: 190px 1fr;
+        align-items: start;
+      }
+    }
+
+    .sensei-box {
+      background: var(--surface-sand);
+      background-image: radial-gradient(rgba(20, 20, 20, 0.14) 1px, transparent 1px);
+      background-size: 10px 10px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-manga-sm);
+    }
+
+    .speech-bubble-box {
+      position: relative;
+      background: #FFFFFF;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-manga-sm);
+    }
+
+    .glossary-term-pill {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 7px;
+      border: 1.5px solid var(--border);
+      background: var(--butter);
+      color: var(--ink-strong);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 1.5px 1.5px 0 var(--border);
+    }
+
+    .glossary-term-pill.alt {
+      background: var(--terracotta-soft);
+      color: var(--terracotta-strong);
+    }
+
+    .glossary-panel {
+      margin-top: 14px;
+      background: var(--surface-soft);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .glossary-chip-btn {
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border);
+      background: #FFFFFF;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.78rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    .glossary-chip-btn.active {
+      background: var(--butter);
+    }
+
+    .glossary-popup-bubble {
+      margin-top: 10px;
+      background: var(--ink-strong);
+      color: #FFFFFF;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 11px 14px;
+      font-size: 0.88rem;
+      box-shadow: var(--shadow-manga-sm);
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 640px) {
+      .compare-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .compare-box {
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .compare-box.after {
+      background: var(--terracotta-soft);
+    }
+
+    .youtube-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .youtube-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      background: #FFFFFF;
+      color: var(--ink-strong);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    .youtube-link:hover {
+      background: var(--butter);
+    }
+
+    /* Talleres de 8 compases */
+    .bars-8-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 760px) {
+      .bars-8-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .bar-box {
+      background: #FFFFFF;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--border);
+      min-height: 98px;
+    }
+
+    .bar-box.active-bar {
+      border-color: var(--terracotta-strong);
+      background: var(--terracotta-soft);
+    }
+
+    .bar-box.playing-bar {
+      background: var(--butter);
+    }
+
+    .bar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--ink-strong);
+    }
+
+    .slot-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      margin: 2px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: var(--surface-sand);
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .countdown-banner {
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--butter);
+      color: var(--ink-strong);
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    /* Quiz y Evaluación */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 680px) {
+      .options-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-btn {
+      text-align: left;
+      padding: 13px 15px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: #FFFFFF;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-manga-sm);
+      color: var(--ink-strong);
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: var(--surface-soft);
+    }
+
+    .option-btn.correct {
+      background: var(--sage-soft);
+      border-color: var(--sage);
+      color: var(--sage);
+    }
+
+    .option-btn.wrong {
+      background: var(--danger-soft);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .feedback-box {
+      margin-top: 14px;
+      padding: 13px 15px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--surface-soft);
+      font-size: 0.9rem;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .info-table th,
+    .info-table td {
+      border: 2px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .info-table th {
+      background: var(--surface-sand);
+      font-weight: 800;
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 340px;
+    }
+
+    .toast-msg {
+      padding: 11px 15px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--ink-strong);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-manga-sm);
+    }
+
+    .toast-msg.ok {
+      background: var(--sage);
+    }
+
+    .toast-msg.warn {
+      background: var(--terracotta-strong);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 20, 20, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 900;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface-card);
+      border: 2.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: 6px 6px 0 var(--border);
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Barra superior -->
+    <header class="topbar">
+      <div class="brand-mark">
+        <span class="brand-bars">♪ 4/4</span>
+        <span>Educación Musical · Colegio Salesiano Valparaíso</span>
+      </div>
+      <div class="topbar-right">
+        <span id="header-user-pill" class="pill-tag hidden"></span>
+        <span id="header-role-pill" class="pill-tag pill-butter hidden"></span>
+        <button type="button" id="btn-top-home" class="btn btn-outline btn-sm hidden" onclick="goHome()">
+          Inicio
+        </button>
+        <button type="button" id="btn-top-logout" class="btn btn-outline btn-sm hidden" onclick="logoutUser()">
+          Salir
+        </button>
+      </div>
+    </header>
+
+    <!-- ======================================================================
+         VISTA 1: INGRESO LIMPIO POR RUT (ACCESO DOCENTE EN MISMO CAMPO)
+         ====================================================================== -->
+    <section id="view-login" class="card" style="max-width:540px; margin:20px auto;">
+      <span class="step-kicker">✦ Colegio Salesiano Valparaíso</span>
+      <h1 style="margin-top:10px;">Educación Musical</h1>
+      <p class="muted" style="margin-top:6px;">
+        Profesor José Carvajal Contreras · Preparación y evaluación de lectura melódica, lectura rítmica e historia del villancico.
+      </p>
+
+      <form id="login-form" style="margin-top:18px;" onsubmit="handleLoginSubmit(event)">
+        <label for="rut-input" class="field-label">Ingresa tu RUT</label>
+        <input
+          id="rut-input"
+          type="text"
+          class="input-control"
+          placeholder="Ej: 21.345.678-9"
+          autocomplete="off"
+          required
+        />
+        <div id="login-error" class="error-banner hidden"></div>
+        <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block" style="margin-top:14px;">
+          Entrar →
+        </button>
+      </form>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 2: PANEL PRINCIPAL DE ESTUDIO Y EVALUACIÓN
+         ====================================================================== -->
+    <section id="view-dashboard" class="hidden">
+      <!-- Saludo y barras de progreso -->
+      <div class="card">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:12px;">
+          <div>
+            <span class="step-kicker">✦ Ruta de Aprendizaje</span>
+            <h1 id="dash-greeting" style="margin-top:8px;">¡Hola!</h1>
+            <p id="dash-subline" class="muted" style="margin-top:4px;"></p>
+          </div>
+          <div id="teacher-quick-actions" class="btn-row hidden">
+            <button type="button" class="btn btn-butter btn-sm" onclick="openTeacherModal()">
+              Panel Docente
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <div class="progress-header">
+            <span style="font-weight:800; color:var(--ink-strong);">Dominio Global Acumulado</span>
+            <strong id="pct-global">0%</strong>
+          </div>
+          <div class="progress-track">
+            <div id="bar-global" class="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="pillars-3">
+          <div class="compact-pillar">
+            <div class="progress-header" style="margin-bottom:6px;">
+              <span style="font-weight:800; color:var(--ink-strong);">01 · Lectura Melódica</span>
+              <strong id="pct-melodia">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div id="bar-melodia" class="progress-fill" style="background: var(--navy);"></div>
+            </div>
+          </div>
+
+          <div class="compact-pillar">
+            <div class="progress-header" style="margin-bottom:6px;">
+              <span style="font-weight:800; color:var(--ink-strong);">02 · Lectura Rítmica</span>
+              <strong id="pct-ritmo">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div id="bar-ritmo" class="progress-fill" style="background: var(--terracotta);"></div>
+            </div>
+          </div>
+
+          <div class="compact-pillar">
+            <div class="progress-header" style="margin-bottom:6px;">
+              <span style="font-weight:800; color:var(--ink-strong);">03 · Historia del Villancico</span>
+              <strong id="pct-historia">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div id="bar-historia" class="progress-fill" style="background: var(--sage);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paso 1: Cápsulas y Talleres de 8 Compases -->
+      <div class="card">
+        <span class="step-kicker">Paso 1 · Explorar y Practicar</span>
+        <h2 style="margin-top:8px;">Cápsulas de Estudio y Talleres de 8 Compases</h2>
+        <p class="muted" style="margin-top:4px;">
+          Recorre cada cápsula con sus 5 ejercicios guiados y crea tus propios patrones rítmicos y melódicos de 8 compases.
+        </p>
+
+        <div class="modules-grid">
+          <button type="button" class="module-card m-melodia" onclick="openCapsule('melodia')">
+            <div>
+              <div class="module-top-row">
+                <span class="module-num">01</span>
+                <span class="manga-star-badge">✦</span>
+              </div>
+              <h3 style="margin-top:12px;">Lectura Melódica</h3>
+              <p class="muted" style="margin-top:6px;">
+                Mano izquierda horizontal, líneas negras del pentagrama y notas en llave de sol sin números de octava.
+              </p>
+            </div>
+            <div style="font-size:0.86rem; font-weight:800; color:var(--ink-strong);">Abrir cápsula 01 →</div>
+          </button>
+
+          <button type="button" class="module-card m-ritmo" onclick="openCapsule('ritmo')">
+            <div>
+              <div class="module-top-row">
+                <span class="module-num">02</span>
+                <span class="manga-star-badge">✦</span>
+              </div>
+              <h3 style="margin-top:12px;">Lectura Rítmica</h3>
+              <p class="muted" style="margin-top:6px;">
+                2 compases de 4/4 con indicadores de pulso, sílabas articuladas, silencios y derivación desde la cuartina.
+              </p>
+            </div>
+            <div style="font-size:0.86rem; font-weight:800; color:var(--ink-strong);">Abrir cápsula 02 →</div>
+          </button>
+
+          <button type="button" class="module-card m-historia" onclick="openCapsule('historia')">
+            <div>
+              <div class="module-top-row">
+                <span class="module-num">03</span>
+                <span class="manga-star-badge">✦</span>
+              </div>
+              <h3 style="margin-top:12px;">Historia del Villancico</h3>
+              <p class="muted" style="margin-top:6px;">
+                Viñetas estilo manga con el Profe José, glosario propio en cada escena y enlaces a YouTube.
+              </p>
+            </div>
+            <div style="font-size:0.86rem; font-weight:800; color:var(--ink-strong);">Abrir cápsula 03 →</div>
+          </button>
+        </div>
+
+        <div class="workshops-grid">
+          <div class="card-sand">
+            <span class="step-kicker kicker-terracotta" style="margin-bottom:6px;">8 Compases · Ritmo</span>
+            <h4>Taller Rítmico (8 Compases)</h4>
+            <p class="muted" style="margin-bottom:12px;">
+              Elige un compás, agrega o quita figuras rítmicas y escúchalo con cuenta previa 1 - 2 - 3 - ¡va!.
+            </p>
+            <button type="button" class="btn btn-terracotta btn-sm" onclick="openWorkshop('ritmo8')">
+              Abrir Taller Rítmico
+            </button>
+          </div>
+
+          <div class="card-sand">
+            <span class="step-kicker" style="margin-bottom:6px;">8 Compases · Melodía</span>
+            <h4>Taller Melódico (8 Compases)</h4>
+            <p class="muted" style="margin-bottom:12px;">
+              Edita notas y duraciones en 8 compases, activa o desactiva los nombres y escucha con cuenta previa 1 - 2 - 3 - ¡va!.
+            </p>
+            <button type="button" class="btn btn-butter btn-sm" onclick="openWorkshop('melodia8')">
+              Abrir Taller Melódico
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paso 2: Desafío Adaptativo (50 preguntas) + Certificado PNG -->
+      <div class="step-2-grid">
+        <div class="card">
+          <span class="step-kicker">Paso 2 · Práctica Adaptativa</span>
+          <h2 style="margin-top:8px;">Desafío Adaptativo (50 Preguntas)</h2>
+          <p class="muted" style="margin-top:4px;">
+            Practica por área o en modo mixto priorizando los contenidos que necesitas reforzar antes de la prueba.
+          </p>
+
+          <div class="btn-row" style="margin-top:14px;">
+            <button type="button" class="btn btn-primary btn-sm" onclick="startAdaptiveQuiz('mix')">
+              Práctica Mixta
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="startAdaptiveQuiz('melodia')">
+              Solo Melodía
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="startAdaptiveQuiz('ritmo')">
+              Solo Ritmo
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="startAdaptiveQuiz('historia')">
+              Solo Villancico
+            </button>
+          </div>
+
+          <div id="adaptive-weakness-box" class="card-soft" style="margin-top:14px;"></div>
+        </div>
+
+        <div class="card-sand">
+          <span class="step-kicker kicker-sage">✦ Logro de Preparación</span>
+          <h3 style="margin-top:8px;">Certificado de Estudio</h3>
+          <p id="cert-status-text" class="muted" style="margin-top:6px;">
+            Alcanza <strong>75% o más</strong> de dominio global (con al menos <strong>70%</strong> en cada área) para descargar tu certificado en PNG.
+          </p>
+          <div style="margin-top:14px;">
+            <button type="button" id="btn-download-cert" class="btn btn-sage btn-block" disabled onclick="downloadCertificatePNG()">
+              Descargar Certificado PNG
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paso 3: Evaluación Final Sumativa -->
+      <div class="step-3-grid">
+        <div class="card">
+          <span class="step-kicker kicker-terracotta">Paso 3 · Evaluación Sumativa</span>
+          <h2 style="margin-top:8px;">Evaluación Final de Música</h2>
+          <p class="muted" style="margin-top:4px;">
+            30 preguntas · 30 minutos · 1 reintento guiado al 50% del puntaje · Escala 2.0 a 7.0 (60% de exigencia = 4.0).
+          </p>
+
+          <div id="exam-locked-box" class="card-soft" style="margin-top:14px;">
+            <p style="font-weight:800; color:var(--ink-strong);">Evaluación protegida con PIN de sala</p>
+            <p class="muted" style="margin-top:4px;">
+              El profesor indicará el PIN cuando corresponda iniciar la evaluación sumativa.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;">
+              <input
+                type="password"
+                id="exam-pin-input"
+                class="input-control"
+                placeholder="PIN de evaluación"
+                style="max-width:200px;"
+              />
+              <button type="button" class="btn btn-terracotta" onclick="unlockExamWithPin()">
+                Desbloquear Evaluación
+              </button>
+            </div>
+            <div id="exam-pin-error" class="error-banner hidden"></div>
+          </div>
+
+          <div id="exam-ready-box" class="card-soft hidden" style="margin-top:14px;">
+            <p style="font-weight:800; color:var(--sage);">✦ Evaluación habilitada</p>
+            <p class="muted" style="margin-top:4px;">
+              Dispones de 30 minutos y hasta 1 reintento guiado por pregunta (50% del puntaje en segundo intento).
+            </p>
+            <button type="button" class="btn btn-terracotta" style="margin-top:12px;" onclick="startSummativeExam()">
+              Iniciar Evaluación Final (30 preguntas)
+            </button>
+          </div>
+
+          <div id="exam-previous-result" class="card-soft hidden" style="margin-top:14px;"></div>
+        </div>
+
+        <div class="card-soft">
+          <h4>Estructura de la Prueba</h4>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>Ítem</th>
+                <th>Preguntas</th>
+                <th>Peso</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ítem I:</strong> Lectura Melódica</td>
+                <td>9 pts</td>
+                <td>30%</td>
+              </tr>
+              <tr>
+                <td><strong>Ítem II:</strong> Lectura Rítmica</td>
+                <td>9 pts</td>
+                <td>30%</td>
+              </tr>
+              <tr>
+                <td><strong>Ítem III:</strong> Historia del Villancico</td>
+                <td>12 pts</td>
+                <td>40%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 3: CÁPSULA 01 — LECTURA MELÓDICA
+         ====================================================================== -->
+    <section id="view-cap-melodia" class="card accent-melodia hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div>
+          <span class="step-kicker" style="margin-bottom:4px;">Módulo 01 · Llave de Sol</span>
+          <h2 style="margin-bottom:0;">Lectura Melódica y Mano Izquierda</h2>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="exitCapsule()">← Volver al inicio</button>
+      </div>
+
+      <!-- Preámbulo "Calentando motores" de la guía del profesor -->
+      <div class="card-sand" style="margin-bottom:14px;">
+        <h4>Calentando motores</h4>
+        <p class="muted" style="margin-top:4px; color:var(--ink);">
+          En la unidad anterior ya trabajamos <strong>3 líneas (Sol – Si – Re)</strong> y <strong>2 espacios (La – Do)</strong>.
+          Ahora expandimos ese mapa a todo el pentagrama: primero reconocemos las <strong>5 líneas</strong> usando la mano izquierda de frente (pulgar arriba, meñique abajo) y luego ubicamos los <strong>espacios</strong>.
+        </p>
+      </div>
+
+      <div class="tabs-bar">
+        <button type="button" id="tab-mel-lineas" class="tab-btn active" onclick="setMelodiaTab('lineas')">
+          1. Líneas (Mi – Sol – Si – Re – Fa)
+        </button>
+        <button type="button" id="tab-mel-espacios" class="tab-btn" onclick="setMelodiaTab('espacios')">
+          2. Espacios (Re – Fa – La – Do – Mi – Sol)
+        </button>
+        <button type="button" id="tab-mel-escala" class="tab-btn" onclick="setMelodiaTab('escala')">
+          3. Escala Completa (Re – Sol)
+        </button>
+      </div>
+
+      <div class="guided-bar">
+        <div class="btn-row">
+          <button type="button" id="btn-mel-tour" class="btn btn-butter btn-sm" onclick="toggleMelodiaTour()">
+            ▶ Recorrido Guiado
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="playCurrentMelodiaNote()">
+            ♪ Escuchar nota
+          </button>
+        </div>
+        <div id="mel-tour-caption" class="guided-caption">
+          Toca cualquier nota o dedo para escuchar su altura y ver dónde se ubica en el pentagrama.
+        </div>
+      </div>
+
+      <!-- Banner superior de nota activa -->
+      <div class="note-banner">
+        <div>
+          <span id="mel-active-name" class="note-banner-title">Mi</span>
+          <span id="mel-active-pos" class="note-banner-sub">1ª línea</span>
+        </div>
+        <span id="mel-active-finger" class="note-banner-chip">Dedo Meñique · 1ª línea</span>
+      </div>
+
+      <!-- Escenario con mano izquierda horizontal y pentagrama de líneas negras -->
+      <div class="hand-stage-frame">
+        <div id="melodia-svg-stage"></div>
+      </div>
+
+      <div id="melodia-chips" class="note-selector-row"></div>
+
+      <div style="margin-top:20px; padding-top:18px; border-top:2px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <p class="muted" style="max-width:520px;">
+          Pon a prueba tu lectura melódica con 5 ejercicios guiados y apoyo visual de la mano.
+        </p>
+        <button type="button" class="btn btn-sage" onclick="startGuidedExercises('melodia')">
+          Comprobar lo aprendido (5 ejercicios) ✦
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 4: CÁPSULA 02 — LECTURA RÍTMICA (2 COMPASES DE 4/4)
+         ====================================================================== -->
+    <section id="view-cap-ritmo" class="card accent-ritmo hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div>
+          <span class="step-kicker kicker-terracotta" style="margin-bottom:4px;">Módulo 02 · Compases de 4/4</span>
+          <h2 style="margin-bottom:0;">Lectura Rítmica</h2>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="exitCapsule()">← Volver al inicio</button>
+      </div>
+
+      <div class="guided-bar">
+        <div class="btn-row">
+          <button type="button" id="btn-rit-tour" class="btn btn-butter btn-sm" onclick="toggleRhythmTour()">
+            ▶ Recorrido Guiado
+          </button>
+          <div class="tempo-group" aria-label="Velocidad del metrónomo">
+            <button type="button" class="tempo-btn" id="tempo-60" onclick="setRhythmTempo(60)">60 BPM</button>
+            <button type="button" class="tempo-btn active" id="tempo-75" onclick="setRhythmTempo(75)">75 BPM</button>
+            <button type="button" class="tempo-btn" id="tempo-90" onclick="setRhythmTempo(90)">90 BPM</button>
+          </div>
+        </div>
+        <div id="rit-tour-caption" class="guided-caption">
+          Revisa los 2 compases de 4/4 y presiona <strong>Escuchar 2 compases con metrónomo</strong> cuando quieras oírlos.
+        </div>
+      </div>
+
+      <div id="rhythm-strip" class="rhythm-strip"></div>
+
+      <div class="rhythm-lab-grid">
+        <div class="card-sand">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+            <h3 id="rit-card-title" style="margin:0;">Redonda</h3>
+            <span id="rit-card-dur" class="step-kicker kicker-terracotta" style="margin:0;">4 pulsos · Ta - a - a - a</span>
+          </div>
+
+          <div id="rit-svg-stage" style="background:#FFFFFF; border:2px solid var(--border); border-radius:12px; padding:10px; display:flex; justify-content:center; align-items:center; min-height:152px; box-shadow:2px 2px 0 var(--border);"></div>
+
+          <div class="hand-pointer-track" aria-hidden="true">
+            <div id="rit-hand-pointer" class="hand-pointer-indicator">☞ Compás 1 · Pulso 1</div>
+          </div>
+
+          <div id="rit-derivation-box" class="hidden" style="margin-top:12px; background:#FFFFFF; border:2px solid var(--border); border-radius:12px; padding:12px 14px; box-shadow:2px 2px 0 var(--border);"></div>
+        </div>
+
+        <div class="card-soft" style="display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+          <div>
+            <h4>Pulsos y Sílabas (8 Pulsos en 2 Compases)</h4>
+            <p id="rit-card-desc" class="muted" style="margin-top:4px; color:var(--ink); font-size:0.9rem;"></p>
+            <div id="rit-beat-grid"></div>
+          </div>
+          <button type="button" id="btn-rit-play" class="btn btn-primary btn-block" onclick="playActiveRhythmCard()">
+            ▶ Escuchar 2 compases con metrónomo
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; padding-top:18px; border-top:2px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <p class="muted" style="max-width:520px;">
+          Pon a prueba tu lectura rítmica, silencios y derivados de la cuartina con 5 ejercicios guiados.
+        </p>
+        <button type="button" class="btn btn-sage" onclick="startGuidedExercises('ritmo')">
+          Comprobar lo aprendido (5 ejercicios) ✦
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 5: CÁPSULA 03 — HISTORIA DEL VILLANCICO (FORMATO MANGA)
+         ====================================================================== -->
+    <section id="view-cap-historia" class="card accent-historia hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div>
+          <span class="step-kicker kicker-sage" style="margin-bottom:4px;">Módulo 03 · Narrativa Manga</span>
+          <h2 style="margin-bottom:0;">Historia del Villancico</h2>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="exitCapsule()">← Volver al inicio</button>
+      </div>
+
+      <div class="guided-bar">
+        <div class="btn-row">
+          <button type="button" id="btn-hist-prev" class="btn btn-outline btn-sm" onclick="stepMangaPanel(-1)">
+            ← Atrás
+          </button>
+          <button type="button" id="btn-hist-next" class="btn btn-butter btn-sm" onclick="stepMangaPanel(1)">
+            Adelante →
+          </button>
+        </div>
+        <div id="hist-panel-counter" class="guided-caption" style="font-weight:800;">
+          Viñeta 1 de 4
+        </div>
+      </div>
+
+      <div id="manga-panel-selector" class="tabs-bar"></div>
+      <div id="manga-panel-stage"></div>
+
+      <div style="margin-top:20px; padding-top:18px; border-top:2px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <p class="muted" style="max-width:520px;">
+          Comprueba lo aprendido sobre el origen, el sincretismo, los negrillos y la tradición del villancico con 5 ejercicios guiados.
+        </p>
+        <button type="button" class="btn btn-sage" onclick="startGuidedExercises('historia')">
+          Comprobar lo aprendido (5 ejercicios) ✦
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 6A: TALLER RÍTMICO DE 8 COMPASES (CUENTA 1 - 2 - 3 - ¡VA!)
+         ====================================================================== -->
+    <section id="view-workshop-ritmo8" class="card accent-ritmo hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div>
+          <span class="step-kicker kicker-terracotta" style="margin-bottom:4px;">Taller Creativo · 8 Compases</span>
+          <h2 style="margin-bottom:0;">Taller Rítmico (8 Compases)</h2>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="exitCapsule()">← Volver al inicio</button>
+      </div>
+
+      <div id="w8-rit-countdown" class="countdown-banner hidden"></div>
+
+      <div class="card-soft" style="margin-bottom:14px;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
+          <strong id="w8-rit-active-label">Editando Compás 1 (0/4 pulsos)</strong>
+          <div class="tempo-group">
+            <button type="button" class="tempo-btn" id="w8-tempo-60" onclick="setW8Tempo(60)">60 BPM</button>
+            <button type="button" class="tempo-btn active" id="w8-tempo-75" onclick="setW8Tempo(75)">75 BPM</button>
+            <button type="button" class="tempo-btn" id="w8-tempo-90" onclick="setW8Tempo(90)">90 BPM</button>
+          </div>
+        </div>
+
+        <div id="w8-rit-palette" class="btn-row"></div>
+
+        <div class="btn-row" style="margin-top:12px;">
+          <button type="button" class="btn btn-primary btn-sm" onclick="playWorkshopRhythm8()">
+            ▶ Escuchar 8 compases (1 - 2 - 3 - ¡va!)
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="removeLastRhythmFromBar()">
+            Quitar última figura
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="clearCurrentRhythmBar()">
+            Limpiar compás
+          </button>
+          <button type="button" class="btn btn-butter btn-sm" onclick="loadSampleRhythm8()">
+            Cargar ejemplo de 8 compases
+          </button>
+        </div>
+      </div>
+
+      <div id="w8-rit-bars" class="bars-8-grid"></div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 6B: TALLER MELÓDICO DE 8 COMPASES (CUENTA 1 - 2 - 3 - ¡VA!)
+         ====================================================================== -->
+    <section id="view-workshop-melodia8" class="card accent-melodia hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div>
+          <span class="step-kicker" style="margin-bottom:4px;">Taller Creativo · 8 Compases</span>
+          <h2 style="margin-bottom:0;">Taller Melódico (8 Compases)</h2>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="exitCapsule()">← Volver al inicio</button>
+      </div>
+
+      <div id="w8-mel-countdown" class="countdown-banner hidden"></div>
+
+      <div class="card-soft" style="margin-bottom:14px;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
+          <strong id="w8-mel-active-label">Editando Compás 1 · Nota 1</strong>
+          <button type="button" id="btn-w8-toggle-names" class="btn btn-butter btn-sm" onclick="toggleW8NoteNames()">
+            Nombres de notas: ACTIVADOS
+          </button>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <span class="field-label">1. Elige la nota (sin números de octava):</span>
+          <div id="w8-mel-note-palette" class="btn-row"></div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <span class="field-label">2. Elige la duración:</span>
+          <div id="w8-mel-dur-palette" class="btn-row"></div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary btn-sm" onclick="playWorkshopMelody8()">
+            ▶ Escuchar melodía de 8 compases (1 - 2 - 3 - ¡va!)
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="addMelodySlotToBar()">
+            + Agregar nota al compás
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="removeLastMelodySlot()">
+            Quitar última nota
+          </button>
+          <button type="button" class="btn btn-butter btn-sm" onclick="loadSampleMelody8()">
+            Cargar melodía ejemplo
+          </button>
+        </div>
+      </div>
+
+      <div id="w8-mel-score-stage" class="hand-stage-frame" style="margin-bottom:14px;"></div>
+      <div id="w8-mel-bars" class="bars-8-grid"></div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 7: EJERCICIOS GUIADOS, PRÁCTICA ADAPTATIVA Y EVALUACIÓN FINAL
+         ====================================================================== -->
+    <section id="view-quiz" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div class="btn-row">
+          <span id="quiz-tag" class="step-kicker">Práctica</span>
+          <span id="quiz-counter" class="pill-tag">Pregunta 1 / 5</span>
+          <span id="quiz-timer-badge" class="pill-tag pill-terracotta hidden">⏱ 30:00</span>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="exitQuizToDashboard()">
+          Salir al inicio
+        </button>
+      </div>
+
+      <div class="progress-track" style="margin-bottom:16px;">
+        <div id="quiz-progress-fill" class="progress-fill"></div>
+      </div>
+
+      <h2 id="quiz-prompt"></h2>
+      <p id="quiz-subprompt" class="muted" style="margin-top:4px;"></p>
+
+      <div id="quiz-visual-box" class="hidden" style="margin-top:14px; background:#FFFFFF; border:2px solid var(--border); border-radius:var(--radius-md); padding:12px;"></div>
+      <div id="quiz-options" class="options-grid"></div>
+      <div id="quiz-feedback" class="feedback-box hidden"></div>
+
+      <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+        <button type="button" id="btn-quiz-next" class="btn btn-primary hidden" onclick="nextQuizQuestion()">
+          Siguiente →
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 8: RESULTADOS DE PRÁCTICA / EVALUACIÓN FINAL
+         ====================================================================== -->
+    <section id="view-results" class="card hidden">
+      <span class="step-kicker">✦ Resultado</span>
+      <h1 id="res-title" style="margin-top:8px;">Resumen</h1>
+      <p id="res-subtitle" class="muted" style="margin-top:4px;"></p>
+      <div id="res-body" style="margin-top:16px;"></div>
+      <div class="btn-row" style="margin-top:20px;">
+        <button type="button" class="btn btn-primary" onclick="goHome()">Volver al inicio</button>
+        <button type="button" id="btn-res-cert" class="btn btn-sage hidden" onclick="downloadCertificatePNG()">
+          Descargar Certificado PNG
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal Panel Docente -->
+  <div id="teacher-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3>Panel Docente · Profe José</h3>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeTeacherModal()">✕</button>
+      </div>
+      <p class="muted" style="margin-bottom:12px;">
+        Puedes habilitar directamente la Evaluación Final para la sala o probar las 50 preguntas de práctica.
+      </p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-terracotta btn-sm" onclick="unlockExamWithPin('2026', true)">
+          Habilitar Evaluación Ahora
+        </button>
+        <button type="button" class="btn btn-butter btn-sm" onclick="startAdaptiveQuiz('mix'); closeTeacherModal();">
+          Probar 50 Preguntas
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIj6ef1B8qllqCXRUkmqbVdgGaEzN3uhe--JvygD9dLqYNqM2Vorx6BcQwsQf4blnU/exec";
+      const TEACHER_CODES = new Set(["2026", "PROFE5", "PROFE6"]);
+      const EXAM_PIN = "2026";
+
+      const state = {
+        user: null,
+        role: "student",
+        progress: {
+          melodia: 0,
+          ritmo: 0,
+          historia: 0,
+          seenCaps: { melodia: false, ritmo: false, historia: false },
+          weakTopics: {},
+          examRecord: null
+        },
+        melodia: {
+          tab: "lineas",
+          selectedId: "mi_1",
+          tourRunning: false,
+          tourTimer: null
+        },
+        rhythm: {
+          activeId: "redonda",
+          tempo: 75,
+          tourRunning: false,
+          tourTimer: null,
+          stepTimers: []
+        },
+        historia: {
+          panelIdx: 0,
+          activeTermKey: "profano"
+        },
+        workshop: {
+          ritTempo: 75,
+          ritBarIdx: 0,
+          barsRitmo: [
+            ["negra", "doble_corchea", "negra", "silencio_negra"],
+            ["cuartina", "galopa", "negra", "negra"],
+            ["blanca", "doble_corchea", "negra"],
+            ["galopa_inv", "sincopa", "blanca"],
+            ["negra", "negra", "doble_corchea", "negra"],
+            ["cuartina", "negra", "galopa", "negra"],
+            ["blanca", "silencio_negra", "negra"],
+            ["redonda"]
+          ],
+          melBarIdx: 0,
+          melSlotIdx: 0,
+          showNoteNames: true,
+          barsMelodia: [
+            [{ note: "sol_2", dur: "q" }, { note: "la_e2", dur: "q" }, { note: "si_3", dur: "q" }, { note: "do_e3", dur: "q" }],
+            [{ note: "re_4", dur: "h" }, { note: "si_3", dur: "h" }],
+            [{ note: "la_e2", dur: "q" }, { note: "sol_2", dur: "q" }, { note: "mi_1", dur: "h" }],
+            [{ note: "re_0", dur: "w" }],
+            [{ note: "sol_2", dur: "q" }, { note: "si_3", dur: "q" }, { note: "re_4", dur: "q" }, { note: "mi_e4", dur: "q" }],
+            [{ note: "fa_5", dur: "h" }, { note: "re_4", dur: "h" }],
+            [{ note: "si_3", dur: "q" }, { note: "la_e2", dur: "q" }, { note: "sol_2", dur: "q" }, { note: "la_e2", dur: "q" }],
+            [{ note: "sol_2", dur: "w" }]
+          ]
+        },
+        quiz: null
+      };
+
+      /* ======================================================================
+         UTILIDADES DE INTERFAZ Y AUDIO WEB AUDIO API
+         ====================================================================== */
+      function showToast(msg, type) {
+        const box = document.getElementById("toast-container");
+        if (!box) return;
+        const el = document.createElement("div");
+        el.className = `toast-msg ${type || "info"}`;
+        el.textContent = msg;
+        box.appendChild(el);
+        setTimeout(() => {
+          el.remove();
+        }, 3200);
+      }
+
+      function normalizeRut(raw) {
+        return String(raw || "").trim().toUpperCase().replace(/\s+/g, "");
+      }
+
+      function isValidRutFormat(rut) {
+        const clean = rut.replace(/\./g, "").replace(/-/g, "");
+        return /^[0-9]{7,8}[0-9K]$/.test(clean);
+      }
+
+      function showView(viewId) {
+        const ids = [
+          "view-login",
+          "view-dashboard",
+          "view-cap-melodia",
+          "view-cap-ritmo",
+          "view-cap-historia",
+          "view-workshop-ritmo8",
+          "view-workshop-melodia8",
+          "view-quiz",
+          "view-results"
+        ];
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.toggle("hidden", id !== viewId);
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      let audioCtx = null;
+      function getAudioCtx() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume().catch(() => {});
+        }
+        return audioCtx;
+      }
+
+      function playPitchTone(freq, durationSec) {
+        const dur = typeof durationSec === "number" ? durationSec : 0.55;
+        try {
+          const ctx = getAudioCtx();
+          const now = ctx.currentTime;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.22, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + dur + 0.02);
+        } catch (err) {}
+      }
+
+      function playMetronomeClick(timeSec, isDownbeat) {
+        try {
+          const ctx = getAudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(isDownbeat ? 1120 : 840, timeSec);
+          gain.gain.setValueAtTime(0.001, timeSec);
+          gain.gain.linearRampToValueAtTime(isDownbeat ? 0.14 : 0.09, timeSec + 0.005);
+          gain.gain.exponentialRampToValueAtTime(0.0008, timeSec + 0.055);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(timeSec);
+          osc.stop(timeSec + 0.06);
+        } catch (err) {}
+      }
+
+      function playSyllableSound(timeSec, durSec, syllableKind, freq) {
+        const kind = syllableKind || "ta";
+        const baseFreq = freq || 392;
+        try {
+          const ctx = getAudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          if (kind === "ti") {
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(baseFreq * 1.12, timeSec);
+          } else if (kind === "ri") {
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(baseFreq * 1.25, timeSec);
+          } else {
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(baseFreq, timeSec);
+          }
+          gain.gain.setValueAtTime(0.001, timeSec);
+          gain.gain.linearRampToValueAtTime(0.2, timeSec + 0.015);
+          gain.gain.setValueAtTime(0.18, Math.max(timeSec + 0.02, timeSec + durSec * 0.72));
+          gain.gain.exponentialRampToValueAtTime(0.001, timeSec + durSec);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(timeSec);
+          osc.stop(timeSec + durSec + 0.02);
+        } catch (err) {}
+      }
+
+      /* ======================================================================
+         ALMACENAMIENTO LOCAL Y SINCRONIZACIÓN CON APPS SCRIPT
+         ====================================================================== */
+      function storageKey(rut) {
+        return `salesiano_mus_profejose_${normalizeRut(rut)}`;
+      }
+
+      function loadLocalProgress(rut) {
+        try {
+          const raw = localStorage.getItem(storageKey(rut));
+          if (!raw) return;
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === "object") {
+            state.progress = {
+              melodia: Number(parsed.melodia) || 0,
+              ritmo: Number(parsed.ritmo) || 0,
+              historia: Number(parsed.historia) || 0,
+              seenCaps: {
+                melodia: Boolean(parsed.seenCaps && parsed.seenCaps.melodia),
+                ritmo: Boolean(parsed.seenCaps && parsed.seenCaps.ritmo),
+                historia: Boolean(parsed.seenCaps && parsed.seenCaps.historia)
+              },
+              weakTopics: parsed.weakTopics || {},
+              examRecord: parsed.examRecord || null
+            };
+          }
+        } catch (err) {}
+      }
+
+      function saveLocalProgress() {
+        if (!state.user || !state.user.rut) return;
+        try {
+          localStorage.setItem(storageKey(state.user.rut), JSON.stringify(state.progress));
+        } catch (err) {}
+      }
+
+      async function syncWithAppsScript(payload) {
+        if (!APPS_SCRIPT_URL) return;
+        try {
+          await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload)
+          });
+        } catch (err) {}
+      }
+
+      function getGlobalDominio() {
+        return Math.round((state.progress.melodia + state.progress.ritmo + state.progress.historia) / 3);
+      }
+
+      function qualifiesForCertificate() {
+        const p = state.progress;
+        return getGlobalDominio() >= 75 && p.melodia >= 70 && p.ritmo >= 70 && p.historia >= 70;
+      }
+
+      function refreshDashboardUI() {
+        if (!state.user) return;
+        const p = state.progress;
+        const globalPct = getGlobalDominio();
+
+        document.getElementById("header-user-pill").textContent = `${state.user.nombre} · ${state.user.curso}`;
+        document.getElementById("header-user-pill").classList.remove("hidden");
+        document.getElementById("btn-top-home").classList.remove("hidden");
+        document.getElementById("btn-top-logout").classList.remove("hidden");
+
+        const rolePill = document.getElementById("header-role-pill");
+        const teacherBox = document.getElementById("teacher-quick-actions");
+        if (state.role === "teacher") {
+          rolePill.textContent = "✦ Vista Docente";
+          rolePill.classList.remove("hidden");
+          teacherBox.classList.remove("hidden");
+        } else {
+          rolePill.classList.add("hidden");
+          teacherBox.classList.add("hidden");
+        }
+
+        document.getElementById("dash-greeting").textContent = `¡Hola, ${state.user.nombre}!`;
+        document.getElementById("dash-subline").textContent = `${state.user.curso} · Colegio Salesiano Valparaíso`;
+
+        document.getElementById("pct-global").textContent = `${globalPct}%`;
+        document.getElementById("bar-global").style.width = `${globalPct}%`;
+
+        document.getElementById("pct-melodia").textContent = `${p.melodia}%`;
+        document.getElementById("bar-melodia").style.width = `${p.melodia}%`;
+
+        document.getElementById("pct-ritmo").textContent = `${p.ritmo}%`;
+        document.getElementById("bar-ritmo").style.width = `${p.ritmo}%`;
+
+        document.getElementById("pct-historia").textContent = `${p.historia}%`;
+        document.getElementById("bar-historia").style.width = `${p.historia}%`;
+
+        const certBtn = document.getElementById("btn-download-cert");
+        const certStatus = document.getElementById("cert-status-text");
+        if (qualifiesForCertificate()) {
+          certBtn.disabled = false;
+          certStatus.innerHTML = `✦ ¡Meta alcanzada! Dominio global <strong>${globalPct}%</strong> y mínimo 70% en cada módulo.`;
+        } else {
+          certBtn.disabled = true;
+          certStatus.innerHTML = `Necesitas <strong>75% o más</strong> de dominio global (actual: <strong>${globalPct}%</strong>) y al menos <strong>70%</strong> en cada área para descargar tu certificado PNG.`;
+        }
+
+        const weakEntries = Object.entries(p.weakTopics || {})
+          .filter(([, count]) => count > 0)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 3);
+
+        const weakBox = document.getElementById("adaptive-weakness-box");
+        if (weakEntries.length > 0) {
+          weakBox.innerHTML = `
+            <div style="font-weight:800; font-size:0.86rem; margin-bottom:4px;">Temas detectados para reforzar:</div>
+            <div class="btn-row" style="margin-top:6px;">
+              ${weakEntries.map(([topic]) => `<span class="pill-tag pill-terracotta">✦ ${topic}</span>`).join("")}
+            </div>
+          `;
+        } else {
+          weakBox.innerHTML = `
+            <span class="muted" style="font-size:0.86rem;">
+              Aún no hay errores registrados. Al responder en práctica o ejercicios, aquí aparecerán tus prioridades de repaso.
+            </span>
+          `;
+        }
+
+        const prevExamBox = document.getElementById("exam-previous-result");
+        if (p.examRecord) {
+          prevExamBox.classList.remove("hidden");
+          prevExamBox.innerHTML = `
+            <strong>Última Evaluación Registrada:</strong> Nota <strong>${p.examRecord.nota}</strong>
+            (${p.examRecord.puntos} / 30 pts · ${p.examRecord.pct}%)
+          `;
+        } else {
+          prevExamBox.classList.add("hidden");
+        }
+      }
+
+      /* ======================================================================
+         INGRESO Y NAVEGACIÓN GENERAL
+         ====================================================================== */
+      function handleLoginSubmit(ev) {
+        ev.preventDefault();
+        const rawInput = document.getElementById("rut-input").value;
+        const normalized = normalizeRut(rawInput);
+        const errEl = document.getElementById("login-error");
+        errEl.classList.add("hidden");
+
+        if (TEACHER_CODES.has(normalized)) {
+          state.role = "teacher";
+          state.user = {
+            rut: normalized,
+            nombre: "Profe José",
+            curso: "Docente · 5° y 6° Básico"
+          };
+          loadLocalProgress(normalized);
+          document.getElementById("exam-locked-box").classList.add("hidden");
+          document.getElementById("exam-ready-box").classList.remove("hidden");
+          refreshDashboardUI();
+          showView("view-dashboard");
+          syncWithAppsScript({ action: "login_teacher", rut: normalized, timestamp: new Date().toISOString() });
+          showToast("Acceso docente habilitado.", "ok");
+          return;
+        }
+
+        if (!isValidRutFormat(normalized)) {
+          errEl.textContent = "Revisa el formato del RUT (ejemplo: 21.345.678-9).";
+          errEl.classList.remove("hidden");
+          return;
+        }
+
+        state.role = "student";
+        state.user = {
+          rut: normalized,
+          nombre: "Estudiante",
+          curso: "Colegio Salesiano Valparaíso"
+        };
+        loadLocalProgress(normalized);
+        refreshDashboardUI();
+        showView("view-dashboard");
+        syncWithAppsScript({ action: "login_student", rut: normalized, timestamp: new Date().toISOString() });
+      }
+
+      function logoutUser() {
+        stopMelodiaTour();
+        stopRhythmTour();
+        clearWorkshopTimers();
+        if (state.quiz && state.quiz.timerId) {
+          clearInterval(state.quiz.timerId);
+        }
+        state.user = null;
+        state.role = "student";
+        state.quiz = null;
+        document.getElementById("rut-input").value = "";
+        document.getElementById("header-user-pill").classList.add("hidden");
+        document.getElementById("header-role-pill").classList.add("hidden");
+        document.getElementById("btn-top-home").classList.add("hidden");
+        document.getElementById("btn-top-logout").classList.add("hidden");
+        showView("view-login");
+      }
+
+      function goHome() {
+        stopMelodiaTour();
+        stopRhythmTour();
+        clearWorkshopTimers();
+        refreshDashboardUI();
+        showView("view-dashboard");
+      }
+
+      function exitCapsule() {
+        goHome();
+      }
+
+      function exitQuizToDashboard() {
+        if (state.quiz && state.quiz.timerId) {
+          clearInterval(state.quiz.timerId);
+        }
+        state.quiz = null;
+        goHome();
+      }
+
+      function openCapsule(capKey) {
+        stopMelodiaTour();
+        stopRhythmTour();
+        if (capKey === "melodia") {
+          state.progress.seenCaps.melodia = true;
+          state.progress.melodia = Math.max(state.progress.melodia, 20);
+          saveLocalProgress();
+          renderMelodiaStage();
+          showView("view-cap-melodia");
+        } else if (capKey === "ritmo") {
+          state.progress.seenCaps.ritmo = true;
+          state.progress.ritmo = Math.max(state.progress.ritmo, 20);
+          saveLocalProgress();
+          renderRhythmStrip();
+          renderActiveRhythmCard(-1);
+          showView("view-cap-ritmo");
+        } else if (capKey === "historia") {
+          state.progress.seenCaps.historia = true;
+          state.progress.historia = Math.max(state.progress.historia, 20);
+          saveLocalProgress();
+          renderMangaHistoria();
+          showView("view-cap-historia");
+        }
+      }
+
+      /* ======================================================================
+         CÁPSULA 01 — LECTURA MELÓDICA (MANO IZQUIERDA + LÍNEAS NEGRAS)
+         ====================================================================== */
+      const MELODIA_NOTES = [
+        { id: "re_0", name: "Re", pos: "Bajo la 1ª línea", finger: "Bajo el meñique", kind: "space", lineIndex: null, spaceIndex: 0, noteY: 162, ledger: true, freq: 293.66 },
+        { id: "mi_1", name: "Mi", pos: "1ª línea", finger: "Dedo Meñique · 1ª línea", kind: "line", lineIndex: 0, spaceIndex: null, noteY: 150, ledger: false, freq: 329.63 },
+        { id: "fa_e1", name: "Fa", pos: "1er espacio", finger: "Entre meñique y anular", kind: "space", lineIndex: null, spaceIndex: 1, noteY: 138, ledger: false, freq: 349.23 },
+        { id: "sol_2", name: "Sol", pos: "2ª línea", finger: "Dedo Anular · 2ª línea", kind: "line", lineIndex: 1, spaceIndex: null, noteY: 126, ledger: false, freq: 392.00 },
+        { id: "la_e2", name: "La", pos: "2do espacio", finger: "Entre anular y medio", kind: "space", lineIndex: null, spaceIndex: 2, noteY: 114, ledger: false, freq: 440.00 },
+        { id: "si_3", name: "Si", pos: "3ª línea", finger: "Dedo Medio · 3ª línea", kind: "line", lineIndex: 2, spaceIndex: null, noteY: 102, ledger: false, freq: 493.88 },
+        { id: "do_e3", name: "Do", pos: "3er espacio", finger: "Entre medio e índice", kind: "space", lineIndex: null, spaceIndex: 3, noteY: 90, ledger: false, freq: 523.25 },
+        { id: "re_4", name: "Re", pos: "4ª línea", finger: "Dedo Índice · 4ª línea", kind: "line", lineIndex: 3, spaceIndex: null, noteY: 78, ledger: false, freq: 587.33 },
+        { id: "mi_e4", name: "Mi", pos: "4to espacio", finger: "Entre índice y pulgar", kind: "space", lineIndex: null, spaceIndex: 4, noteY: 66, ledger: false, freq: 659.25 },
+        { id: "fa_5", name: "Fa", pos: "5ª línea", finger: "Dedo Pulgar · 5ª línea", kind: "line", lineIndex: 4, spaceIndex: null, noteY: 54, ledger: false, freq: 698.46 },
+        { id: "sol_5", name: "Sol", pos: "Sobre la 5ª línea", finger: "Sobre el pulgar", kind: "space", lineIndex: null, spaceIndex: 5, noteY: 42, ledger: false, freq: 783.99 }
+      ];
+
+      const MELODIA_BY_ID = Object.fromEntries(MELODIA_NOTES.map(n => [n.id, n]));
+
+      function getFilteredMelodiaNotes() {
+        if (state.melodia.tab === "lineas") {
+          return MELODIA_NOTES.filter(n => n.kind === "line");
+        }
+        if (state.melodia.tab === "espacios") {
+          return MELODIA_NOTES.filter(n => n.kind === "space");
+        }
+        return MELODIA_NOTES;
+      }
+
+      function setMelodiaTab(tab) {
+        stopMelodiaTour();
+        state.melodia.tab = tab;
+        ["lineas", "espacios", "escala"].forEach(t => {
+          document.getElementById(`tab-mel-${t}`).classList.toggle("active", t === tab);
+        });
+        const list = getFilteredMelodiaNotes();
+        if (!list.some(n => n.id === state.melodia.selectedId)) {
+          state.melodia.selectedId = list[0].id;
+        }
+        renderMelodiaStage();
+      }
+
+      function selectMelodiaNote(id, shouldPlay, fromTour) {
+        const playIt = shouldPlay !== false;
+        if (!fromTour) stopMelodiaTour();
+        const note = MELODIA_BY_ID[id];
+        if (!note) return;
+        state.melodia.selectedId = id;
+        renderMelodiaStage();
+        if (playIt) {
+          playPitchTone(note.freq, 0.55);
+        }
+      }
+
+      function playCurrentMelodiaNote() {
+        const note = MELODIA_BY_ID[state.melodia.selectedId] || MELODIA_NOTES[1];
+        playPitchTone(note.freq, 0.65);
+      }
+
+      function stopMelodiaTour() {
+        if (state.melodia.tourTimer) {
+          clearTimeout(state.melodia.tourTimer);
+          state.melodia.tourTimer = null;
+        }
+        state.melodia.tourRunning = false;
+        const btn = document.getElementById("btn-mel-tour");
+        if (btn) btn.textContent = "▶ Recorrido Guiado";
+      }
+
+      function toggleMelodiaTour() {
+        if (state.melodia.tourRunning) {
+          stopMelodiaTour();
+          return;
+        }
+        state.melodia.tourRunning = true;
+        document.getElementById("btn-mel-tour").textContent = "⏸ Pausar Recorrido";
+        const seq = getFilteredMelodiaNotes();
+        let idx = 0;
+        const runStep = () => {
+          if (!state.melodia.tourRunning) return;
+          const item = seq[idx];
+          selectMelodiaNote(item.id, true, true);
+          document.getElementById("mel-tour-caption").innerHTML = `<strong>${item.name}</strong> · ${item.pos} (${item.finger}).`;
+          idx++;
+          if (idx < seq.length) {
+            state.melodia.tourTimer = setTimeout(runStep, 950);
+          } else {
+            state.melodia.tourTimer = setTimeout(() => {
+              stopMelodiaTour();
+              showToast("Recorrido melódico completado.", "ok");
+            }, 950);
+          }
+        };
+        runStep();
+      }
+
+      function renderMelodiaStage() {
+        const note = MELODIA_BY_ID[state.melodia.selectedId] || MELODIA_NOTES[1];
+        document.getElementById("mel-active-name").textContent = note.name;
+        document.getElementById("mel-active-pos").textContent = note.pos;
+        document.getElementById("mel-active-finger").textContent = note.finger;
+
+        const lineYs = [150, 126, 102, 78, 54];
+        const noteX = 465;
+
+        let svg = `<svg viewBox="0 0 640 190" style="width:100%; max-width:640px; height:auto; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">`;
+
+        if (note.kind === "space") {
+          let bandY = 150;
+          let bandH = 24;
+          if (note.spaceIndex === 0) { bandY = 150; bandH = 24; }
+          else if (note.spaceIndex === 1) { bandY = 126; bandH = 24; }
+          else if (note.spaceIndex === 2) { bandY = 102; bandH = 24; }
+          else if (note.spaceIndex === 3) { bandY = 78; bandH = 24; }
+          else if (note.spaceIndex === 4) { bandY = 54; bandH = 24; }
+          else if (note.spaceIndex === 5) { bandY = 30; bandH = 24; }
+          svg += `<rect x="40" y="${bandY}" width="575" height="${bandH}" fill="rgba(234, 88, 12, 0.16)"/>`;
+        }
+
+        const fingerActive = (lineIdx) => note.kind === "line" && note.lineIndex === lineIdx;
+        const handDim = note.kind === "line" ? 0.58 : 0.72;
+
+        svg += `<g opacity="${handDim}">`;
+        svg += `<path d="M 35 144 C 55 144, 72 152, 95 153 L 185 153 C 202 153, 212 145, 215 132 L 215 74 C 212 60, 198 52, 178 52 L 96 52 C 74 52, 56 60, 35 60 Z" fill="#F3CBB0" stroke="#141414" stroke-width="2.2"/>`;
+        svg += `<path d="M 118 52 C 126 36, 146 28, 174 36 C 184 39, 188 47, 184 54 L 118 54 Z" fill="${fingerActive(4) ? "#F5EE84" : "#F3CBB0"}" stroke="#141414" stroke-width="2.2"/>`;
+        svg += `<path d="M 212 72 L 328 72 C 336 72, 340 75, 340 78 C 340 81, 336 84, 328 84 L 212 84 Z" fill="${fingerActive(3) ? "#F5EE84" : "#F3CBB0"}" stroke="#141414" stroke-width="2.2"/>`;
+        svg += `<path d="M 212 96 L 348 96 C 356 96, 360 99, 360 102 C 360 105, 356 108, 348 108 L 212 108 Z" fill="${fingerActive(2) ? "#F5EE84" : "#F3CBB0"}" stroke="#141414" stroke-width="2.2"/>`;
+        svg += `<path d="M 212 120 L 326 120 C 334 120, 338 123, 338 126 C 338 129, 334 132, 326 132 L 212 132 Z" fill="${fingerActive(1) ? "#F5EE84" : "#F3CBB0"}" stroke="#141414" stroke-width="2.2"/>`;
+        svg += `<path d="M 205 144 L 296 144 C 303 144, 307 147, 307 150 C 307 153, 303 156, 296 156 L 205 156 Z" fill="${fingerActive(0) ? "#F5EE84" : "#F3CBB0"}" stroke="#141414" stroke-width="2.2"/>`;
+        svg += `</g>`;
+
+        lineYs.forEach((ly, idx) => {
+          const isSelectedLine = note.kind === "line" && note.lineIndex === idx;
+          const strokeCol = isSelectedLine ? "#EA580C" : "#141414";
+          const strokeW = isSelectedLine ? 3.4 : 2.1;
+          svg += `<line x1="40" y1="${ly}" x2="615" y2="${ly}" stroke="${strokeCol}" stroke-width="${strokeW}"/>`;
+        });
+
+        svg += `<g opacity="0.42" transform="translate(86, 24) scale(0.95)">`;
+        svg += `<path d="M 28 134 C 18 134, 12 127, 14 118 C 16 110, 26 108, 30 116 C 32 121, 27 126, 22 124 C 24 129, 32 128, 35 120 C 39 108, 28 95, 18 85 C 6 73, 6 54, 18 42 C 26 34, 34 24, 32 12 C 30 4, 22 2, 18 8 C 14 15, 18 32, 23 54 L 31 128 C 32 135, 29 142, 22 144" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round"/>`;
+        svg += `<circle cx="24" cy="102" r="9" fill="none" stroke="#141414" stroke-width="2.8"/>`;
+        svg += `</g>`;
+
+        if (note.ledger) {
+          svg += `<line x1="${noteX - 18}" y1="162" x2="${noteX + 18}" y2="162" stroke="#141414" stroke-width="2.2"/>`;
+        }
+
+        svg += `<circle cx="${noteX}" cy="${note.noteY}" r="18" fill="rgba(234, 88, 12, 0.22)"/>`;
+        svg += `<circle cx="${noteX}" cy="${note.noteY}" r="12" fill="rgba(245, 238, 132, 0.45)"/>`;
+
+        const stemUp = note.noteY >= 102;
+        svg += `<ellipse cx="${noteX}" cy="${note.noteY}" rx="9.5" ry="6.8" transform="rotate(-18 ${noteX} ${note.noteY})" fill="#EA580C" stroke="#141414" stroke-width="2"/>`;
+        if (stemUp) {
+          svg += `<line x1="${noteX + 8.5}" y1="${note.noteY - 2}" x2="${noteX + 8.5}" y2="${note.noteY - 38}" stroke="#141414" stroke-width="2.2"/>`;
+        } else {
+          svg += `<line x1="${noteX - 8.5}" y1="${note.noteY + 2}" x2="${noteX - 8.5}" y2="${note.noteY + 38}" stroke="#141414" stroke-width="2.2"/>`;
+        }
+
+        const labelY = stemUp ? Math.max(20, note.noteY - 44) : Math.min(184, note.noteY + 52);
+        svg += `<text x="${noteX}" y="${labelY}" text-anchor="middle" font-size="14" font-weight="900" fill="#141414">${note.name}</text>`;
+
+        svg += `</svg>`;
+        document.getElementById("melodia-svg-stage").innerHTML = svg;
+
+        const filtered = getFilteredMelodiaNotes();
+        document.getElementById("melodia-chips").innerHTML = filtered.map(n => `
+          <button type="button" class="note-chip ${n.id === state.melodia.selectedId ? "active" : ""}" onclick="selectMelodiaNote('${n.id}', true)">
+            ${n.name} · ${n.pos}
+          </button>
+        `).join("");
+      }
+
+      /* ======================================================================
+         CÁPSULA 02 — LECTURA RÍTMICA (2 COMPASES 4/4 + MANO INDICADORA)
+         ====================================================================== */
+      const RHYTHM_CARDS = [
+        {
+          id: "redonda",
+          title: "Redonda",
+          dur: "4 pulsos · Ta - a - a - a",
+          desc: "Dura 4 pulsos (Ta - a - a - a). Arriba se alinean los 4 marcadores verticales con cada sílaba en ambos compases.",
+          beatsPattern: [
+            { syl: "Ta", kind: "sound", syllType: "ta" },
+            { syl: "a", kind: "hold", syllType: "ta" },
+            { syl: "a", kind: "hold", syllType: "ta" },
+            { syl: "a", kind: "hold", syllType: "ta" }
+          ]
+        },
+        {
+          id: "blanca",
+          title: "Blanca",
+          dur: "2 pulsos · Ta - a",
+          desc: "Cada blanca ocupa 2 pulsos (Ta - a). En 2 compases de 4/4 se escuchan 4 blancas en total.",
+          beatsPattern: [
+            { syl: "Ta", kind: "sound", syllType: "ta" },
+            { syl: "a", kind: "hold", syllType: "ta" },
+            { syl: "Ta", kind: "sound", syllType: "ta" },
+            { syl: "a", kind: "hold", syllType: "ta" }
+          ]
+        },
+        {
+          id: "negra",
+          title: "Negra",
+          dur: "1 pulso · Ta",
+          desc: "Cada negra equivale a 1 pulso completo (Ta) a lo largo de los 8 pulsos de los 2 compases.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Ta", kind: "sound", syllType: "ta" }))
+        },
+        {
+          id: "doble_corchea",
+          title: "Doble corchea",
+          dur: "1 pulso · Ti - ti",
+          desc: "Dos corcheas entran en 1 pulso (Ti - ti) y se repiten en cada uno de los 8 pulsos.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Ti - ti", kind: "sound", syllType: "ti" }))
+        },
+        {
+          id: "silencio_redonda",
+          title: "Silencio de redonda",
+          dur: "4 pulsos · Sh",
+          desc: "En pentagrama de 5 líneas, cuelga bajo la 4ª línea y ocupa 4 pulsos en silencio por compás (8 pulsos en total).",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Sh", kind: "rest", syllType: "rest" }))
+        },
+        {
+          id: "silencio_blanca",
+          title: "Silencio de blanca",
+          dur: "2 pulsos · Sh",
+          desc: "En pentagrama de 5 líneas, se apoya sobre la 3ª línea y dura 2 pulsos en silencio por figura.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Sh", kind: "rest", syllType: "rest" }))
+        },
+        {
+          id: "silencio_negra",
+          title: "Silencio de negra",
+          dur: "1 pulso · Sh",
+          desc: "Cada silencio de negra ocupa 1 pulso en silencio (Sh) en los 8 pulsos de los 2 compases.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Sh", kind: "rest", syllType: "rest" }))
+        },
+        {
+          id: "silencio_corchea",
+          title: "Silencio de corchea",
+          dur: "½ pulso · Sh - Ti",
+          desc: "En pentagrama de 5 líneas, cada pulso combina el silencio de corchea (Sh) y la corchea (Ti) durante los 8 pulsos.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Sh - Ti", kind: "rest", syllType: "ti" }))
+        },
+        {
+          id: "cuartina",
+          title: "Cuartina",
+          dur: "1 pulso · Ti - ri - ti - ri",
+          desc: "Cuatro semicorcheas en 1 pulso, con las sílabas Ti - ri - ti - ri alineadas bajo cada cabeza de nota.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Ti - ri - ti - ri", kind: "sound", syllType: "ri" }))
+        },
+        {
+          id: "galopa",
+          title: "Galopa",
+          dur: "1 pulso · Ti - ti - ri",
+          desc: "Se forma uniendo las 2 primeras semicorcheas de la cuartina en una corchea (Ti - ti - ri).",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Ti - ti - ri", kind: "sound", syllType: "ti" })),
+          derivationHTML: `
+            <div style="font-size:0.82rem; font-weight:800; color:var(--terracotta-strong); margin-bottom:6px;">
+              Derivación desde la Cuartina (se unen las 2 primeras semicorcheas)
+            </div>
+            <svg viewBox="0 0 430 84" style="width:100%; max-width:430px; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">
+              <text x="8" y="25" font-size="11" font-weight="800" fill="#141414">Cuartina (1 pulso):</text>
+              <rect x="112" y="8" width="44" height="24" rx="6" fill="#FDECE4" stroke="#EA580C" stroke-width="1.8"/>
+              <text x="134" y="24" text-anchor="middle" font-size="10.5" font-weight="800" fill="#C2410C">Ti + ri</text>
+              <text x="172" y="24" text-anchor="middle" font-size="10.5" font-weight="800" fill="#141414">ti</text>
+              <text x="192" y="24" text-anchor="middle" font-size="10.5" font-weight="800" fill="#141414">ri</text>
+              <path d="M 134 34 L 134 46 L 268 46 L 268 36" fill="none" stroke="#EA580C" stroke-width="2"/>
+              <polygon points="268,32 264,39 272,39" fill="#EA580C"/>
+              <text x="8" y="68" font-size="11" font-weight="800" fill="#141414">Galopa (1 pulso):</text>
+              <ellipse cx="246" cy="64" rx="6" ry="4.5" fill="#EA580C"/>
+              <line x1="251.5" y1="63" x2="251.5" y2="41" stroke="#EA580C" stroke-width="2.2"/>
+              <ellipse cx="272" cy="64" rx="6" ry="4.5" fill="#141414"/>
+              <line x1="277.5" y1="63" x2="277.5" y2="41" stroke="#141414" stroke-width="2.2"/>
+              <ellipse cx="286" cy="64" rx="6" ry="4.5" fill="#141414"/>
+              <line x1="291.5" y1="63" x2="291.5" y2="41" stroke="#141414" stroke-width="2.2"/>
+              <rect x="251" y="40" width="41" height="3.8" fill="#141414"/>
+              <rect x="277" y="46" width="15" height="3.8" fill="#141414"/>
+              <text x="355" y="67" text-anchor="middle" font-size="11.5" font-weight="900" fill="#141414">Ti - ti - ri</text>
+            </svg>
+          `
+        },
+        {
+          id: "galopa_inv",
+          title: "Galopa inversa",
+          dur: "1 pulso · Ti - ri - ti",
+          desc: "Se forma uniendo las 2 últimas semicorcheas de la cuartina en una corchea final (Ti - ri - ti).",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Ti - ri - ti", kind: "sound", syllType: "ri" }))
+        },
+        {
+          id: "sincopa",
+          title: "Síncopa",
+          dur: "1 pulso · Ti - ta - ti",
+          desc: "Se forma uniendo las 2 semicorcheas centrales de la cuartina (Ti - ta - ti) dentro de 1 pulso.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Ti - ta - ti", kind: "sound", syllType: "ta" }))
+        },
+        {
+          id: "cuartina_sh_junto",
+          title: "Silencio con semicorcheas",
+          dur: "1 pulso · Sh - ri - ti - ri",
+          desc: "Silencio agrupado junto a las semicorcheas restantes del pulso: Sh - ri - ti - ri.",
+          beatsPattern: [0, 1, 2, 3].map(() => ({ syl: "Sh - ri - ti - ri", kind: "rest", syllType: "ri" }))
+        }
+      ];
+
+      const RHYTHM_BY_ID = Object.fromEntries(RHYTHM_CARDS.map(r => [r.id, r]));
+
+      function clearRhythmStepTimers() {
+        (state.rhythm.stepTimers || []).forEach(id => clearTimeout(id));
+        state.rhythm.stepTimers = [];
+      }
+
+      function renderTwoBars44SVG(id, activeBeatIdx) {
+        const activeBeat = typeof activeBeatIdx === "number" ? activeBeatIdx : -1;
+        const card = RHYTHM_BY_ID[id] || RHYTHM_CARDS[0];
+        const ink = "#141414";
+        const rulerBar = "rgba(20, 20, 20, 0.35)";
+        const rulerText = "rgba(20, 20, 20, 0.75)";
+
+        const noteHead = (x, y, hollow, fillColor) =>
+          `<ellipse cx="${x}" cy="${y}" rx="8" ry="5.6" transform="rotate(-18 ${x} ${y})" fill="${fillColor || (hollow ? "#FFFFFF" : ink)}" stroke="${ink}" stroke-width="${hollow ? 2.2 : 0}"/>`;
+
+        const restQuarter = (x, color) =>
+          `<path d="M ${x} 52 L ${x + 8} 63 L ${x} 72 L ${x + 8} 82 C ${x + 2} 83, ${x - 2} 87, ${x + 2} 92" fill="none" stroke="${color || ink}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+        const restEighth = (x, color) =>
+          `<circle cx="${x - 2}" cy="64" r="3.5" fill="${color || "#EA580C"}"/><path d="M ${x} 65 C ${x + 6} 67, ${x + 9} 65, ${x + 11} 61 L ${x + 1} 88" fill="none" stroke="${color || "#EA580C"}" stroke-width="2.4" stroke-linecap="round"/>`;
+
+        const pulseRuler = (xStart, width, pulseCount) => `
+          <g>
+            <rect x="${xStart}" y="14" width="${width}" height="4" rx="2" fill="${rulerBar}"/>
+            <line x1="${xStart}" y1="14" x2="${xStart}" y2="24" stroke="${rulerText}" stroke-width="1.8"/>
+            <line x1="${xStart + width}" y1="14" x2="${xStart + width}" y2="24" stroke="${rulerText}" stroke-width="1.8"/>
+            <text x="${xStart + width / 2}" y="10.5" text-anchor="middle" font-size="9.5" font-weight="800" fill="${rulerText}">${pulseCount} ${pulseCount === 1 ? "pulso" : "pulsos"}</text>
+          </g>
+        `;
+
+        const wholeNoteAlignedTicks = (xStart, barIdx) => {
+          const xs = [xStart + 38, xStart + 104, xStart + 170, xStart + 236];
+          const syls = ["Ta", "a", "a", "a"];
+          return xs.map((tx, i) => {
+            const gBeat = barIdx * 4 + i;
+            const isAct = activeBeat === gBeat;
+            const col = isAct ? "#EA580C" : ink;
+            return `
+              <line x1="${tx}" y1="45" x2="${tx}" y2="57" stroke="${col}" stroke-width="${isAct ? 3.2 : 2.3}" stroke-linecap="round"/>
+              <text x="${tx}" y="116" text-anchor="middle" font-size="12" font-weight="900" fill="${col}">${syls[i]}</text>
+            `;
+          }).join("");
+        };
+
+        const drawBeatFigure = (x0, kind, isActiveBeat) => {
+          const cx = x0 + 33;
+          const col = isActiveBeat ? "#EA580C" : ink;
+          let g = pulseRuler(x0 + 4, 58, 1);
+
+          if (kind === "negra") {
+            g += `${noteHead(cx, 84, false, col)}<line x1="${cx + 7.5}" y1="82" x2="${cx + 7.5}" y2="42" stroke="${col}" stroke-width="2.2"/>`;
+            g += `<text x="${cx}" y="116" text-anchor="middle" font-size="11.5" font-weight="800" fill="${col}">Ta</text>`;
+          } else if (kind === "doble_corchea") {
+            g += `${noteHead(x0 + 18, 84, false, col)}<line x1="${x0 + 25.5}" y1="82" x2="${x0 + 25.5}" y2="46" stroke="${col}" stroke-width="2.1"/>`;
+            g += `${noteHead(x0 + 44, 84, false, col)}<line x1="${x0 + 51.5}" y1="82" x2="${x0 + 51.5}" y2="46" stroke="${col}" stroke-width="2.1"/>`;
+            g += `<rect x="${x0 + 24.5}" y="44" width="28" height="4.5" fill="${col}"/>`;
+            g += `<text x="${x0 + 18}" y="116" text-anchor="middle" font-size="10.5" font-weight="800" fill="${col}">Ti</text>`;
+            g += `<text x="${x0 + 44}" y="116" text-anchor="middle" font-size="10.5" font-weight="800" fill="${col}">ti</text>`;
+          } else if (kind === "silencio_negra") {
+            g += restQuarter(cx - 4, col);
+            g += `<text x="${cx}" y="116" text-anchor="middle" font-size="11.5" font-weight="800" fill="${col}">Sh</text>`;
+          } else if (kind === "cuartina") {
+            const xs = [x0 + 11, x0 + 25, x0 + 39, x0 + 53];
+            const syls = ["Ti", "ri", "ti", "ri"];
+            xs.forEach((nx, i) => {
+              g += `${noteHead(nx, 86, false, col)}<line x1="${nx + 7.5}" y1="84" x2="${nx + 7.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+              g += `<text x="${nx}" y="116" text-anchor="middle" font-size="9.8" font-weight="800" fill="${col}">${syls[i]}</text>`;
+            });
+            g += `<rect x="${x0 + 17.5}" y="42" width="44" height="4.2" fill="${col}"/><rect x="${x0 + 17.5}" y="49" width="44" height="4.2" fill="${col}"/>`;
+          } else if (kind === "galopa") {
+            g += `${noteHead(x0 + 13, 86, false, col)}<line x1="${x0 + 20.5}" y1="84" x2="${x0 + 20.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `${noteHead(x0 + 39, 86, false, col)}<line x1="${x0 + 46.5}" y1="84" x2="${x0 + 46.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `${noteHead(x0 + 53, 86, false, col)}<line x1="${x0 + 60.5}" y1="84" x2="${x0 + 60.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `<rect x="${x0 + 19.5}" y="42" width="42" height="4.2" fill="${col}"/><rect x="${x0 + 45.5}" y="49" width="16" height="4.2" fill="${col}"/>`;
+            g += `<text x="${x0 + 13}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">Ti</text>`;
+            g += `<text x="${x0 + 39}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">ti</text>`;
+            g += `<text x="${x0 + 53}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">ri</text>`;
+          } else if (kind === "galopa_inv") {
+            g += `${noteHead(x0 + 12, 86, false, col)}<line x1="${x0 + 19.5}" y1="84" x2="${x0 + 19.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `${noteHead(x0 + 26, 86, false, col)}<line x1="${x0 + 33.5}" y1="84" x2="${x0 + 33.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `${noteHead(x0 + 52, 86, false, col)}<line x1="${x0 + 59.5}" y1="84" x2="${x0 + 59.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `<rect x="${x0 + 18.5}" y="42" width="42" height="4.2" fill="${col}"/><rect x="${x0 + 18.5}" y="49" width="16" height="4.2" fill="${col}"/>`;
+            g += `<text x="${x0 + 12}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">Ti</text>`;
+            g += `<text x="${x0 + 26}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">ri</text>`;
+            g += `<text x="${x0 + 52}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">ti</text>`;
+          } else if (kind === "sincopa") {
+            g += `${noteHead(x0 + 12, 86, false, col)}<line x1="${x0 + 19.5}" y1="84" x2="${x0 + 19.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `${noteHead(x0 + 29, 86, false, col)}<line x1="${x0 + 36.5}" y1="84" x2="${x0 + 36.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `${noteHead(x0 + 53, 86, false, col)}<line x1="${x0 + 60.5}" y1="84" x2="${x0 + 60.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            g += `<rect x="${x0 + 18.5}" y="42" width="43" height="4.2" fill="${col}"/><rect x="${x0 + 18.5}" y="49" width="10" height="4.2" fill="${col}"/><rect x="${x0 + 51.5}" y="49" width="10" height="4.2" fill="${col}"/>`;
+            g += `<text x="${x0 + 12}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">Ti</text>`;
+            g += `<text x="${x0 + 29}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">ta</text>`;
+            g += `<text x="${x0 + 53}" y="116" text-anchor="middle" font-size="10" font-weight="800" fill="${col}">ti</text>`;
+          } else if (kind === "cuartina_sh_junto") {
+            g += restEighth(x0 + 11, "#EA580C");
+            [26, 40, 54].forEach(dx => {
+              g += `${noteHead(x0 + dx, 86, false, col)}<line x1="${x0 + dx + 7.5}" y1="84" x2="${x0 + dx + 7.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
+            });
+            g += `<rect x="${x0 + 32.5}" y="42" width="30" height="4.2" fill="${col}"/><rect x="${x0 + 32.5}" y="49" width="30" height="4.2" fill="${col}"/>`;
+            g += `<text x="${x0 + 13}" y="116" text-anchor="middle" font-size="9.5" font-weight="800" fill="#EA580C">Sh</text>`;
+            g += `<text x="${x0 + 26}" y="116" text-anchor="middle" font-size="9.5" font-weight="800" fill="${col}">ri</text>`;
+            g += `<text x="${x0 + 40}" y="116" text-anchor="middle" font-size="9.5" font-weight="800" fill="${col}">ti</text>`;
+            g += `<text x="${x0 + 54}" y="116" text-anchor="middle" font-size="9.5" font-weight="800" fill="${col}">ri</text>`;
+          }
+
+          return g;
+        };
+
+        const drawBarContent = (xStart, barIdx, kind) => {
+          if (kind === "redonda") {
+            const isBarAct = activeBeat >= barIdx * 4 && activeBeat < (barIdx + 1) * 4;
+            return pulseRuler(xStart + 6, 264, 4) +
+              wholeNoteAlignedTicks(xStart, barIdx) +
+              `<ellipse cx="${xStart + 138}" cy="76" rx="13.5" ry="9" fill="none" stroke="${isBarAct ? "#EA580C" : ink}" stroke-width="3"/>`;
+          }
+          if (kind === "blanca") {
+            return [0, 2].map(b => {
+              const bx = xStart + 4 + b * 68;
+              const cx = bx + 66;
+              const b1 = barIdx * 4 + b;
+              const isAct = activeBeat === b1 || activeBeat === b1 + 1;
+              const col = isAct ? "#EA580C" : ink;
+              return pulseRuler(bx + 4, 128, 2) +
+                `${noteHead(cx, 82, true, isAct ? "#FDECE4" : "#FFFFFF")}<line x1="${cx + 7.5}" y1="80" x2="${cx + 7.5}" y2="40" stroke="${col}" stroke-width="2.2"/>` +
+                `<text x="${cx - 18}" y="116" text-anchor="middle" font-size="11.5" font-weight="800" fill="${col}">Ta</text>` +
+                `<text x="${cx + 18}" y="116" text-anchor="middle" font-size="11.5" font-weight="800" fill="${col}">a</text>`;
+            }).join("");
+          }
+          if (kind === "silencio_redonda") {
+            let s = pulseRuler(xStart + 6, 264, 4);
+            for (let i = 0; i < 5; i++) s += `<line x1="${xStart + 6}" y1="${46 + i * 12}" x2="${xStart + 270}" y2="${46 + i * 12}" stroke="#141414" stroke-width="1.3"/>`;
+            s += `<rect x="${xStart + 122}" y="58" width="32" height="8" fill="${ink}"/>`;
+            s += `<text x="${xStart + 138}" y="116" text-anchor="middle" font-size="10.8" font-weight="800" fill="#EA580C">Sh (4 pulsos · bajo 4ª línea)</text>`;
+            return s;
+          }
+          if (kind === "silencio_blanca") {
+            let s = "";
+            for (let i = 0; i < 5; i++) s += `<line x1="${xStart + 6}" y1="${46 + i * 12}" x2="${xStart + 270}" y2="${46 + i * 12}" stroke="#141414" stroke-width="1.3"/>`;
+            [0, 2].forEach(b => {
+              const bx = xStart + 4 + b * 68;
+              const cx = bx + 66;
+              s += pulseRuler(bx + 4, 128, 2);
+              s += `<rect x="${cx - 15}" y="62" width="30" height="8" fill="${ink}"/>`;
+              s += `<text x="${cx}" y="116" text-anchor="middle" font-size="10.8" font-weight="800" fill="#EA580C">Sh (2 pulsos · sobre 3ª)</text>`;
+            });
+            return s;
+          }
+          if (kind === "silencio_negra") {
+            let s = "";
+            for (let i = 0; i < 5; i++) s += `<line x1="${xStart + 6}" y1="${46 + i * 12}" x2="${xStart + 270}" y2="${46 + i * 12}" stroke="#141414" stroke-width="1.3"/>`;
+            for (let b = 0; b < 4; b++) {
+              const bx = xStart + 6 + b * 67;
+              const isAct = activeBeat === (barIdx * 4 + b);
+              s += pulseRuler(bx + 3, 60, 1);
+              s += restQuarter(bx + 26, isAct ? "#EA580C" : ink);
+              s += `<text x="${bx + 33}" y="116" text-anchor="middle" font-size="11" font-weight="800" fill="#EA580C">Sh</text>`;
+            }
+            return s;
+          }
+          if (kind === "silencio_corchea") {
+            let s = "";
+            for (let i = 0; i < 5; i++) s += `<line x1="${xStart + 6}" y1="${46 + i * 12}" x2="${xStart + 270}" y2="${46 + i * 12}" stroke="#141414" stroke-width="1.3"/>`;
+            for (let b = 0; b < 4; b++) {
+              const bx = xStart + 6 + b * 67;
+              const isAct = activeBeat === (barIdx * 4 + b);
+              const col = isAct ? "#EA580C" : ink;
+              s += pulseRuler(bx + 3, 60, 1);
+              s += restEighth(bx + 13, "#EA580C");
+              s += `${noteHead(bx + 40, 82, false, col)}<line x1="${bx + 47.5}" y1="80" x2="${bx + 47.5}" y2="48" stroke="${col}" stroke-width="2"/><path d="M ${bx + 47.5} 48 C ${bx + 56} 51, ${bx + 58} 58, ${bx + 53} 63" fill="none" stroke="${col}" stroke-width="2" stroke-linecap="round"/>`;
+              s += `<text x="${bx + 33}" y="116" text-anchor="middle" font-size="10.5" font-weight="800" fill="#EA580C">Sh - Ti</text>`;
+            }
+            return s;
+          }
+          return [0, 1, 2, 3].map(b => drawBeatFigure(xStart + 6 + b * 67, kind, activeBeat === (barIdx * 4 + b))).join("");
+        };
+
+        let svg = `<svg viewBox="0 0 600 128" style="width:100%; max-width:600px; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">`;
+        svg += `<rect x="2" y="2" width="596" height="124" rx="12" fill="#FFFFFF"/>`;
+        svg += `<text x="16" y="64" font-size="15" font-weight="900" fill="${ink}">4</text>`;
+        svg += `<text x="16" y="84" font-size="15" font-weight="900" fill="${ink}">4</text>`;
+        svg += drawBarContent(36, 0, card.id);
+        svg += drawBarContent(312, 1, card.id);
+        svg += `<line x1="36" y1="24" x2="36" y2="100" stroke="${ink}" stroke-width="2.2"/>`;
+        svg += `<line x1="312" y1="24" x2="312" y2="100" stroke="${ink}" stroke-width="2.2"/>`;
+        svg += `<line x1="583" y1="24" x2="583" y2="100" stroke="${ink}" stroke-width="2"/>`;
+        svg += `<line x1="588" y1="24" x2="588" y2="100" stroke="${ink}" stroke-width="4.2"/>`;
+        svg += `</svg>`;
+        return svg;
+      }
+
+      function renderRhythmStrip() {
+        document.getElementById("rhythm-strip").innerHTML = RHYTHM_CARDS.map(r => `
+          <button type="button" class="rhythm-chip ${r.id === state.rhythm.activeId ? "active" : ""}" onclick="selectRhythmCard('${r.id}')">
+            ${r.title}
+          </button>
+        `).join("");
+      }
+
+      function updateHandPointer(beatIdx) {
+        const ptr = document.getElementById("rit-hand-pointer");
+        if (!ptr) return;
+        if (beatIdx < 0) {
+          ptr.style.left = "7%";
+          ptr.style.opacity = "0.65";
+          ptr.textContent = "☞ Compás 1 · Pulso 1";
+          return;
+        }
+        const barNum = beatIdx < 4 ? 1 : 2;
+        const beatInBar = (beatIdx % 4) + 1;
+        const pct = 7 + (beatIdx / 7) * 86;
+        ptr.style.left = `${pct}%`;
+        ptr.style.opacity = "1";
+        ptr.textContent = `☞ Compás ${barNum} · Pulso ${beatInBar}`;
+      }
+
+      function renderActiveRhythmCard(activeBeatIdx) {
+        const activeBeat = typeof activeBeatIdx === "number" ? activeBeatIdx : -1;
+        const card = RHYTHM_BY_ID[state.rhythm.activeId] || RHYTHM_CARDS[0];
+        document.getElementById("rit-card-title").textContent = card.title;
+        document.getElementById("rit-card-dur").textContent = card.dur;
+        document.getElementById("rit-card-desc").textContent = card.desc;
+        document.getElementById("rit-svg-stage").innerHTML = renderTwoBars44SVG(card.id, activeBeat);
+        updateHandPointer(activeBeat);
+
+        const derBox = document.getElementById("rit-derivation-box");
+        if (card.derivationHTML) {
+          derBox.classList.remove("hidden");
+          derBox.innerHTML = card.derivationHTML;
+        } else {
+          derBox.classList.add("hidden");
+        }
+
+        const all8 = card.beatsPattern.concat(card.beatsPattern);
+        const row1 = all8.slice(0, 4).map((b, idx) => `
+          <div class="beat-cell ${b.kind} ${activeBeat === idx ? "active-step" : ""}">
+            <div style="font-size:0.7rem; opacity:0.75;">C1 · P${idx + 1}</div>
+            <div>${b.syl}</div>
+          </div>
+        `).join("");
+        const row2 = all8.slice(4, 8).map((b, idx) => {
+          const gIdx = idx + 4;
+          return `
+            <div class="beat-cell ${b.kind} ${activeBeat === gIdx ? "active-step" : ""}">
+              <div style="font-size:0.7rem; opacity:0.75;">C2 · P${idx + 1}</div>
+              <div>${b.syl}</div>
+            </div>
+          `;
+        }).join("");
+
+        document.getElementById("rit-beat-grid").innerHTML = `
+          <div class="beat-cells cols-4">${row1}</div>
+          <div class="beat-cells cols-4">${row2}</div>
+        `;
+      }
+
+      function selectRhythmCard(id, fromTour) {
+        if (!fromTour) stopRhythmTour();
+        clearRhythmStepTimers();
+        state.rhythm.activeId = id;
+        renderRhythmStrip();
+        renderActiveRhythmCard(-1);
+      }
+
+      function setRhythmTempo(bpm) {
+        state.rhythm.tempo = bpm;
+        [60, 75, 90].forEach(t => {
+          document.getElementById(`tempo-${t}`).classList.toggle("active", t === bpm);
+        });
+      }
+
+      function playActiveRhythmCard() {
+        clearRhythmStepTimers();
+        const card = RHYTHM_BY_ID[state.rhythm.activeId] || RHYTHM_CARDS[0];
+        const bpm = state.rhythm.tempo;
+        const beatSec = 60 / bpm;
+        const ctx = getAudioCtx();
+        const start = ctx.currentTime + 0.06;
+
+        for (let b = 0; b < 8; b++) {
+          const t = start + b * beatSec;
+          playMetronomeClick(t, b === 0 || b === 4);
+
+          if (card.id === "redonda") {
+            if (b === 0 || b === 4) {
+              playSyllableSound(t, beatSec * 3.85, "ta", 392);
+            }
+          } else if (card.id === "blanca") {
+            if (b === 0 || b === 2 || b === 4 || b === 6) {
+              playSyllableSound(t, beatSec * 1.85, "ta", 392);
+            }
+          } else if (card.id === "negra") {
+            playSyllableSound(t, beatSec * 0.72, "ta", 392);
+          } else if (card.id === "doble_corchea") {
+            playSyllableSound(t, beatSec * 0.36, "ti", 392);
+            playSyllableSound(t + beatSec * 0.5, beatSec * 0.36, "ti", 392);
+          } else if (card.id === "silencio_corchea") {
+            playSyllableSound(t + beatSec * 0.5, beatSec * 0.38, "ti", 392);
+          } else if (card.id === "cuartina") {
+            for (let s = 0; s < 4; s++) {
+              playSyllableSound(t + s * beatSec * 0.25, beatSec * 0.19, s % 2 === 0 ? "ti" : "ri", 392);
+            }
+          } else if (card.id === "galopa") {
+            playSyllableSound(t, beatSec * 0.42, "ti", 392);
+            playSyllableSound(t + beatSec * 0.5, beatSec * 0.2, "ti", 392);
+            playSyllableSound(t + beatSec * 0.75, beatSec * 0.2, "ri", 392);
+          } else if (card.id === "galopa_inv") {
+            playSyllableSound(t, beatSec * 0.2, "ti", 392);
+            playSyllableSound(t + beatSec * 0.25, beatSec * 0.2, "ri", 392);
+            playSyllableSound(t + beatSec * 0.5, beatSec * 0.42, "ti", 392);
+          } else if (card.id === "sincopa") {
+            playSyllableSound(t, beatSec * 0.2, "ti", 392);
+            playSyllableSound(t + beatSec * 0.25, beatSec * 0.45, "ta", 392);
+            playSyllableSound(t + beatSec * 0.75, beatSec * 0.2, "ti", 392);
+          } else if (card.id === "cuartina_sh_junto") {
+            for (let s = 1; s < 4; s++) {
+              playSyllableSound(t + s * beatSec * 0.25, beatSec * 0.19, s % 2 === 1 ? "ri" : "ti", 392);
+            }
+          }
+
+          const tm = setTimeout(() => {
+            renderActiveRhythmCard(b);
+          }, Math.round((0.06 + b * beatSec) * 1000));
+          state.rhythm.stepTimers.push(tm);
+        }
+
+        const endTm = setTimeout(() => {
+          renderActiveRhythmCard(-1);
+        }, Math.round((0.06 + 8 * beatSec + 0.08) * 1000));
+        state.rhythm.stepTimers.push(endTm);
+      }
+
+      function stopRhythmTour() {
+        if (state.rhythm.tourTimer) {
+          clearTimeout(state.rhythm.tourTimer);
+          state.rhythm.tourTimer = null;
+        }
+        clearRhythmStepTimers();
+        renderActiveRhythmCard(-1);
+        state.rhythm.tourRunning = false;
+        const btn = document.getElementById("btn-rit-tour");
+        if (btn) btn.textContent = "▶ Recorrido Guiado";
+      }
+
+      function toggleRhythmTour() {
+        if (state.rhythm.tourRunning) {
+          stopRhythmTour();
+          return;
+        }
+        state.rhythm.tourRunning = true;
+        document.getElementById("btn-rit-tour").textContent = "⏸ Pausar Recorrido";
+        let idx = 0;
+        const step = () => {
+          if (!state.rhythm.tourRunning) return;
+          const card = RHYTHM_CARDS[idx];
+          selectRhythmCard(card.id, true);
+          playActiveRhythmCard();
+          const waitMs = Math.round(8 * (60 / state.rhythm.tempo) * 1000) + 650;
+          idx++;
+          if (idx < RHYTHM_CARDS.length) {
+            state.rhythm.tourTimer = setTimeout(step, waitMs);
+          } else {
+            state.rhythm.tourTimer = setTimeout(() => {
+              stopRhythmTour();
+              showToast("Recorrido de lectura rítmica completado.", "ok");
+            }, waitMs);
+          }
+        };
+        step();
+      }
+
+      /* ======================================================================
+         CÁPSULA 03 — HISTORIA DEL VILLANCICO (MANGA + GLOSARIO POR VIÑETA)
+         ====================================================================== */
+      const MANGA_PANELS = [
+        {
+          id: "origen",
+          badge: "SIGLOS XIII – XVI · ORIGEN EUROPEO",
+          label: "Viñeta 1 · Origen",
+          title: "Del «villano» a la Iglesia",
+          dialog: "La palabra «villancico» nace de «villano» (habitante de una villa o aldea en España). En los siglos XIII–XV eran cantos populares y profanos sobre la vida diaria y las cosechas. En el siglo XVI la Iglesia los incorporó por su lengua vernácula.",
+          glossary: [
+            {
+              key: "profano",
+              term: "Profano",
+              styleAlt: false,
+              def: "Profano: canto o tema vinculado a la vida cotidiana, festiva o popular, fuera del ámbito litúrgico del templo."
+            },
+            {
+              key: "vernácula",
+              term: "Vernácula",
+              styleAlt: true,
+              def: "Vernácula: lengua propia y cotidiana del pueblo o lugar (como el español o las lenguas originarias), en vez del latín."
+            }
+          ],
+          antes: "Cantos profanos en aldeas sobre la vida diaria y las cosechas.",
+          despues: "Incorporación en templos en lengua vernácula y, desde el siglo XIX, foco navideño.",
+          videos: []
+        },
+        {
+          id: "conquista",
+          badge: "SIGLOS XVI – XVII · CONQUISTA Y CAPILLAS",
+          label: "Viñeta 2 · Conquista y Capillas",
+          title: "Conquistadores, misioneros y maestros de capilla",
+          dialog: "Con la llegada de conquistadores y misioneros a América, el villancico sonó en catedrales —dirigidas por maestros de capilla— y en misiones. En el área andina destaca «Hanacpachap cussicuinin» en quechua, impreso en 1631 por Juan Pérez Bocanegra.",
+          glossary: [
+            {
+              key: "maestro_capilla",
+              term: "Maestro de capilla",
+              styleAlt: false,
+              def: "Maestro de capilla: músico responsable de dirigir el coro, componer y organizar la música de una catedral, iglesia o capilla."
+            },
+            {
+              key: "quechua",
+              term: "Quechua",
+              styleAlt: true,
+              def: "Quechua: lengua originaria andina en la que se escribió «Hanacpachap cussicuinin» en el siglo XVII."
+            }
+          ],
+          antes: "Práctica musical peninsular en templos y cortes.",
+          despues: "Llegada con conquistadores y misioneros, dirección de maestros de capilla y cantos en lenguas originarias.",
+          videos: [
+            { title: "Hanacpachap cussicuinin (letra y traducción)", url: "https://www.youtube.com/watch?v=WGNCCSJBPIY" },
+            { title: "Hanaq Pacha Kusikuynin — Coro de Niños", url: "https://www.youtube.com/watch?v=S7Z5bf-x2V0" }
+          ]
+        },
+        {
+          id: "sincretismo",
+          badge: "SIGLOS XVI – XVIII · SINCRETISMO CULTURAL",
+          label: "Viñeta 3 · Sincretismo",
+          title: "Voces, lenguas y sincretismo en América",
+          dialog: "Aquí ocurrió el sincretismo cultural. Gaspar Fernandes compuso en náhuatl «Xicochi conetzintle». También se sumaron expresiones como «Hanacpachap cussicuinin» y danzas festivas como el «Carnavalito de Nochebuena», donde se entrelazan tradiciones.",
+          glossary: [
+            {
+              key: "sincretismo",
+              term: "Sincretismo",
+              styleAlt: true,
+              def: "Sincretismo: encuentro y mezcla creativa de distintas tradiciones culturales que da origen a nuevas formas artísticas."
+            },
+            {
+              key: "xicochi",
+              term: "Xicochi conetzintle",
+              styleAlt: false,
+              def: "Xicochi conetzintle: villancico de cuna navideño en náhuatl compuesto por Gaspar Fernandes hacia 1600."
+            }
+          ],
+          antes: "Repertorio escrito bajo modelos europeos.",
+          despues: "Cruce en náhuatl («Xicochi conetzintle»), quechua y carnavalitos navideños.",
+          videos: [
+            { title: "Xicochi conetzintle — Gaspar Fernandes", url: "https://www.youtube.com/watch?v=5EfnresedHo" },
+            { title: "Carnavalito de Nochebuena — Villancico Tradicional", url: "https://www.youtube.com/watch?v=n45wz8oAG2M" }
+          ]
+        },
+        {
+          id: "negrillos",
+          badge: "SIGLOS XVII – XVIII · HERENCIA AFRODESCENDIENTE",
+          label: "Viñeta 4 · Negrillos",
+          title: "Negrillos y ritmo sincopado",
+          dialog: "Los negrillos aportaron ritmos con síncopa, percusión y habla festiva afrodescendiente. Sobresale «Los coflades de la estleya» de Juan de Araujo.",
+          glossary: [
+            {
+              key: "negrillo",
+              term: "Negrillo",
+              styleAlt: true,
+              def: "Negrillo: villancico colonial de tradición afrodescendiente con ritmo vivo, síncopa y carácter festivo."
+            },
+            {
+              key: "sincopa_hist",
+              term: "Síncopa",
+              styleAlt: false,
+              def: "Síncopa: desplazamiento o acentuación rítmica que altera la regularidad esperada del pulso."
+            }
+          ],
+          antes: "Escritura rítmica más regular y silábica.",
+          despues: "Mayor impulso rítmico, síncopa y diálogo festivo en los negrillos.",
+          videos: [
+            { title: "Los Coflades de la Estleya ('Los Negritos') — Juan de Araujo", url: "https://www.youtube.com/watch?v=1pDupqNRO6o" }
+          ]
+        }
+      ];
+
+      function highlightGlossaryInText(text, panelGlossary) {
+        let out = text;
+        panelGlossary.forEach(item => {
+          const escaped = item.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const regex = new RegExp(`\\b(${escaped})\\b`, "gi");
+          const cls = item.styleAlt ? "glossary-term-pill alt" : "glossary-term-pill";
+          out = out.replace(regex, match => `<span class="${cls}" onclick="selectGlossaryTerm('${item.key}')">${match}</span>`);
+        });
+        return out;
+      }
+
+      function selectGlossaryTerm(key) {
+        state.historia.activeTermKey = key;
+        renderMangaHistoria();
+      }
+
+      function stepMangaPanel(delta) {
+        const nextIdx = state.historia.panelIdx + delta;
+        if (nextIdx < 0 || nextIdx >= MANGA_PANELS.length) return;
+        state.historia.panelIdx = nextIdx;
+        state.historia.activeTermKey = MANGA_PANELS[nextIdx].glossary[0].key;
+        renderMangaHistoria();
+      }
+
+      function jumpToMangaPanel(idx) {
+        state.historia.panelIdx = idx;
+        state.historia.activeTermKey = MANGA_PANELS[idx].glossary[0].key;
+        renderMangaHistoria();
+      }
+
+      function renderMangaHistoria() {
+        const idx = state.historia.panelIdx;
+        const panel = MANGA_PANELS[idx] || MANGA_PANELS[0];
+
+        document.getElementById("hist-panel-counter").textContent = `Viñeta ${idx + 1} de ${MANGA_PANELS.length}`;
+        document.getElementById("btn-hist-prev").disabled = idx === 0;
+        document.getElementById("btn-hist-next").disabled = idx === MANGA_PANELS.length - 1;
+
+        document.getElementById("manga-panel-selector").innerHTML = MANGA_PANELS.map((p, i) => `
+          <button type="button" class="tab-btn ${i === idx ? "active" : ""}" onclick="jumpToMangaPanel(${i})">
+            ${p.label}
+          </button>
+        `).join("");
+
+        const activeTerm = panel.glossary.find(g => g.key === state.historia.activeTermKey) || panel.glossary[0];
+        const highlightedDialog = highlightGlossaryInText(panel.dialog, panel.glossary);
+
+        const videosHTML = panel.videos.length > 0 ? `
+          <div style="margin-top:14px;">
+            <strong style="font-size:0.86rem;">Ver y escuchar en YouTube:</strong>
+            <div class="youtube-list">
+              ${panel.videos.map(v => `
+                <a class="youtube-link" href="${v.url}" target="_blank" rel="noopener noreferrer">
+                  <span>▶ ${v.title}</span>
+                  <span>Abrir ↗</span>
+                </a>
+              `).join("")}
+            </div>
+          </div>
+        ` : "";
+
+        document.getElementById("manga-panel-stage").innerHTML = `
+          <div class="manga-panel-card">
+            <div class="manga-panel-top">
+              <span class="step-kicker kicker-sage">${panel.badge}</span>
+              <span style="font-weight:800; font-size:0.86rem;">${panel.label}</span>
+            </div>
+
+            <div class="manga-comic-layout">
+              <div class="sensei-box">
+                <svg viewBox="0 0 120 120" style="width:92px; height:92px; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="60" cy="60" r="46" fill="#FDECE4" stroke="#141414" stroke-width="2.5"/>
+                  <path d="M 26 52 C 28 24, 92 24, 94 52 Z" fill="#141414"/>
+                  <circle cx="46" cy="58" r="4" fill="#141414"/>
+                  <circle cx="74" cy="58" r="4" fill="#141414"/>
+                  <path d="M 48 76 Q 60 85 72 76" fill="none" stroke="#141414" stroke-width="2.5" stroke-linecap="round"/>
+                  <rect x="44" y="65" width="32" height="7" rx="3.5" fill="#57534E"/>
+                  <path d="M 32 104 Q 60 92 88 104 L 88 112 L 32 112 Z" fill="#223447" stroke="#141414" stroke-width="2"/>
+                </svg>
+                <div style="margin-top:8px; font-weight:900; font-size:0.88rem;">Profe José</div>
+                <div class="muted" style="font-size:0.75rem;">Salesiano Valparaíso</div>
+              </div>
+
+              <div class="speech-bubble-box">
+                <h3 style="margin-bottom:8px;">${panel.title}</h3>
+                <p style="font-size:0.96rem; color:var(--ink-strong);">${highlightedDialog}</p>
+
+                <div class="glossary-panel">
+                  <div style="font-size:0.8rem; font-weight:800; margin-bottom:8px;">
+                    Glosario de esta viñeta (toca una palabra):
+                  </div>
+                  <div class="btn-row">
+                    ${panel.glossary.map(g => `
+                      <button type="button" class="glossary-chip-btn ${g.key === activeTerm.key ? "active" : ""}" onclick="selectGlossaryTerm('${g.key}')">
+                        ✦ ${g.term}
+                      </button>
+                    `).join("")}
+                  </div>
+                  <div class="glossary-popup-bubble">
+                    ${activeTerm.def}
+                  </div>
+                </div>
+
+                <div class="compare-grid">
+                  <div class="compare-box">
+                    <div style="font-size:0.74rem; font-weight:900; text-transform:uppercase; color:var(--muted);">Antes</div>
+                    <div style="font-size:0.86rem; font-weight:700; margin-top:3px;">${panel.antes}</div>
+                  </div>
+                  <div class="compare-box after">
+                    <div style="font-size:0.74rem; font-weight:900; text-transform:uppercase; color:var(--terracotta-strong);">Transformación</div>
+                    <div style="font-size:0.86rem; font-weight:700; margin-top:3px;">${panel.despues}</div>
+                  </div>
+                </div>
+
+                ${videosHTML}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      /* ======================================================================
+         TALLERES CREATIVOS DE 8 COMPASES (RÍTMICO Y MELÓDICO)
+         ====================================================================== */
+      const RIT_PALETTE = [
+        { id: "negra", label: "Ta (1p)", beats: 1 },
+        { id: "doble_corchea", label: "Ti - ti (1p)", beats: 1 },
+        { id: "cuartina", label: "Ti-ri-ti-ri (1p)", beats: 1 },
+        { id: "galopa", label: "Ti-ti-ri (1p)", beats: 1 },
+        { id: "galopa_inv", label: "Ti-ri-ti (1p)", beats: 1 },
+        { id: "sincopa", label: "Ti-ta-ti (1p)", beats: 1 },
+        { id: "silencio_negra", label: "Sh (1p)", beats: 1 },
+        { id: "blanca", label: "Ta - a (2p)", beats: 2 },
+        { id: "redonda", label: "Ta-a-a-a (4p)", beats: 4 }
+      ];
+
+      const MEL_DURATIONS = [
+        { code: "q", label: "Negra (1p)", beats: 1 },
+        { code: "h", label: "Blanca (2p)", beats: 2 },
+        { code: "w", label: "Redonda (4p)", beats: 4 }
+      ];
+
+      let workshopTimers = [];
+      function clearWorkshopTimers() {
+        workshopTimers.forEach(id => clearTimeout(id));
+        workshopTimers = [];
+        const c1 = document.getElementById("w8-rit-countdown");
+        const c2 = document.getElementById("w8-mel-countdown");
+        if (c1) c1.classList.add("hidden");
+        if (c2) c2.classList.add("hidden");
+      }
+
+      function barBeatsCount(bar) {
+        return bar.reduce((acc, itemId) => {
+          const found = RIT_PALETTE.find(p => p.id === itemId);
+          return acc + (found ? found.beats : 1);
+        }, 0);
+      }
+
+      function openWorkshop(type) {
+        clearWorkshopTimers();
+        if (type === "ritmo8") {
+          renderWorkshopRhythm8(-1);
+          showView("view-workshop-ritmo8");
+        } else {
+          renderWorkshopMelody8(-1);
+          showView("view-workshop-melodia8");
+        }
+      }
+
+      function setW8Tempo(bpm) {
+        state.workshop.ritTempo = bpm;
+        [60, 75, 90].forEach(t => {
+          document.getElementById(`w8-tempo-${t}`).classList.toggle("active", t === bpm);
+        });
+      }
+
+      function selectWorkshopRitBar(idx) {
+        state.workshop.ritBarIdx = idx;
+        renderWorkshopRhythm8(-1);
+      }
+
+      function addRhythmToBar(itemId) {
+        const idx = state.workshop.ritBarIdx;
+        const bar = state.workshop.barsRitmo[idx];
+        const pal = RIT_PALETTE.find(p => p.id === itemId);
+        if (!pal) return;
+        if (barBeatsCount(bar) + pal.beats > 4) {
+          showToast("Ese compás ya alcanzó sus 4 pulsos.", "warn");
+          return;
+        }
+        bar.push(itemId);
+        renderWorkshopRhythm8(-1);
+      }
+
+      function removeRhythmSlotAt(barIdx, slotIdx) {
+        state.workshop.barsRitmo[barIdx].splice(slotIdx, 1);
+        renderWorkshopRhythm8(-1);
+      }
+
+      function removeLastRhythmFromBar() {
+        const bar = state.workshop.barsRitmo[state.workshop.ritBarIdx];
+        bar.pop();
+        renderWorkshopRhythm8(-1);
+      }
+
+      function clearCurrentRhythmBar() {
+        state.workshop.barsRitmo[state.workshop.ritBarIdx] = [];
+        renderWorkshopRhythm8(-1);
+      }
+
+      function loadSampleRhythm8() {
+        state.workshop.barsRitmo = [
+          ["negra", "doble_corchea", "galopa", "negra"],
+          ["cuartina", "sincopa", "blanca"],
+          ["negra", "silencio_negra", "doble_corchea", "negra"],
+          ["galopa_inv", "galopa", "blanca"],
+          ["cuartina", "cuartina", "negra", "negra"],
+          ["blanca", "sincopa", "negra"],
+          ["doble_corchea", "galopa", "doble_corchea", "negra"],
+          ["redonda"]
+        ];
+        renderWorkshopRhythm8(-1);
+        showToast("Patrón rítmico de 8 compases cargado.", "ok");
+      }
+
+      function renderWorkshopRhythm8(playingBarIdx) {
+        const playingIdx = typeof playingBarIdx === "number" ? playingBarIdx : -1;
+        const bIdx = state.workshop.ritBarIdx;
+        const used = barBeatsCount(state.workshop.barsRitmo[bIdx]);
+        document.getElementById("w8-rit-active-label").textContent = `Editando Compás ${bIdx + 1} (${used}/4 pulsos)`;
+
+        document.getElementById("w8-rit-palette").innerHTML = RIT_PALETTE.map(p => `
+          <button type="button" class="rhythm-chip" onclick="addRhythmToBar('${p.id}')">
+            + ${p.label}
+          </button>
+        `).join("");
+
+        document.getElementById("w8-rit-bars").innerHTML = state.workshop.barsRitmo.map((bar, idx) => {
+          const u = barBeatsCount(bar);
+          return `
+            <div class="bar-box ${idx === bIdx ? "active-bar" : ""} ${idx === playingIdx ? "playing-bar" : ""}" onclick="selectWorkshopRitBar(${idx})">
+              <div class="bar-header">
+                <span>Compás ${idx + 1}</span>
+                <span>${u}/4</span>
+              </div>
+              <div>
+                ${bar.length ? bar.map((id, sIdx) => {
+                  const p = RIT_PALETTE.find(x => x.id === id);
+                  return `<span class="slot-chip" onclick="event.stopPropagation(); removeRhythmSlotAt(${idx}, ${sIdx})">${p ? p.label : id} ×</span>`;
+                }).join("") : `<span class="muted" style="font-size:0.75rem;">Compás vacío</span>`}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function playWorkshopRhythm8() {
+        clearWorkshopTimers();
+        const bpm = state.workshop.ritTempo;
+        const beatSec = 60 / bpm;
+        const ctx = getAudioCtx();
+        const start = ctx.currentTime + 0.05;
+        const banner = document.getElementById("w8-rit-countdown");
+        banner.classList.remove("hidden");
+
+        const countLabels = ["1", "2", "3", "¡va!"];
+        for (let c = 0; c < 4; c++) {
+          const t = start + c * beatSec;
+          playMetronomeClick(t, c === 0);
+          const tm = setTimeout(() => {
+            banner.textContent = `Cuenta previa: ${countLabels[c]}`;
+          }, Math.round((0.05 + c * beatSec) * 1000));
+          workshopTimers.push(tm);
+        }
+
+        const playStartSec = 0.05 + 4 * beatSec;
+        const playStartCtx = start + 4 * beatSec;
+        let cursorBeat = 0;
+
+        state.workshop.barsRitmo.forEach((bar, barIdx) => {
+          const barStartBeat = cursorBeat;
+          const barStartTm = setTimeout(() => {
+            banner.textContent = `Reproduciendo Compás ${barIdx + 1} de 8`;
+            renderWorkshopRhythm8(barIdx);
+          }, Math.round((playStartSec + barStartBeat * beatSec) * 1000));
+          workshopTimers.push(barStartTm);
+
+          let localBeat = 0;
+          bar.forEach(itemId => {
+            const pal = RIT_PALETTE.find(p => p.id === itemId) || { beats: 1 };
+            const evTime = playStartCtx + (barStartBeat + localBeat) * beatSec;
+            for (let b = 0; b < pal.beats; b++) {
+              playMetronomeClick(evTime + b * beatSec, b === 0);
+            }
+            if (itemId === "silencio_negra") {
+              // Silencio
+            } else if (itemId === "doble_corchea") {
+              playSyllableSound(evTime, beatSec * 0.36, "ti", 392);
+              playSyllableSound(evTime + beatSec * 0.5, beatSec * 0.36, "ti", 392);
+            } else if (itemId === "cuartina") {
+              for (let s = 0; s < 4; s++) {
+                playSyllableSound(evTime + s * beatSec * 0.25, beatSec * 0.19, s % 2 === 0 ? "ti" : "ri", 392);
+              }
+            } else if (itemId === "galopa") {
+              playSyllableSound(evTime, beatSec * 0.42, "ti", 392);
+              playSyllableSound(evTime + beatSec * 0.5, beatSec * 0.2, "ti", 392);
+              playSyllableSound(evTime + beatSec * 0.75, beatSec * 0.2, "ri", 392);
+            } else if (itemId === "galopa_inv") {
+              playSyllableSound(evTime, beatSec * 0.2, "ti", 392);
+              playSyllableSound(evTime + beatSec * 0.25, beatSec * 0.2, "ri", 392);
+              playSyllableSound(evTime + beatSec * 0.5, beatSec * 0.42, "ti", 392);
+            } else if (itemId === "sincopa") {
+              playSyllableSound(evTime, beatSec * 0.2, "ti", 392);
+              playSyllableSound(evTime + beatSec * 0.25, beatSec * 0.45, "ta", 392);
+              playSyllableSound(evTime + beatSec * 0.75, beatSec * 0.2, "ti", 392);
+            } else {
+              playSyllableSound(evTime, beatSec * pal.beats * 0.85, "ta", 392);
+            }
+            localBeat += pal.beats;
+          });
+
+          cursorBeat += 4;
+        });
+
+        const doneTm = setTimeout(() => {
+          banner.classList.add("hidden");
+          renderWorkshopRhythm8(-1);
+        }, Math.round((playStartSec + cursorBeat * beatSec + 0.1) * 1000));
+        workshopTimers.push(doneTm);
+      }
+
+      function toggleW8NoteNames() {
+        state.workshop.showNoteNames = !state.workshop.showNoteNames;
+        document.getElementById("btn-w8-toggle-names").textContent =
+          `Nombres de notas: ${state.workshop.showNoteNames ? "ACTIVADOS" : "OCULTOS"}`;
+        renderWorkshopMelody8(-1);
+      }
+
+      function selectWorkshopMelSlot(barIdx, slotIdx) {
+        state.workshop.melBarIdx = barIdx;
+        state.workshop.melSlotIdx = slotIdx;
+        renderWorkshopMelody8(-1);
+      }
+
+      function setW8SlotNote(noteId) {
+        const bar = state.workshop.barsMelodia[state.workshop.melBarIdx];
+        if (!bar || !bar[state.workshop.melSlotIdx]) return;
+        bar[state.workshop.melSlotIdx].note = noteId;
+        const nObj = MELODIA_BY_ID[noteId];
+        if (nObj) playPitchTone(nObj.freq, 0.45);
+        renderWorkshopMelody8(-1);
+      }
+
+      function setW8SlotDur(durCode) {
+        const bar = state.workshop.barsMelodia[state.workshop.melBarIdx];
+        if (!bar || !bar[state.workshop.melSlotIdx]) return;
+        bar[state.workshop.melSlotIdx].dur = durCode;
+        renderWorkshopMelody8(-1);
+      }
+
+      function addMelodySlotToBar() {
+        const bar = state.workshop.barsMelodia[state.workshop.melBarIdx];
+        if (bar.length >= 6) {
+          showToast("Máximo de 6 notas por compás en el taller.", "warn");
+          return;
+        }
+        bar.push({ note: "sol_2", dur: "q" });
+        state.workshop.melSlotIdx = bar.length - 1;
+        renderWorkshopMelody8(-1);
+      }
+
+      function removeLastMelodySlot() {
+        const bar = state.workshop.barsMelodia[state.workshop.melBarIdx];
+        if (bar.length <= 1) return;
+        bar.pop();
+        state.workshop.melSlotIdx = Math.max(0, bar.length - 1);
+        renderWorkshopMelody8(-1);
+      }
+
+      function loadSampleMelody8() {
+        state.workshop.barsMelodia = [
+          [{ note: "sol_2", dur: "q" }, { note: "la_e2", dur: "q" }, { note: "si_3", dur: "q" }, { note: "do_e3", dur: "q" }],
+          [{ note: "re_4", dur: "h" }, { note: "si_3", dur: "h" }],
+          [{ note: "do_e3", dur: "q" }, { note: "la_e2", dur: "q" }, { note: "sol_2", dur: "h" }],
+          [{ note: "mi_1", dur: "w" }],
+          [{ note: "sol_2", dur: "q" }, { note: "si_3", dur: "q" }, { note: "re_4", dur: "q" }, { note: "fa_5", dur: "q" }],
+          [{ note: "mi_e4", dur: "h" }, { note: "re_4", dur: "h" }],
+          [{ note: "do_e3", dur: "q" }, { note: "si_3", dur: "q" }, { note: "la_e2", dur: "q" }, { note: "sol_2", dur: "q" }],
+          [{ note: "sol_2", dur: "w" }]
+        ];
+        state.workshop.melSlotIdx = 0;
+        renderWorkshopMelody8(-1);
+        showToast("Melodía de 8 compases cargada.", "ok");
+      }
+
+      function renderWorkshopMelody8(playingBarIdx) {
+        const playingIdx = typeof playingBarIdx === "number" ? playingBarIdx : -1;
+        const bIdx = state.workshop.melBarIdx;
+        const sIdx = state.workshop.melSlotIdx;
+        const curSlot = state.workshop.barsMelodia[bIdx][sIdx] || state.workshop.barsMelodia[bIdx][0];
+        const curNote = MELODIA_BY_ID[curSlot.note] || MELODIA_NOTES[3];
+
+        document.getElementById("w8-mel-active-label").textContent =
+          `Editando Compás ${bIdx + 1} · Nota ${sIdx + 1} (${state.workshop.showNoteNames ? curNote.name : "Nombre oculto"})`;
+
+        document.getElementById("w8-mel-note-palette").innerHTML = MELODIA_NOTES.map(n => `
+          <button type="button" class="note-chip ${n.id === curSlot.note ? "active" : ""}" onclick="setW8SlotNote('${n.id}')">
+            ${n.name}
+          </button>
+        `).join("");
+
+        document.getElementById("w8-mel-dur-palette").innerHTML = MEL_DURATIONS.map(d => `
+          <button type="button" class="rhythm-chip ${d.code === curSlot.dur ? "active" : ""}" onclick="setW8SlotDur('${d.code}')">
+            ${d.label}
+          </button>
+        `).join("");
+
+        const lineYs = [108, 92, 76, 60, 44];
+        let svg = `<svg viewBox="0 0 880 140" style="width:100%; max-width:880px; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">`;
+        lineYs.forEach(ly => {
+          svg += `<line x1="16" y1="${ly}" x2="864" y2="${ly}" stroke="#141414" stroke-width="1.8"/>`;
+        });
+
+        const barWidth = 104;
+        state.workshop.barsMelodia.forEach((bar, barIdx) => {
+          const bx = 24 + barIdx * barWidth;
+          svg += `<line x1="${bx}" y1="44" x2="${bx}" y2="108" stroke="#141414" stroke-width="1.8"/>`;
+          svg += `<text x="${bx + 6}" y="28" font-size="10.5" font-weight="800" fill="#141414">C${barIdx + 1}</text>`;
+
+          const stepW = (barWidth - 16) / Math.max(1, bar.length);
+          bar.forEach((slot, slotIndex) => {
+            const nInfo = MELODIA_BY_ID[slot.note] || MELODIA_NOTES[3];
+            const nx = bx + 16 + slotIndex * stepW + stepW * 0.4;
+            const ny = Math.round(44 + (150 - nInfo.noteY) * 0.67);
+            const isSelected = barIdx === bIdx && slotIndex === sIdx;
+            const fillCol = isSelected ? "#EA580C" : "#141414";
+
+            if (isSelected) {
+              svg += `<circle cx="${nx}" cy="${ny}" r="11" fill="rgba(245, 238, 132, 0.75)"/>`;
+            }
+            if (nInfo.ledger) {
+              svg += `<line x1="${nx - 10}" y1="${ny}" x2="${nx + 10}" y2="${ny}" stroke="#141414" stroke-width="1.6"/>`;
+            }
+            const hollow = slot.dur === "h" || slot.dur === "w";
+            svg += `<ellipse cx="${nx}" cy="${ny}" rx="6.2" ry="4.4" transform="rotate(-18 ${nx} ${ny})" fill="${hollow ? "#FFFFFF" : fillCol}" stroke="${fillCol}" stroke-width="${hollow ? 2 : 0}"/>`;
+            if (slot.dur !== "w") {
+              svg += `<line x1="${nx + 5.5}" y1="${ny}" x2="${nx + 5.5}" y2="${ny - 24}" stroke="${fillCol}" stroke-width="1.6"/>`;
+            }
+            if (state.workshop.showNoteNames) {
+              svg += `<text x="${nx}" y="128" text-anchor="middle" font-size="10.5" font-weight="800" fill="${isSelected ? "#C2410C" : "#141414"}">${nInfo.name}</text>`;
+            }
+          });
+        });
+        svg += `<line x1="856" y1="44" x2="856" y2="108" stroke="#141414" stroke-width="3.2"/>`;
+        svg += `</svg>`;
+        document.getElementById("w8-mel-score-stage").innerHTML = svg;
+
+        document.getElementById("w8-mel-bars").innerHTML = state.workshop.barsMelodia.map((bar, barIdx) => `
+          <div class="bar-box ${barIdx === bIdx ? "active-bar" : ""} ${barIdx === playingIdx ? "playing-bar" : ""}" onclick="selectWorkshopMelSlot(${barIdx}, 0)">
+            <div class="bar-header">
+              <span>Compás ${barIdx + 1}</span>
+              <span>${bar.length} notas</span>
+            </div>
+            <div>
+              ${bar.map((slot, slotIndex) => {
+                const nObj = MELODIA_BY_ID[slot.note];
+                const lbl = state.workshop.showNoteNames && nObj ? nObj.name : `♪${slotIndex + 1}`;
+                const activeStyle = barIdx === bIdx && slotIndex === sIdx ? "style='background:var(--butter);'" : "";
+                return `<span class="slot-chip" ${activeStyle} onclick="event.stopPropagation(); selectWorkshopMelSlot(${barIdx}, ${slotIndex})">${lbl}</span>`;
+              }).join("")}
+            </div>
+          </div>
+        `).join("");
+      }
+
+      function playWorkshopMelody8() {
+        clearWorkshopTimers();
+        const beatSec = 60 / 75;
+        const ctx = getAudioCtx();
+        const start = ctx.currentTime + 0.05;
+        const banner = document.getElementById("w8-mel-countdown");
+        banner.classList.remove("hidden");
+
+        const countLabels = ["1", "2", "3", "¡va!"];
+        for (let c = 0; c < 4; c++) {
+          const t = start + c * beatSec;
+          playMetronomeClick(t, c === 0);
+          const tm = setTimeout(() => {
+            banner.textContent = `Cuenta previa: ${countLabels[c]}`;
+          }, Math.round((0.05 + c * beatSec) * 1000));
+          workshopTimers.push(tm);
+        }
+
+        const playStartSec = 0.05 + 4 * beatSec;
+        const playStartCtx = start + 4 * beatSec;
+        let cursorBeat = 0;
+
+        state.workshop.barsMelodia.forEach((bar, barIdx) => {
+          const barStartBeat = cursorBeat;
+          const barTm = setTimeout(() => {
+            banner.textContent = `Escuchando Compás ${barIdx + 1} de 8`;
+            renderWorkshopMelody8(barIdx);
+          }, Math.round((playStartSec + barStartBeat * beatSec) * 1000));
+          workshopTimers.push(barTm);
+
+          let localBeat = 0;
+          bar.forEach(slot => {
+            const dObj = MEL_DURATIONS.find(d => d.code === slot.dur) || { beats: 1 };
+            const nObj = MELODIA_BY_ID[slot.note] || MELODIA_NOTES[3];
+            const evTime = playStartCtx + (barStartBeat + localBeat) * beatSec;
+            playSyllableSound(evTime, dObj.beats * beatSec * 0.9, "ta", nObj.freq);
+            localBeat += dObj.beats;
+          });
+
+          cursorBeat += 4;
+        });
+
+        const endTm = setTimeout(() => {
+          banner.classList.add("hidden");
+          renderWorkshopMelody8(-1);
+        }, Math.round((playStartSec + cursorBeat * beatSec + 0.1) * 1000));
+        workshopTimers.push(endTm);
+      }
+
+      /* ======================================================================
+         BANCO DE 50 PREGUNTAS (MELODÍA + RITMO + HISTORIA DEL VILLANCICO)
+         ====================================================================== */
+      const QUESTIONS = [
+        // 15 Melodía (sin números de octava)
+        { id: "M1", pillar: "melodia", topic: "Líneas del pentagrama", type: "mcq_note", noteId: "mi_1",
+          prompt: "¿Qué nota se ubica en la 1ª línea del pentagrama en llave de sol?",
+          options: ["Mi", "Sol", "Si", "Re"], answer: 0,
+          feedback: "La 1ª línea corresponde a Mi (dedo meñique)." },
+        { id: "M2", pillar: "melodia", topic: "Líneas del pentagrama", type: "mcq_note", noteId: "sol_2",
+          prompt: "¿Qué nota corresponde a la 2ª línea en llave de sol?",
+          options: ["Fa", "Sol", "La", "Do"], answer: 1,
+          feedback: "La 2ª línea es Sol (dedo anular)." },
+        { id: "M3", pillar: "melodia", topic: "Líneas del pentagrama", type: "mcq_note", noteId: "si_3",
+          prompt: "¿Qué nota se ubica en la 3ª línea del pentagrama?",
+          options: ["Mi", "Re", "Si", "Fa"], answer: 2,
+          feedback: "La 3ª línea es Si (dedo medio)." },
+        { id: "M4", pillar: "melodia", topic: "Líneas del pentagrama", type: "mcq_note", noteId: "re_4",
+          prompt: "¿Qué nota corresponde a la 4ª línea del pentagrama?",
+          options: ["Re", "Sol", "Do", "Mi"], answer: 0,
+          feedback: "La 4ª línea es Re (dedo índice)." },
+        { id: "M5", pillar: "melodia", topic: "Líneas del pentagrama", type: "mcq_note", noteId: "fa_5",
+          prompt: "¿Qué nota se ubica en la 5ª línea del pentagrama?",
+          options: ["Si", "Fa", "La", "Sol"], answer: 1,
+          feedback: "La 5ª línea es Fa (dedo pulgar)." },
+        { id: "M6", pillar: "melodia", topic: "Espacios del pentagrama", type: "mcq_note", noteId: "re_0",
+          prompt: "¿Qué nota suena debajo de la 1ª línea con línea adicional?",
+          options: ["Mi", "Fa", "Re", "La"], answer: 2,
+          feedback: "Debajo de la 1ª línea se ubica Re." },
+        { id: "M7", pillar: "melodia", topic: "Espacios del pentagrama", type: "mcq_note", noteId: "fa_e1",
+          prompt: "¿Qué nota ocupa el 1er espacio del pentagrama?",
+          options: ["Fa", "La", "Do", "Sol"], answer: 0,
+          feedback: "El 1er espacio (entre 1ª y 2ª línea) es Fa." },
+        { id: "M8", pillar: "melodia", topic: "Espacios del pentagrama", type: "mcq_note", noteId: "la_e2",
+          prompt: "¿Qué nota ocupa el 2do espacio del pentagrama?",
+          options: ["Do", "La", "Mi", "Re"], answer: 1,
+          feedback: "El 2do espacio (entre 2ª y 3ª línea) es La." },
+        { id: "M9", pillar: "melodia", topic: "Espacios del pentagrama", type: "mcq_note", noteId: "do_e3",
+          prompt: "¿Qué nota ocupa el 3er espacio del pentagrama?",
+          options: ["Mi", "Sol", "Do", "Fa"], answer: 2,
+          feedback: "El 3er espacio (entre 3ª y 4ª línea) es Do." },
+        { id: "M10", pillar: "melodia", topic: "Espacios del pentagrama", type: "mcq_note", noteId: "mi_e4",
+          prompt: "¿Qué nota ocupa el 4to espacio del pentagrama?",
+          options: ["Mi", "La", "Si", "Re"], answer: 0,
+          feedback: "El 4to espacio (entre 4ª y 5ª línea) es Mi." },
+        { id: "M11", pillar: "melodia", topic: "Espacios del pentagrama", type: "mcq_note", noteId: "sol_5",
+          prompt: "¿Qué nota se ubica sobre la 5ª línea del pentagrama?",
+          options: ["Fa", "Sol", "Do", "Mi"], answer: 1,
+          feedback: "Sobre la 5ª línea se ubica Sol." },
+        { id: "M12", pillar: "melodia", topic: "Mano izquierda", type: "mcq_note", noteId: "si_3",
+          prompt: "En la mano izquierda horizontal, ¿qué dedo corresponde a la 3ª línea (Si)?",
+          options: ["Dedo índice", "Dedo anular", "Dedo medio", "Dedo pulgar"], answer: 2,
+          feedback: "El dedo medio corresponde a la 3ª línea (Si)." },
+        { id: "M13", pillar: "melodia", topic: "Mano izquierda", type: "mcq_note", noteId: "fa_5",
+          prompt: "En la mano izquierda horizontal, ¿qué dedo corresponde a la 5ª línea (Fa)?",
+          options: ["Dedo pulgar", "Dedo meñique", "Dedo anular", "Dedo índice"], answer: 0,
+          feedback: "El dedo pulgar corresponde a la 5ª línea (Fa)." },
+        { id: "M14", pillar: "melodia", topic: "Dictado melódico", type: "mcq_note_audio", noteId: "sol_2",
+          prompt: "Escucha la altura y marca cuál de estas notas sonó.",
+          options: ["Mi", "Sol", "Do", "Fa"], answer: 1,
+          feedback: "Sonó la nota Sol." },
+        { id: "M15", pillar: "melodia", topic: "Dictado melódico", type: "mcq_note_audio", noteId: "la_e2",
+          prompt: "Escucha atentamente y elige la nota correcta.",
+          options: ["Re", "Fa", "La", "Si"], answer: 2,
+          feedback: "La altura reproducida corresponde a La." },
+
+        // 15 Lectura Rítmica (sin mención a Kodály)
+        { id: "R1", pillar: "ritmo", topic: "Redonda (Ta - a - a - a)", type: "mcq_rhythm", cardId: "redonda",
+          prompt: "¿Cuántos pulsos dura una redonda (Ta - a - a - a)?",
+          options: ["1 pulso", "2 pulsos", "3 pulsos", "4 pulsos"], answer: 3,
+          feedback: "La redonda dura 4 pulsos (Ta - a - a - a)." },
+        { id: "R2", pillar: "ritmo", topic: "Blanca (Ta - a)", type: "mcq_rhythm", cardId: "blanca",
+          prompt: "¿Cuántas blancas caben en un compás de 4/4?",
+          options: ["2 blancas (2 pulsos cada una)", "4 blancas", "1 blanca", "8 blancas"], answer: 0,
+          feedback: "Cada blanca dura 2 pulsos (Ta - a), por lo que caben 2 en un compás de 4/4." },
+        { id: "R3", pillar: "ritmo", topic: "Negra (Ta)", type: "mcq_rhythm", cardId: "negra",
+          prompt: "¿Qué figura equivale a 1 pulso completo (Ta)?",
+          options: ["Blanca", "Negra", "Redonda", "Cuartina"], answer: 1,
+          feedback: "La negra dura 1 pulso (Ta)." },
+        { id: "R4", pillar: "ritmo", topic: "Doble corchea (Ti - ti)", type: "mcq_rhythm", cardId: "doble_corchea",
+          prompt: "En una doble corchea (Ti - ti), ¿cuántos sonidos entran en 1 pulso?",
+          options: ["4 sonidos", "1 sonido", "2 sonidos (Ti - ti)", "3 sonidos"], answer: 2,
+          feedback: "Entran 2 sonidos en 1 pulso (Ti - ti)." },
+        { id: "R5", pillar: "ritmo", topic: "Silencio de redonda", type: "mcq_rhythm", cardId: "silencio_redonda",
+          prompt: "En el pentagrama de 5 líneas, ¿dónde cuelga el silencio de redonda (4 pulsos)?",
+          options: ["Bajo la 4ª línea", "Sobre la 3ª línea", "En el 1er espacio", "Sobre la 5ª línea"], answer: 0,
+          feedback: "El silencio de redonda cuelga debajo de la 4ª línea y dura 4 pulsos." },
+        { id: "R6", pillar: "ritmo", topic: "Silencio de blanca", type: "mcq_rhythm", cardId: "silencio_blanca",
+          prompt: "En el pentagrama de 5 líneas, ¿dónde se apoya el silencio de blanca (2 pulsos)?",
+          options: ["Bajo la 4ª línea", "Sobre la 3ª línea", "Bajo la 1ª línea", "En el 4to espacio"], answer: 1,
+          feedback: "El silencio de blanca se apoya sobre la 3ª línea y dura 2 pulsos." },
+        { id: "R7", pillar: "ritmo", topic: "Silencio de negra", type: "mcq_rhythm", cardId: "silencio_negra",
+          prompt: "¿Cuántos pulsos ocupa cada silencio de negra?",
+          options: ["4 pulsos", "2 pulsos", "1 pulso", "Medio pulso"], answer: 2,
+          feedback: "Cada silencio de negra ocupa 1 pulso." },
+        { id: "R8", pillar: "ritmo", topic: "Silencio de corchea", type: "mcq_rhythm", cardId: "silencio_corchea",
+          prompt: "¿Qué duración tiene un silencio de corchea?",
+          options: ["Medio pulso", "1 pulso", "2 pulsos", "4 pulsos"], answer: 0,
+          feedback: "Dura medio pulso." },
+        { id: "R9", pillar: "ritmo", topic: "Cuartina (Ti - ri - ti - ri)", type: "mcq_rhythm", cardId: "cuartina",
+          prompt: "¿Cómo se articulan las 4 semicorcheas de una cuartina en 1 pulso?",
+          options: ["Ti - ti - ri", "Ti - ri - ti - ri", "Ti - ti", "Ti - ta - ti"], answer: 1,
+          feedback: "La cuartina se articula Ti - ri - ti - ri dentro de 1 pulso." },
+        { id: "R10", pillar: "ritmo", topic: "Galopa (Ti - ti - ri)", type: "mcq_rhythm", cardId: "galopa",
+          prompt: "¿Cómo nace la GALOPA desde la cuartina?",
+          options: [
+            "Uniendo las 2 primeras semicorcheas: Ti - ti - ri",
+            "Uniendo las 2 últimas semicorcheas: Ti - ri - ti",
+            "Uniendo las 2 centrales: Ti - ta - ti",
+            "Durando 4 pulsos"
+          ], answer: 0,
+          feedback: "La galopa une las 2 primeras semicorcheas: Ti - ti - ri." },
+        { id: "R11", pillar: "ritmo", topic: "Galopa inversa (Ti - ri - ti)", type: "mcq_rhythm", cardId: "galopa_inv",
+          prompt: "¿Cómo nace la GALOPA INVERSA desde la cuartina?",
+          options: [
+            "Uniendo las 2 primeras semicorcheas",
+            "Uniendo las 2 últimas semicorcheas: Ti - ri - ti",
+            "Durando 2 pulsos",
+            "Con 4 silencios"
+          ], answer: 1,
+          feedback: "La galopa inversa une las 2 últimas semicorcheas: Ti - ri - ti." },
+        { id: "R12", pillar: "ritmo", topic: "Síncopa (Ti - ta - ti)", type: "mcq_rhythm", cardId: "sincopa",
+          prompt: "¿Qué célula rítmica une las 2 semicorcheas centrales de la cuartina (Ti - ta - ti)?",
+          options: ["Cuartina", "Galopa", "Síncopa", "Doble corchea"], answer: 2,
+          feedback: "Es la Síncopa (Ti - ta - ti) en 1 pulso." },
+        { id: "R13", pillar: "ritmo", topic: "Silencio con semicorcheas", type: "mcq_rhythm", cardId: "cuartina_sh_junto",
+          prompt: "En «Sh - ri - ti - ri», ¿qué parte de la cuartina queda en silencio?",
+          options: ["La 1ª semicorchea", "La 2ª semicorchea", "La 3ª semicorchea", "La 4ª semicorchea"], answer: 0,
+          feedback: "Se silencia la 1ª semicorchea agrupada: Sh - ri - ti - ri." },
+        { id: "R14", pillar: "ritmo", topic: "Dictado rítmico", type: "mcq_rhythm_audio",
+          audio: { beats: 2, events: [{ b: 0, kind: "ta" }, { b: 1, kind: "cuartina" }] },
+          prompt: "Dictado 1: escucha este patrón de 2 pulsos y elige cuál es.",
+          options: ["Ta + Ti - ri - ti - ri", "Ti - ti + Ta", "Ta - a", "Ti - ti - ri + Ta"], answer: 0,
+          feedback: "Sonó primero Ta y luego Ti - ri - ti - ri." },
+        { id: "R15", pillar: "ritmo", topic: "Dictado rítmico", type: "mcq_rhythm_audio",
+          audio: { beats: 2, events: [{ b: 0, kind: "galopa" }, { b: 1, kind: "doble" }] },
+          prompt: "Dictado 2: escucha este patrón de 2 pulsos y selecciona la opción correcta.",
+          options: ["Ti - ri - ti - ri + Ta", "Ti - ti - ri + Ti - ti", "Ta + Ta", "Ti - ta - ti + Ta"], answer: 1,
+          feedback: "Sonó Ti - ti - ri seguido de Ti - ti." },
+
+        // 20 Historia del Villancico
+        { id: "H1", pillar: "historia", topic: "Origen del villancico", type: "mcq",
+          prompt: "¿De qué palabra proviene originalmente el término «villancico»?",
+          options: ["Villano (habitante de villa o aldea)", "Villeta", "Villancete", "Víspera"], answer: 0,
+          feedback: "Proviene de «villano», habitante de villas o aldeas." },
+        { id: "H2", pillar: "historia", topic: "Canto profano", type: "mcq",
+          prompt: "En los siglos XIII–XV, ¿qué significa que los villancicos fueran cantos profanos?",
+          options: ["Que trataban temas de la vida cotidiana y festiva fuera del templo", "Que se cantaban solo en latín", "Que eran marchas militares", "Que estaban prohibidos"], answer: 0,
+          feedback: "Profano refiere a temas cotidianos, populares o festivos fuera del ámbito litúrgico." },
+        { id: "H3", pillar: "historia", topic: "Lengua vernácula", type: "mcq",
+          prompt: "¿Qué significa «lengua vernácula» en la historia del villancico?",
+          options: ["El idioma propio y cotidiano del pueblo o lugar", "Un instrumento de viento", "Una danza de corte", "Un compás de 3/4"], answer: 0,
+          feedback: "Vernácula es la lengua propia y cotidiana de un lugar o pueblo." },
+        { id: "H4", pillar: "historia", topic: "Transformación navideña", type: "mcq",
+          prompt: "¿En qué siglo el villancico quedó asociado casi exclusivamente a la Navidad?",
+          options: ["Siglo XIX", "Siglo X", "Siglo XII", "Siglo XIV"], answer: 0,
+          feedback: "A partir del siglo XIX se consolidó principalmente como canto navideño." },
+        { id: "H5", pillar: "historia", topic: "Maestros de capilla", type: "mcq",
+          prompt: "Tras la llegada de conquistadores y misioneros a América, ¿quiénes dirigían la música en catedrales y templos?",
+          options: ["Los maestros de capilla", "Los juglares medievales", "Los trovadores", "Los organistas de teatro"], answer: 0,
+          feedback: "Los maestros de capilla componían, dirigían y organizaban la música de catedrales y capillas." },
+        { id: "H6", pillar: "historia", topic: "Sincretismo", type: "mcq",
+          prompt: "¿Qué es el sincretismo cultural en la historia del villancico americano?",
+          options: ["El cruce y mezcla creativa de distintas tradiciones culturales", "La prohibición de cantar en público", "El uso exclusivo de flautas dulces", "La desaparición de las coplas"], answer: 0,
+          feedback: "Es la mezcla creativa de tradiciones que da origen a nuevas expresiones." },
+        { id: "H7", pillar: "historia", topic: "Xicochi conetzintle", type: "mcq",
+          prompt: "¿En qué lengua originaria compuso Gaspar Fernandes «Xicochi conetzintle»?",
+          options: ["Náhuatl", "Mapudungun", "Guaraní", "Aimara"], answer: 0,
+          feedback: "Gaspar Fernandes compuso «Xicochi conetzintle» en náhuatl." },
+        { id: "H8", pillar: "historia", topic: "Hanacpachap cussicuinin", type: "mcq",
+          prompt: "¿En qué lengua se escribió «Hanacpachap cussicuinin» en el ámbito andino colonial?",
+          options: ["Quechua", "Latín", "Francés", "Alemán"], answer: 0,
+          feedback: "«Hanacpachap cussicuinin» es una obra en quechua del siglo XVII." },
+        { id: "H9", pillar: "historia", topic: "Carnavalito de Nochebuena", type: "mcq",
+          prompt: "¿Qué caracteriza a ejemplos como el «Carnavalito de Nochebuena»?",
+          options: ["El vínculo festivo y danzado con tradiciones locales andinas", "Ser una obra solo instrumental para piano", "Provenir del siglo X en Francia", "Carecer de relación con fiestas populares"], answer: 0,
+          feedback: "Une el espíritu festivo navideño con danzas y tradiciones andinas." },
+        { id: "H10", pillar: "historia", topic: "Negrillos", type: "mcq",
+          prompt: "¿Qué rasgo distingue a los «negrillos» coloniales?",
+          options: ["Ritmos con síncopa, percusión y carácter festivo afrodescendiente", "Ser cantos gregorianos sin pulso", "Tocarse solo en órgano", "No tener texto"], answer: 0,
+          feedback: "Los negrillos destacan por su energía rítmica, síncopa y aporte afrodescendiente." },
+        { id: "H11", pillar: "historia", topic: "Juan de Araujo", type: "mcq",
+          prompt: "¿Cuál de estas obras corresponde a la tradición de negrillos asociada a Juan de Araujo?",
+          options: ["Los coflades de la estleya", "Las Cuatro Estaciones", "El Mesías", "La Creación"], answer: 0,
+          feedback: "«Los coflades de la estleya» es un célebre villancico de negrillos." },
+        { id: "H12", pillar: "historia", topic: "Llegada a América", type: "mcq",
+          prompt: "¿Quiénes llevaron el villancico a América en los siglos XVI–XVII?",
+          options: ["Conquistadores y misioneros", "Navegantes vikingos", "Compositores románticos", "Directores de cine"], answer: 0,
+          feedback: "Llegó con conquistadores y misioneros, adaptándose a las culturas locales." },
+        { id: "H13", pillar: "historia", topic: "Misiones y templos", type: "mcq",
+          prompt: "¿Dónde sonó el villancico en América durante el periodo colonial?",
+          options: ["En catedrales, misiones y celebraciones populares", "Únicamente en teatros modernos", "Solo en monasterios europeos", "En estadios"], answer: 0,
+          feedback: "Circuló tanto en catedrales y misiones como en espacios festivos populares." },
+        { id: "H14", pillar: "historia", topic: "Canto de cuna en náhuatl", type: "mcq",
+          prompt: "¿Qué tipo de canto es «Xicochi conetzintle»?",
+          options: ["Un canto de cuna navideño", "Una marcha fúnebre", "Una ópera bufa", "Un vals"], answer: 0,
+          feedback: "Es un tierno canto de cuna dirigido al Niño en náhuatl." },
+        { id: "H15", pillar: "historia", topic: "Lenguas originarias", type: "mcq",
+          prompt: "¿Por qué el uso de lenguas vernáculas y originarias fue clave en el villancico colonial?",
+          options: ["Porque permitía comunicar el mensaje en el idioma cercano de las comunidades", "Porque impedía entender la letra", "Porque eliminaba las melodías", "Porque reemplazaba todos los instrumentos"], answer: 0,
+          feedback: "Cantar en lengua vernácula u originaria acercaba el canto a la comunidad." },
+        { id: "H16", pillar: "historia", topic: "Síncopa y festividad", type: "mcq",
+          prompt: "¿Qué elemento rítmico resalta especialmente en los villancicos de negrillos?",
+          options: ["La síncopa y el pulso vivo", "La ausencia de ritmo", "Un pulso lento de 40 BPM", "Solo redondas ligadas"], answer: 0,
+          feedback: "La síncopa y el impulso rítmico dan vitalidad a los negrillos." },
+        { id: "H17", pillar: "historia", topic: "Origen aldeano", type: "mcq",
+          prompt: "¿En qué región europea nació originalmente el villancico?",
+          options: ["En España", "En Japón", "En Canadá", "En Australia"], answer: 0,
+          feedback: "Surgió en España como canto popular de villas y aldeas." },
+        { id: "H18", pillar: "historia", topic: "Función del maestro de capilla", type: "mcq",
+          prompt: "¿Qué tarea cumplía un maestro de capilla?",
+          options: ["Dirigir el coro y la música sacra de la capilla o catedral", "Construir campanas", "Vender partituras en la calle", "Escribir novelas"], answer: 0,
+          feedback: "Dirigía el conjunto vocal/instrumental y la vida musical de la capilla." },
+        { id: "H19", pillar: "historia", topic: "Sincretismo musical", type: "mcq",
+          prompt: "¿Cuál es una muestra de sincretismo musical en América?",
+          options: ["Combinar formas y melodías con lenguas y danzas locales como «Xicochi conetzintle» o «Hanacpachap cussicuinin»", "Tocar siempre la misma pieza sin cambios", "Prohibir cualquier mezcla cultural", "Cantar solo en griego antiguo"], answer: 0,
+          feedback: "El sincretismo se ve en obras en náhuatl y quechua y en danzas festivas locales." },
+        { id: "H20", pillar: "historia", topic: "Continuidad histórica", type: "mcq",
+          prompt: "¿Qué nos muestra la historia del villancico hasta hoy?",
+          options: ["Que es una tradición viva que cambia según época, lugar y comunidad", "Que nunca cambió desde la Edad Media", "Que solo existió durante un año", "Que no tiene relación con la cultura popular"], answer: 0,
+          feedback: "Ha ido transformándose desde cantos profanos de aldea hasta tradiciones navideñas diversas." }
+      ];
+
+      function buildQuestionPool(mode, pillar) {
+        const pil = pillar || "mix";
+        let pool = QUESTIONS.slice();
+        if (pil !== "mix") {
+          pool = pool.filter(q => q.pillar === pil);
+        }
+        if (mode === "guided") {
+          return pool.slice(0, 5);
+        }
+        if (mode === "exam") {
+          const mel = QUESTIONS.filter(q => q.pillar === "melodia").slice(0, 9);
+          const rit = QUESTIONS.filter(q => q.pillar === "ritmo").slice(0, 9);
+          const his = QUESTIONS.filter(q => q.pillar === "historia").slice(0, 12);
+          return mel.concat(rit, his);
+        }
+        const weak = state.progress.weakTopics || {};
+        pool.sort((a, b) => (weak[b.topic] || 0) - (weak[a.topic] || 0));
+        return pool.slice(0, 50);
+      }
+
+      function startGuidedExercises(pillar) {
+        initQuizSession("guided", pillar);
+      }
+
+      function startAdaptiveQuiz(pillar) {
+        initQuizSession("adaptive", pillar);
+      }
+
+      function unlockExamWithPin(forcedPin, isTeacherOverride) {
+        const errEl = document.getElementById("exam-pin-error");
+        errEl.classList.add("hidden");
+        const val = forcedPin || document.getElementById("exam-pin-input").value.trim();
+        if (isTeacherOverride || val === EXAM_PIN) {
+          document.getElementById("exam-locked-box").classList.add("hidden");
+          document.getElementById("exam-ready-box").classList.remove("hidden");
+          showToast("Evaluación Final habilitada.", "ok");
+        } else {
+          errEl.textContent = "PIN incorrecto.";
+          errEl.classList.remove("hidden");
+        }
+      }
+
+      function startSummativeExam() {
+        initQuizSession("exam", "mix");
+      }
+
+      function initQuizSession(mode, pillar) {
+        const queue = buildQuestionPool(mode, pillar);
+        if (state.quiz && state.quiz.timerId) {
+          clearInterval(state.quiz.timerId);
+        }
+
+        state.quiz = {
+          mode,
+          pillar,
+          queue,
+          currentIdx: 0,
+          attemptNum: 1,
+          answered: false,
+          earnedPoints: 0,
+          maxPoints: mode === "exam" ? 30 : queue.length,
+          byPillar: {
+            melodia: { pts: 0, max: mode === "exam" ? 9 : 0 },
+            ritmo: { pts: 0, max: mode === "exam" ? 9 : 0 },
+            historia: { pts: 0, max: mode === "exam" ? 12 : 0 }
+          },
+          remainingSec: mode === "exam" ? 30 * 60 : 0,
+          timerId: null
+        };
+
+        const timerBadge = document.getElementById("quiz-timer-badge");
+        if (mode === "exam") {
+          timerBadge.classList.remove("hidden");
+          updateExamTimerBadge();
+          state.quiz.timerId = setInterval(() => {
+            if (!state.quiz) return;
+            state.quiz.remainingSec -= 1;
+            updateExamTimerBadge();
+            if (state.quiz.remainingSec <= 0) {
+              clearInterval(state.quiz.timerId);
+              finishQuizSession(true);
+            }
+          }, 1000);
+        } else {
+          timerBadge.classList.add("hidden");
+        }
+
+        showView("view-quiz");
+        renderCurrentQuizQuestion();
+      }
+
+      function updateExamTimerBadge() {
+        const badge = document.getElementById("quiz-timer-badge");
+        if (!badge || !state.quiz) return;
+        const sec = Math.max(0, state.quiz.remainingSec);
+        const mm = String(Math.floor(sec / 60)).padStart(2, "0");
+        const ss = String(sec % 60).padStart(2, "0");
+        badge.textContent = `⏱ ${mm}:${ss}`;
+      }
+
+      function renderCurrentQuizQuestion() {
+        const qz = state.quiz;
+        const q = qz.queue[qz.currentIdx];
+        if (!q) {
+          finishQuizSession(false);
+          return;
+        }
+
+        qz.attemptNum = 1;
+        qz.answered = false;
+
+        const pillarNames = {
+          melodia: "Lectura Melódica",
+          ritmo: "Lectura Rítmica",
+          historia: "Historia del Villancico"
+        };
+        const modeNames = {
+          guided: "Ejercicios Guiados",
+          adaptive: "Desafío Adaptativo",
+          exam: "Evaluación Final"
+        };
+
+        document.getElementById("quiz-tag").textContent = `${modeNames[qz.mode]} · ${pillarNames[q.pillar]}`;
+        document.getElementById("quiz-counter").textContent = `Pregunta ${qz.currentIdx + 1} / ${qz.queue.length}`;
+        document.getElementById("quiz-progress-fill").style.width = `${Math.round(((qz.currentIdx + 1) / qz.queue.length) * 100)}%`;
+        document.getElementById("quiz-prompt").textContent = q.prompt;
+        document.getElementById("quiz-subprompt").textContent =
+          qz.mode === "exam"
+            ? "1er intento: 1,0 pt · 2do intento guiado: 0,5 pts"
+            : `Tema: ${q.topic}`;
+
+        const visual = document.getElementById("quiz-visual-box");
+        visual.classList.add("hidden");
+        visual.innerHTML = "";
+
+        if (q.type === "mcq_note" && q.noteId) {
+          const noteObj = MELODIA_BY_ID[q.noteId];
+          const lineYs = [150, 126, 102, 78, 54];
+          let vSvg = `<svg viewBox="0 0 360 176" style="width:100%; max-width:360px; height:auto; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">`;
+          lineYs.forEach(ly => {
+            vSvg += `<line x1="25" y1="${ly}" x2="335" y2="${ly}" stroke="#141414" stroke-width="2"/>`;
+          });
+          if (noteObj.ledger) {
+            vSvg += `<line x1="162" y1="162" x2="198" y2="162" stroke="#141414" stroke-width="2"/>`;
+          }
+          vSvg += `<ellipse cx="180" cy="${noteObj.noteY}" rx="9.5" ry="6.8" transform="rotate(-18 180 ${noteObj.noteY})" fill="#EA580C" stroke="#141414" stroke-width="2"/>`;
+          vSvg += `<line x1="188.5" y1="${noteObj.noteY - 2}" x2="188.5" y2="${noteObj.noteY - 36}" stroke="#141414" stroke-width="2.2"/>`;
+          vSvg += `</svg>`;
+          visual.classList.remove("hidden");
+          visual.innerHTML = vSvg;
+        } else if (q.type === "mcq_note_audio" && q.noteId) {
+          visual.classList.remove("hidden");
+          visual.innerHTML = `
+            <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+              <button type="button" class="btn btn-butter btn-sm" onclick="playPitchTone(${MELODIA_BY_ID[q.noteId].freq}, 0.65)">
+                ♪ Escuchar altura
+              </button>
+            </div>
+          `;
+        } else if (q.type === "mcq_rhythm" && q.cardId) {
+          visual.classList.remove("hidden");
+          visual.innerHTML = renderTwoBars44SVG(q.cardId, -1);
+        } else if (q.type === "mcq_rhythm_audio" && q.audio) {
+          visual.classList.remove("hidden");
+          visual.innerHTML = `
+            <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+              <button type="button" class="btn btn-butter btn-sm" onclick="playQuizRhythmDictation()">
+                ▶ Escuchar patrón rítmico
+              </button>
+            </div>
+          `;
+        }
+
+        const fb = document.getElementById("quiz-feedback");
+        fb.classList.add("hidden");
+        fb.innerHTML = "";
+        document.getElementById("btn-quiz-next").classList.add("hidden");
+
+        document.getElementById("quiz-options").innerHTML = q.options.map((opt, idx) => `
+          <button type="button" id="opt-btn-${idx}" class="option-btn" onclick="submitQuizOption(${idx})">
+            ${opt}
+          </button>
+        `).join("");
+      }
+
+      function playQuizRhythmDictation() {
+        const q = state.quiz && state.quiz.queue[state.quiz.currentIdx];
+        if (!q || !q.audio) return;
+        const beatSec = 60 / 75;
+        const ctx = getAudioCtx();
+        const start = ctx.currentTime + 0.05;
+        q.audio.events.forEach(ev => {
+          const t = start + ev.b * beatSec;
+          playMetronomeClick(t, ev.b === 0);
+          if (ev.kind === "cuartina") {
+            for (let s = 0; s < 4; s++) {
+              playSyllableSound(t + s * beatSec * 0.25, beatSec * 0.18, s % 2 === 0 ? "ti" : "ri", 392);
+            }
+          } else if (ev.kind === "galopa") {
+            playSyllableSound(t, beatSec * 0.4, "ti", 392);
+            playSyllableSound(t + beatSec * 0.5, beatSec * 0.2, "ti", 392);
+            playSyllableSound(t + beatSec * 0.75, beatSec * 0.2, "ri", 392);
+          } else {
+            playSyllableSound(t, beatSec * 0.75, "ta", 392);
+          }
+        });
+      }
+
+      function submitQuizOption(chosenIdx) {
+        const qz = state.quiz;
+        if (!qz || qz.answered) return;
+        const q = qz.queue[qz.currentIdx];
+        const btn = document.getElementById(`opt-btn-${chosenIdx}`);
+        const fb = document.getElementById("quiz-feedback");
+        const nextBtn = document.getElementById("btn-quiz-next");
+
+        const isCorrect = chosenIdx === q.answer;
+        if (isCorrect) {
+          qz.answered = true;
+          btn.classList.add("correct");
+          document.querySelectorAll(".option-btn").forEach(b => (b.disabled = true));
+
+          const ptsEarned = qz.mode === "exam" ? (qz.attemptNum === 1 ? 1.0 : 0.5) : 1;
+          qz.earnedPoints += ptsEarned;
+          if (qz.byPillar[q.pillar]) {
+            qz.byPillar[q.pillar].pts += ptsEarned;
+          }
+
+          fb.classList.remove("hidden");
+          fb.innerHTML = `<strong>✦ ¡Correcto!</strong> ${q.feedback}`;
+          nextBtn.classList.remove("hidden");
+        } else {
+          btn.classList.add("wrong");
+          btn.disabled = true;
+          state.progress.weakTopics[q.topic] = (state.progress.weakTopics[q.topic] || 0) + 1;
+          saveLocalProgress();
+
+          if (qz.mode === "exam" && qz.attemptNum === 1) {
+            qz.attemptNum = 2;
+            fb.classList.remove("hidden");
+            fb.innerHTML = `<strong>Reintento guiado (0,5 pts):</strong> ${q.feedback} Intenta nuevamente.`;
+          } else {
+            qz.answered = true;
+            document.querySelectorAll(".option-btn").forEach((b, idx) => {
+              b.disabled = true;
+              if (idx === q.answer) b.classList.add("correct");
+            });
+            fb.classList.remove("hidden");
+            fb.innerHTML = `<strong>Respuesta correcta:</strong> ${q.feedback}`;
+            nextBtn.classList.remove("hidden");
+          }
+        }
+      }
+
+      function nextQuizQuestion() {
+        const qz = state.quiz;
+        if (!qz) return;
+        qz.currentIdx += 1;
+        if (qz.currentIdx < qz.queue.length) {
+          renderCurrentQuizQuestion();
+        } else {
+          finishQuizSession(false);
+        }
+      }
+
+      function calculateChileanGrade(pctVal) {
+        let pct = pctVal;
+        if (pct < 0) pct = 0;
+        if (pct > 100) pct = 100;
+        let grade = 2.0;
+        if (pct < 60) {
+          grade = 2.0 + (pct / 60) * 2.0;
+        } else {
+          grade = 4.0 + ((pct - 60) / 40) * 3.0;
+        }
+        return (Math.round(grade * 10) / 10).toFixed(1);
+      }
+
+      function finishQuizSession(timedOut) {
+        const qz = state.quiz;
+        if (!qz) return;
+        if (qz.timerId) clearInterval(qz.timerId);
+
+        const totalPossible = qz.mode === "exam" ? 30 : Math.max(1, qz.queue.length);
+        const pct = Math.min(100, Math.round((qz.earnedPoints / totalPossible) * 100));
+
+        if (qz.mode === "guided") {
+          const pKey = qz.pillar;
+          state.progress[pKey] = Math.max(state.progress[pKey], Math.min(85, Math.max(45, pct)));
+          saveLocalProgress();
+
+          document.getElementById("res-title").textContent = "Ejercicios Guiados Completados";
+          document.getElementById("res-subtitle").textContent = `Aciertos: ${qz.earnedPoints} / ${qz.queue.length} (${pct}%)`;
+          document.getElementById("res-body").innerHTML = `
+            <div class="card-soft">
+              <p>Tu dominio en el módulo avanzó a <strong>${state.progress[pKey]}%</strong>.</p>
+            </div>
+          `;
+          document.getElementById("btn-res-cert").classList.toggle("hidden", !qualifiesForCertificate());
+          syncWithAppsScript({
+            action: "guided_complete",
+            rut: state.user ? state.user.rut : "",
+            pillar: pKey,
+            score: qz.earnedPoints,
+            pct,
+            timestamp: new Date().toISOString()
+          });
+        } else if (qz.mode === "adaptive") {
+          ["melodia", "ritmo", "historia"].forEach(k => {
+            if (qz.pillar === "mix" || qz.pillar === k) {
+              state.progress[k] = Math.max(state.progress[k], pct);
+            }
+          });
+          saveLocalProgress();
+
+          document.getElementById("res-title").textContent = "Desafío Adaptativo Finalizado";
+          document.getElementById("res-subtitle").textContent = `Puntaje: ${qz.earnedPoints} / ${qz.queue.length} (${pct}%)`;
+          document.getElementById("res-body").innerHTML = `
+            <table class="info-table">
+              <thead><tr><th>Módulo</th><th>Dominio Actual</th></tr></thead>
+              <tbody>
+                <tr><td>01 · Lectura Melódica</td><td><strong>${state.progress.melodia}%</strong></td></tr>
+                <tr><td>02 · Lectura Rítmica</td><td><strong>${state.progress.ritmo}%</strong></td></tr>
+                <tr><td>03 · Historia del Villancico</td><td><strong>${state.progress.historia}%</strong></td></tr>
+              </tbody>
+            </table>
+          `;
+          document.getElementById("btn-res-cert").classList.toggle("hidden", !qualifiesForCertificate());
+          syncWithAppsScript({
+            action: "adaptive_complete",
+            rut: state.user ? state.user.rut : "",
+            pillar: qz.pillar,
+            score: qz.earnedPoints,
+            total: qz.queue.length,
+            pct,
+            timestamp: new Date().toISOString()
+          });
+        } else if (qz.mode === "exam") {
+          const ptsRounded = Math.round(qz.earnedPoints * 10) / 10;
+          const nota = calculateChileanGrade(pct);
+          state.progress.examRecord = { puntos: ptsRounded, pct, nota };
+          saveLocalProgress();
+
+          document.getElementById("res-title").textContent = timedOut ? "Evaluación Final (Tiempo cumplido)" : "Evaluación Final Completada";
+          document.getElementById("res-subtitle").textContent = `Nota Final: ${nota} · Puntaje: ${ptsRounded} / 30 pts (${pct}%)`;
+          document.getElementById("res-body").innerHTML = `
+            <div class="card-sand" style="margin-bottom:14px;">
+              <div style="font-size:1.3rem; font-weight:900;">Nota: ${nota} (${pct}% de logro)</div>
+              <div class="muted">Escala 2.0 a 7.0 · Exigencia 60% = 4.0</div>
+            </div>
+            <table class="info-table">
+              <thead><tr><th>Ítem</th><th>Puntaje</th></tr></thead>
+              <tbody>
+                <tr><td>Ítem I · Lectura Melódica</td><td>${Math.round(qz.byPillar.melodia.pts * 10) / 10} / 9</td></tr>
+                <tr><td>Ítem II · Lectura Rítmica</td><td>${Math.round(qz.byPillar.ritmo.pts * 10) / 10} / 9</td></tr>
+                <tr><td>Ítem III · Historia del Villancico</td><td>${Math.round(qz.byPillar.historia.pts * 10) / 10} / 12</td></tr>
+              </tbody>
+            </table>
+          `;
+          document.getElementById("btn-res-cert").classList.add("hidden");
+          syncWithAppsScript({
+            action: "exam_submit",
+            rut: state.user ? state.user.rut : "",
+            puntos: ptsRounded,
+            pct,
+            nota,
+            byPillar: qz.byPillar,
+            timestamp: new Date().toISOString()
+          });
+        }
+
+        state.quiz = null;
+        showView("view-results");
+      }
+
+      /* ======================================================================
+         CERTIFICADO PNG DESCARGABLE Y PANEL DOCENTE
+         ====================================================================== */
+      function downloadCertificatePNG() {
+        if (!qualifiesForCertificate()) {
+          showToast("Aún no cumples el requisito de 75% global y 70% por área.", "warn");
+          return;
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = 960;
+        canvas.height = 640;
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#E6DEC8";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#FBFAF6";
+        ctx.strokeStyle = "#141414";
+        ctx.lineWidth = 6;
+        ctx.fillRect(40, 40, 880, 560);
+        ctx.strokeRect(40, 40, 880, 560);
+
+        ctx.fillStyle = "#F5EE84";
+        ctx.fillRect(72, 72, 816, 56);
+        ctx.strokeRect(72, 72, 816, 56);
+
+        ctx.fillStyle = "#141414";
+        ctx.font = "900 20px sans-serif";
+        ctx.fillText("COLEGIO SALESIANO VALPARAÍSO · EDUCACIÓN MUSICAL", 94, 108);
+
+        ctx.font = "900 38px sans-serif";
+        ctx.fillText("Certificado de Preparación Musical", 94, 200);
+
+        ctx.font = "700 22px sans-serif";
+        ctx.fillStyle = "#57534E";
+        ctx.fillText(`Otorgado a: ${state.user ? state.user.nombre : "Estudiante"} (${state.user ? state.user.rut : ""})`, 94, 252);
+
+        const p = state.progress;
+        const boxes = [
+          { label: "GLOBAL", val: `${getGlobalDominio()}%`, bg: "#F5EE84" },
+          { label: "MELODÍA", val: `${p.melodia}%`, bg: "#FFFDF9" },
+          { label: "RITMO", val: `${p.ritmo}%`, bg: "#FDECE4" },
+          { label: "VILLANCICO", val: `${p.historia}%`, bg: "#E3F1EC" }
+        ];
+
+        boxes.forEach((b, i) => {
+          const bx = 94 + i * 198;
+          const by = 295;
+          ctx.fillStyle = b.bg;
+          ctx.fillRect(bx, by, 180, 118);
+          ctx.strokeStyle = "#141414";
+          ctx.lineWidth = 3;
+          ctx.strokeRect(bx, by, 180, 118);
+          ctx.fillStyle = "#141414";
+          ctx.font = "800 14px sans-serif";
+          ctx.fillText(b.label, bx + 16, by + 34);
+          ctx.font = "900 32px sans-serif";
+          ctx.fillText(b.val, bx + 16, by + 84);
+        });
+
+        ctx.fillStyle = "#141414";
+        ctx.font = "700 18px sans-serif";
+        ctx.fillText("Profesor José Carvajal Contreras · Educación Musical", 94, 515);
+
+        const link = document.createElement("a");
+        link.download = `certificado-musica-${normalizeRut(state.user ? state.user.rut : "estudiante")}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        showToast("Certificado PNG descargado.", "ok");
+      }
+
+      function openTeacherModal() {
+        document.getElementById("teacher-modal").classList.remove("hidden");
+      }
+
+      function closeTeacherModal() {
+        document.getElementById("teacher-modal").classList.add("hidden");
+      }
+
+      window.handleLoginSubmit = handleLoginSubmit;
+      window.logoutUser = logoutUser;
+      window.goHome = goHome;
+      window.exitCapsule = exitCapsule;
+      window.exitQuizToDashboard = exitQuizToDashboard;
+      window.openCapsule = openCapsule;
+      window.setMelodiaTab = setMelodiaTab;
+      window.selectMelodiaNote = selectMelodiaNote;
+      window.playCurrentMelodiaNote = playCurrentMelodiaNote;
+      window.toggleMelodiaTour = toggleMelodiaTour;
+      window.selectRhythmCard = selectRhythmCard;
+      window.setRhythmTempo = setRhythmTempo;
+      window.playActiveRhythmCard = playActiveRhythmCard;
+      window.toggleRhythmTour = toggleRhythmTour;
+      window.selectGlossaryTerm = selectGlossaryTerm;
+      window.stepMangaPanel = stepMangaPanel;
+      window.jumpToMangaPanel = jumpToMangaPanel;
+      window.openWorkshop = openWorkshop;
+      window.setW8Tempo = setW8Tempo;
+      window.selectWorkshopRitBar = selectWorkshopRitBar;
+      window.addRhythmToBar = addRhythmToBar;
+      window.removeRhythmSlotAt = removeRhythmSlotAt;
+      window.removeLastRhythmFromBar = removeLastRhythmFromBar;
+      window.clearCurrentRhythmBar = clearCurrentRhythmBar;
+      window.loadSampleRhythm8 = loadSampleRhythm8;
+      window.playWorkshopRhythm8 = playWorkshopRhythm8;
+      window.toggleW8NoteNames = toggleW8NoteNames;
+      window.selectWorkshopMelSlot = selectWorkshopMelSlot;
+      window.setW8SlotNote = setW8SlotNote;
+      window.setW8SlotDur = setW8SlotDur;
+      window.addMelodySlotToBar = addMelodySlotToBar;
+      window.removeLastMelodySlot = removeLastMelodySlot;
+      window.loadSampleMelody8 = loadSampleMelody8;
+      window.playWorkshopMelody8 = playWorkshopMelody8;
+      window.startGuidedExercises = startGuidedExercises;
+      window.startAdaptiveQuiz = startAdaptiveQuiz;
+      window.unlockExamWithPin = unlockExamWithPin;
+      window.startSummativeExam = startSummativeExam;
+      window.playQuizRhythmDictation = playQuizRhythmDictation;
+      window.submitQuizOption = submitQuizOption;
+      window.nextQuizQuestion = nextQuizQuestion;
+      window.downloadCertificatePNG = downloadCertificatePNG;
+      window.openTeacherModal = openTeacherModal;
+      window.closeTeacherModal = closeTeacherModal;
+      window.playPitchTone = playPitchTone;
+    })();
+  </script>
+</body>
+</html>

@@ -691,25 +691,37 @@
 
     .beat-cells {
       display: grid;
-      gap: 8px;
+      gap: 4px;
       margin-top: 8px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .beat-cells.cols-4 {
       grid-template-columns: repeat(4, 1fr);
     }
 
+    .beat-cells.cols-8 {
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
     .beat-cell {
-      padding: 10px 4px;
+      padding: 6px 2px;
       border-radius: var(--radius-sm);
       border: 2px solid var(--border);
       background: #FFFFFF;
       text-align: center;
       font-weight: 800;
-      font-size: 0.82rem;
-      box-shadow: 2px 2px 0 var(--border);
-      transition: transform 0.1s ease, background 0.1s ease;
-      line-height: 1.25;
+      font-size: 0.72rem;
+      box-shadow: 1px 1px 0 var(--border);
+      transition: transform 0.1s ease, background 0.1s ease, border-color 0.1s ease;
+      line-height: 1.2;
+      overflow: hidden;
+      min-width: 0;
+      box-sizing: border-box;
     }
 
     .beat-cell.sound {
@@ -1450,7 +1462,7 @@
             ▶ Recorrido Guiado
           </button>
           <button type="button" class="btn btn-outline btn-sm" onclick="playCurrentMelodiaNote()">
-            ♪ Escuchar nota
+            🔊 Escuchar nota
           </button>
         </div>
         <div id="mel-tour-caption" class="guided-caption">
@@ -1458,13 +1470,18 @@
         </div>
       </div>
 
-      <!-- Banner superior de nota activa -->
-      <div class="note-banner">
-        <div>
-          <span id="mel-active-name" class="note-banner-title">Mi</span>
-          <span id="mel-active-pos" class="note-banner-sub">1ª línea</span>
+      <!-- Banner superior de nota activa con botón directo 🔊 Escuchar nota -->
+      <div class="note-banner" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div>
+            <span id="mel-active-name" class="note-banner-title">Mi</span>
+            <span id="mel-active-pos" class="note-banner-sub">1ª línea</span>
+          </div>
+          <span id="mel-active-finger" class="note-banner-chip">Dedo Meñique · 1ª línea</span>
         </div>
-        <span id="mel-active-finger" class="note-banner-chip">Dedo Meñique · 1ª línea</span>
+        <button type="button" class="btn btn-primary btn-sm" onclick="playCurrentMelodiaNote()" style="display:inline-flex; align-items:center; gap:6px; font-weight:800;">
+          🔊 Escuchar nota
+        </button>
       </div>
 
       <!-- Escenario con mano izquierda horizontal y pentagrama de líneas negras -->
@@ -1882,6 +1899,101 @@
         return audioCtx;
       }
 
+      /* ======================================================================
+         PIPELINE DE AUDIO: VOZ HUMANA MASCULINA REAL (ES-CL) + WEB AUDIO CERO LATENCIA
+         ====================================================================== */
+      const AUDIO_CLIPS_CONFIG = {
+        // Sílabas rítmicas (Lectura Rítmica)
+        "ta": "./audio/ta.mp3",
+        "a": "./audio/a.mp3",
+        "ti-ti": "./audio/ti-ti.mp3",
+        "ti-ri-ti-ri": "./audio/ti-ri-ti-ri.mp3",
+        "ti-ti-ri": "./audio/ti-ti-ri.mp3",
+        "ti-ri-ti": "./audio/ti-ri-ti.mp3",
+        "ti-ta-ti": "./audio/ti-ta-ti.mp3",
+        "sh": "./audio/sh.mp3",
+        "sh-ti": "./audio/sh-ti.mp3",
+        "sh-ri-ti-ri": "./audio/sh-ri-ti-ri.mp3",
+        // Notas melódicas de la Mano Musical
+        "do": "./audio/do.mp3",
+        "re": "./audio/re.mp3",
+        "mi": "./audio/mi.mp3",
+        "fa": "./audio/fa.mp3",
+        "sol": "./audio/sol.mp3",
+        "la": "./audio/la.mp3",
+        "si": "./audio/si.mp3"
+      };
+
+      const audioBufferCache = new Map();
+      let activeAudioSources = [];
+      let audioPreloadStarted = false;
+
+      function stopActiveAudioSources() {
+        activeAudioSources.forEach(src => {
+          try {
+            src.stop();
+            src.disconnect();
+          } catch (e) {}
+        });
+        activeAudioSources = [];
+      }
+
+      async function preloadAudioClips() {
+        if (audioPreloadStarted) return;
+        audioPreloadStarted = true;
+        try {
+          const ctx = getAudioCtx();
+          const entries = Object.entries(AUDIO_CLIPS_CONFIG);
+          await Promise.allSettled(entries.map(async ([key, url]) => {
+            try {
+              const resp = await fetch(url);
+              if (!resp.ok) return;
+              const ab = await resp.arrayBuffer();
+              const decoded = await ctx.decodeAudioData(ab);
+              audioBufferCache.set(key, decoded);
+            } catch (err) {
+              console.warn(`[Audio] Precarga clip ${key}:`, err);
+            }
+          }));
+        } catch (e) {}
+      }
+
+      function playAudioClip(key, timeSec = 0, gainLevel = 1.0) {
+        try {
+          const ctx = getAudioCtx();
+          if (ctx.state === "suspended") {
+            ctx.resume().catch(() => {});
+          }
+          const buffer = audioBufferCache.get(key);
+          if (buffer) {
+            const source = ctx.createBufferSource();
+            source.buffer = buffer;
+            const gainNode = ctx.createGain();
+            const now = ctx.currentTime;
+            const startTime = timeSec > 0 ? timeSec : now;
+            gainNode.gain.setValueAtTime(gainLevel, startTime);
+            source.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            source.start(startTime);
+            activeAudioSources.push(source);
+            source.onended = () => {
+              const idx = activeAudioSources.indexOf(source);
+              if (idx !== -1) activeAudioSources.splice(idx, 1);
+            };
+            return source;
+          } else {
+            // Fallback con HTMLAudioElement
+            const url = AUDIO_CLIPS_CONFIG[key];
+            if (url) {
+              const a = new Audio(url);
+              a.volume = Math.max(0, Math.min(1, gainLevel));
+              a.play().catch(() => {});
+            }
+          }
+        } catch (e) {}
+        return null;
+      }
+
       function playPitchTone(freq, durationSec) {
         const dur = typeof durationSec === "number" ? durationSec : 0.55;
         try {
@@ -2148,6 +2260,7 @@
       function goHome() {
         stopMelodiaTour();
         stopRhythmTour();
+        stopActiveAudioSources();
         clearWorkshopTimers();
         refreshDashboardUI();
         showView("view-dashboard");
@@ -2233,20 +2346,27 @@
       }
 
       function selectMelodiaNote(id, shouldPlay, fromTour) {
-        const playIt = shouldPlay !== false;
         if (!fromTour) stopMelodiaTour();
+        stopActiveAudioSources();
         const note = MELODIA_BY_ID[id];
         if (!note) return;
         state.melodia.selectedId = id;
         renderMelodiaStage();
-        if (playIt) {
-          playPitchTone(note.freq, 0.55);
+        // CERO REPRODUCCIÓN AUTOMÁTICA al seleccionar notas manualmente.
+        // Solo reproduce si se solicita explícitamente desde el recorrido guiado (fromTour = true).
+        if (fromTour) {
+          playCurrentMelodiaNote();
         }
       }
 
       function playCurrentMelodiaNote() {
+        stopActiveAudioSources();
         const note = MELODIA_BY_ID[state.melodia.selectedId] || MELODIA_NOTES[1];
-        playPitchTone(note.freq, 0.65);
+        const soundKey = note.name.toLowerCase();
+        // 1. Voz humana masculina diciendo el nombre de la nota ("Do", "Re", "Mi", etc.)
+        playAudioClip(soundKey, 0, 1.0);
+        // 2. Altura afinada exacta en Hz mediante Web Audio API simultáneamente
+        playPitchTone(note.freq, 0.85);
       }
 
       function stopMelodiaTour() {
@@ -2254,6 +2374,7 @@
           clearTimeout(state.melodia.tourTimer);
           state.melodia.tourTimer = null;
         }
+        stopActiveAudioSources();
         state.melodia.tourRunning = false;
         const btn = document.getElementById("btn-mel-tour");
         if (btn) btn.textContent = "▶ Recorrido Guiado";
@@ -2557,13 +2678,15 @@
             g += restQuarter(cx - 4, col);
             g += `<text x="${cx}" y="116" text-anchor="middle" font-size="11.5" font-weight="800" fill="${col}">Sh</text>`;
           } else if (kind === "cuartina") {
-            const xs = [x0 + 11, x0 + 25, x0 + 39, x0 + 53];
+            // Amplia separación horizontal entre cada cabeza de semicorchea y sílabas alineadas
+            const xs = [x0 + 8, x0 + 23, x0 + 38, x0 + 53];
             const syls = ["Ti", "ri", "ti", "ri"];
+            const noteHead16 = (x, y, c) => `<ellipse cx="${x}" cy="${y}" rx="5.4" ry="4" transform="rotate(-18 ${x} ${y})" fill="${c}"/>`;
             xs.forEach((nx, i) => {
-              g += `${noteHead(nx, 86, false, col)}<line x1="${nx + 7.5}" y1="84" x2="${nx + 7.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
-              g += `<text x="${nx}" y="116" text-anchor="middle" font-size="9.8" font-weight="800" fill="${col}">${syls[i]}</text>`;
+              g += `${noteHead16(nx, 86, col)}<line x1="${nx + 5}" y1="84" x2="${nx + 5}" y2="44" stroke="${col}" stroke-width="1.9"/>`;
+              g += `<text x="${nx}" y="116" text-anchor="middle" font-size="9.5" font-weight="800" fill="${col}">${syls[i]}</text>`;
             });
-            g += `<rect x="${x0 + 17.5}" y="42" width="44" height="4.2" fill="${col}"/><rect x="${x0 + 17.5}" y="49" width="44" height="4.2" fill="${col}"/>`;
+            g += `<rect x="${x0 + 12}" y="42" width="46" height="3.8" fill="${col}"/><rect x="${x0 + 12}" y="48.5" width="46" height="3.8" fill="${col}"/>`;
           } else if (kind === "galopa") {
             g += `${noteHead(x0 + 13, 86, false, col)}<line x1="${x0 + 20.5}" y1="84" x2="${x0 + 20.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
             g += `${noteHead(x0 + 39, 86, false, col)}<line x1="${x0 + 46.5}" y1="84" x2="${x0 + 46.5}" y2="44" stroke="${col}" stroke-width="2"/>`;
@@ -2728,26 +2851,28 @@
         }
 
         const all8 = card.beatsPattern.concat(card.beatsPattern);
-        const row1 = all8.slice(0, 4).map((b, idx) => `
-          <div class="beat-cell ${b.kind} ${activeBeat === idx ? "active-step" : ""}">
-            <div style="font-size:0.7rem; opacity:0.75;">C1 · P${idx + 1}</div>
-            <div>${b.syl}</div>
-          </div>
-        `).join("");
-        const row2 = all8.slice(4, 8).map((b, idx) => {
-          const gIdx = idx + 4;
+        // Franja indicadora compacta en 8 columnas exactas (C1·P1 a C2·P4) sin desbordes
+        const cells8 = all8.map((b, idx) => {
+          const barNum = idx < 4 ? 1 : 2;
+          const pNum = (idx % 4) + 1;
+          const isAct = activeBeat === idx;
           return `
-            <div class="beat-cell ${b.kind} ${activeBeat === gIdx ? "active-step" : ""}">
-              <div style="font-size:0.7rem; opacity:0.75;">C2 · P${idx + 1}</div>
-              <div>${b.syl}</div>
+            <div class="beat-cell ${b.kind} ${isAct ? "active-step" : ""}" title="Compás ${barNum} · Pulso ${pNum}: ${b.syl}">
+              <div style="font-size:0.62rem; opacity:0.85; font-weight:900; white-space:nowrap;">C${barNum}·P${pNum}</div>
+              <div style="font-size:0.72rem; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${b.syl}</div>
             </div>
           `;
         }).join("");
 
         document.getElementById("rit-beat-grid").innerHTML = `
-          <div class="beat-cells cols-4">${row1}</div>
-          <div class="beat-cells cols-4">${row2}</div>
+          <div class="beat-cells cols-8">${cells8}</div>
         `;
+      }
+
+      function clearRhythmStepTimers() {
+        (state.rhythm.stepTimers || []).forEach(id => clearTimeout(id));
+        state.rhythm.stepTimers = [];
+        stopActiveAudioSources();
       }
 
       function selectRhythmCard(id, fromTour) {
@@ -2766,63 +2891,71 @@
       }
 
       function playActiveRhythmCard() {
+        // Control de superposición: cancela timers y detiene fuentes activas
         clearRhythmStepTimers();
+        stopActiveAudioSources();
+
         const card = RHYTHM_BY_ID[state.rhythm.activeId] || RHYTHM_CARDS[0];
         const bpm = state.rhythm.tempo;
         const beatSec = 60 / bpm;
         const ctx = getAudioCtx();
-        const start = ctx.currentTime + 0.06;
+        if (ctx.state === "suspended") ctx.resume().catch(() => {});
 
+        const startBufferSec = 0.08;
+        const startAudioTime = ctx.currentTime + startBufferSec;
+
+        // Recorrido exacto de los 8 pulsos (C1·P1 a C2·P4)
         for (let b = 0; b < 8; b++) {
-          const t = start + b * beatSec;
-          playMetronomeClick(t, b === 0 || b === 4);
+          const t = startAudioTime + b * beatSec;
+          const isDownbeat = (b === 0 || b === 4);
+          playMetronomeClick(t, isDownbeat);
 
+          // Disparo exacto de la voz humana masculina real (.mp3 en audio/)
           if (card.id === "redonda") {
             if (b === 0 || b === 4) {
-              playSyllableSound(t, beatSec * 3.85, "ta", 392);
+              playAudioClip("ta", t, 1.0);
+            } else {
+              playAudioClip("a", t, 0.85);
             }
           } else if (card.id === "blanca") {
-            if (b === 0 || b === 2 || b === 4 || b === 6) {
-              playSyllableSound(t, beatSec * 1.85, "ta", 392);
+            if (b % 2 === 0) {
+              playAudioClip("ta", t, 1.0);
+            } else {
+              playAudioClip("a", t, 0.85);
             }
           } else if (card.id === "negra") {
-            playSyllableSound(t, beatSec * 0.72, "ta", 392);
+            playAudioClip("ta", t, 1.0);
           } else if (card.id === "doble_corchea") {
-            playSyllableSound(t, beatSec * 0.36, "ti", 392);
-            playSyllableSound(t + beatSec * 0.5, beatSec * 0.36, "ti", 392);
+            playAudioClip("ti-ti", t, 1.0);
+          } else if (card.id === "silencio_redonda" || card.id === "silencio_blanca" || card.id === "silencio_negra") {
+            playAudioClip("sh", t, 0.95);
           } else if (card.id === "silencio_corchea") {
-            playSyllableSound(t + beatSec * 0.5, beatSec * 0.38, "ti", 392);
+            playAudioClip("sh-ti", t, 1.0);
           } else if (card.id === "cuartina") {
-            for (let s = 0; s < 4; s++) {
-              playSyllableSound(t + s * beatSec * 0.25, beatSec * 0.19, s % 2 === 0 ? "ti" : "ri", 392);
-            }
+            playAudioClip("ti-ri-ti-ri", t, 1.0);
           } else if (card.id === "galopa") {
-            playSyllableSound(t, beatSec * 0.42, "ti", 392);
-            playSyllableSound(t + beatSec * 0.5, beatSec * 0.2, "ti", 392);
-            playSyllableSound(t + beatSec * 0.75, beatSec * 0.2, "ri", 392);
+            playAudioClip("ti-ti-ri", t, 1.0);
           } else if (card.id === "galopa_inv") {
-            playSyllableSound(t, beatSec * 0.2, "ti", 392);
-            playSyllableSound(t + beatSec * 0.25, beatSec * 0.2, "ri", 392);
-            playSyllableSound(t + beatSec * 0.5, beatSec * 0.42, "ti", 392);
+            playAudioClip("ti-ri-ti", t, 1.0);
           } else if (card.id === "sincopa") {
-            playSyllableSound(t, beatSec * 0.2, "ti", 392);
-            playSyllableSound(t + beatSec * 0.25, beatSec * 0.45, "ta", 392);
-            playSyllableSound(t + beatSec * 0.75, beatSec * 0.2, "ti", 392);
+            playAudioClip("ti-ta-ti", t, 1.0);
           } else if (card.id === "cuartina_sh_junto") {
-            for (let s = 1; s < 4; s++) {
-              playSyllableSound(t + s * beatSec * 0.25, beatSec * 0.19, s % 2 === 1 ? "ri" : "ti", 392);
-            }
+            playAudioClip("sh-ri-ti-ri", t, 1.0);
           }
 
+          // Sincronización visual milisegundo a milisegundo con el pentagrama y la franja de 8 bloques
+          const visualDelay = Math.round((startBufferSec + b * beatSec) * 1000);
           const tm = setTimeout(() => {
             renderActiveRhythmCard(b);
-          }, Math.round((0.06 + b * beatSec) * 1000));
+          }, visualDelay);
           state.rhythm.stepTimers.push(tm);
         }
 
+        // Finalización limpia al terminar los 8 pulsos
+        const endDelay = Math.round((startBufferSec + 8 * beatSec + 0.06) * 1000);
         const endTm = setTimeout(() => {
           renderActiveRhythmCard(-1);
-        }, Math.round((0.06 + 8 * beatSec + 0.08) * 1000));
+        }, endDelay);
         state.rhythm.stepTimers.push(endTm);
       }
 
@@ -2832,6 +2965,7 @@
           state.rhythm.tourTimer = null;
         }
         clearRhythmStepTimers();
+        stopActiveAudioSources();
         renderActiveRhythmCard(-1);
         state.rhythm.tourRunning = false;
         const btn = document.getElementById("btn-rit-tour");
@@ -3271,28 +3405,27 @@
               playMetronomeClick(evTime + b * beatSec, b === 0);
             }
             if (itemId === "silencio_negra") {
-              // Silencio
+              playAudioClip("sh", evTime, 0.95);
             } else if (itemId === "doble_corchea") {
-              playSyllableSound(evTime, beatSec * 0.36, "ti", 392);
-              playSyllableSound(evTime + beatSec * 0.5, beatSec * 0.36, "ti", 392);
+              playAudioClip("ti-ti", evTime, 1.0);
             } else if (itemId === "cuartina") {
-              for (let s = 0; s < 4; s++) {
-                playSyllableSound(evTime + s * beatSec * 0.25, beatSec * 0.19, s % 2 === 0 ? "ti" : "ri", 392);
-              }
+              playAudioClip("ti-ri-ti-ri", evTime, 1.0);
             } else if (itemId === "galopa") {
-              playSyllableSound(evTime, beatSec * 0.42, "ti", 392);
-              playSyllableSound(evTime + beatSec * 0.5, beatSec * 0.2, "ti", 392);
-              playSyllableSound(evTime + beatSec * 0.75, beatSec * 0.2, "ri", 392);
+              playAudioClip("ti-ti-ri", evTime, 1.0);
             } else if (itemId === "galopa_inv") {
-              playSyllableSound(evTime, beatSec * 0.2, "ti", 392);
-              playSyllableSound(evTime + beatSec * 0.25, beatSec * 0.2, "ri", 392);
-              playSyllableSound(evTime + beatSec * 0.5, beatSec * 0.42, "ti", 392);
+              playAudioClip("ti-ri-ti", evTime, 1.0);
             } else if (itemId === "sincopa") {
-              playSyllableSound(evTime, beatSec * 0.2, "ti", 392);
-              playSyllableSound(evTime + beatSec * 0.25, beatSec * 0.45, "ta", 392);
-              playSyllableSound(evTime + beatSec * 0.75, beatSec * 0.2, "ti", 392);
+              playAudioClip("ti-ta-ti", evTime, 1.0);
+            } else if (itemId === "blanca") {
+              playAudioClip("ta", evTime, 1.0);
+              playAudioClip("a", evTime + beatSec, 0.85);
+            } else if (itemId === "redonda") {
+              playAudioClip("ta", evTime, 1.0);
+              playAudioClip("a", evTime + beatSec, 0.85);
+              playAudioClip("a", evTime + 2 * beatSec, 0.85);
+              playAudioClip("a", evTime + 3 * beatSec, 0.85);
             } else {
-              playSyllableSound(evTime, beatSec * pal.beats * 0.85, "ta", 392);
+              playAudioClip("ta", evTime, 1.0);
             }
             localBeat += pal.beats;
           });
@@ -3566,7 +3699,7 @@
           options: ["Re", "Fa", "La", "Si"], answer: 2,
           feedback: "La altura reproducida corresponde a La." },
 
-        // 15 Lectura Rítmica (sin mención a Kodály)
+        // 15 Lectura Rítmica
         { id: "R1", pillar: "ritmo", topic: "Redonda (Ta - a - a - a)", type: "mcq_rhythm", cardId: "redonda",
           prompt: "¿Cuántos pulsos dura una redonda (Ta - a - a - a)?",
           options: ["1 pulso", "2 pulsos", "3 pulsos", "4 pulsos"], answer: 3,
@@ -3911,6 +4044,7 @@
       function playQuizRhythmDictation() {
         const q = state.quiz && state.quiz.queue[state.quiz.currentIdx];
         if (!q || !q.audio) return;
+        stopActiveAudioSources();
         const beatSec = 60 / 75;
         const ctx = getAudioCtx();
         const start = ctx.currentTime + 0.05;
@@ -3918,15 +4052,13 @@
           const t = start + ev.b * beatSec;
           playMetronomeClick(t, ev.b === 0);
           if (ev.kind === "cuartina") {
-            for (let s = 0; s < 4; s++) {
-              playSyllableSound(t + s * beatSec * 0.25, beatSec * 0.18, s % 2 === 0 ? "ti" : "ri", 392);
-            }
+            playAudioClip("ti-ri-ti-ri", t, 1.0);
           } else if (ev.kind === "galopa") {
-            playSyllableSound(t, beatSec * 0.4, "ti", 392);
-            playSyllableSound(t + beatSec * 0.5, beatSec * 0.2, "ti", 392);
-            playSyllableSound(t + beatSec * 0.75, beatSec * 0.2, "ri", 392);
+            playAudioClip("ti-ti-ri", t, 1.0);
+          } else if (ev.kind === "doble_corchea") {
+            playAudioClip("ti-ti", t, 1.0);
           } else {
-            playSyllableSound(t, beatSec * 0.75, "ta", 392);
+            playAudioClip("ta", t, 1.0);
           }
         });
       }
@@ -4177,6 +4309,12 @@
         document.getElementById("teacher-modal").classList.add("hidden");
       }
 
+      // Precarga de clips de audio y warming en primer gesto
+      preloadAudioClips();
+      window.addEventListener("pointerdown", () => {
+        preloadAudioClips();
+      }, { once: true });
+
       window.handleLoginSubmit = handleLoginSubmit;
       window.logoutUser = logoutUser;
       window.goHome = goHome;
@@ -4222,6 +4360,8 @@
       window.openTeacherModal = openTeacherModal;
       window.closeTeacherModal = closeTeacherModal;
       window.playPitchTone = playPitchTone;
+      window.playAudioClip = playAudioClip;
+      window.stopActiveAudioSources = stopActiveAudioSources;
     })();
   </script>
 </body>

@@ -1906,6 +1906,8 @@
         // Sílabas rítmicas (Lectura Rítmica)
         "ta": "./audio/ta.mp3",
         "a": "./audio/a.mp3",
+        "ti": "./audio/ti.mp3",
+        "ri": "./audio/ri.mp3",
         "ti-ti": "./audio/ti-ti.mp3",
         "ti-ri-ti-ri": "./audio/ti-ri-ti-ri.mp3",
         "ti-ti-ri": "./audio/ti-ti-ri.mp3",
@@ -1958,7 +1960,7 @@
         } catch (e) {}
       }
 
-      function playAudioClip(key, timeSec = 0, gainLevel = 1.0) {
+      function playAudioClip(key, timeSec = 0, gainLevel = 1.0, maxDurSec = 0) {
         try {
           const ctx = getAudioCtx();
           if (ctx.state === "suspended") {
@@ -1971,10 +1973,26 @@
             const gainNode = ctx.createGain();
             const now = ctx.currentTime;
             const startTime = timeSec > 0 ? timeSec : now;
+
+            let rate = 1.0;
+            if (maxDurSec > 0 && buffer.duration > maxDurSec) {
+              rate = Math.min(1.25, buffer.duration / maxDurSec);
+              source.playbackRate.setValueAtTime(rate, startTime);
+            }
+
             gainNode.gain.setValueAtTime(gainLevel, startTime);
             source.connect(gainNode);
             gainNode.connect(ctx.destination);
             source.start(startTime);
+
+            if (maxDurSec > 0) {
+              const effectiveDur = Math.min(maxDurSec, buffer.duration / rate);
+              const fadeStart = Math.max(startTime + 0.01, startTime + effectiveDur - 0.015);
+              gainNode.gain.setValueAtTime(gainLevel, fadeStart);
+              gainNode.gain.linearRampToValueAtTime(0.0001, startTime + effectiveDur);
+              source.stop(startTime + effectiveDur + 0.005);
+            }
+
             activeAudioSources.push(source);
             source.onended = () => {
               const idx = activeAudioSources.indexOf(source);
@@ -1992,6 +2010,43 @@
           }
         } catch (e) {}
         return null;
+      }
+
+      // Dispara las subdivisiones exactas (corcheas = 1/2 pulso, semicorcheas = 1/4 pulso) respetando el BPM
+      function scheduleRhythmBeat(figureId, t, beatSec) {
+        if (figureId === "negra") {
+          playAudioClip("ta", t, 1.0, beatSec * 0.85);
+        } else if (figureId === "doble_corchea") {
+          playAudioClip("ti", t, 1.0, beatSec * 0.46);
+          playAudioClip("ti", t + beatSec * 0.50, 1.0, beatSec * 0.46);
+        } else if (figureId === "silencio_corchea") {
+          playAudioClip("sh", t, 0.72, beatSec * 0.42);
+          playAudioClip("ti", t + beatSec * 0.50, 1.0, beatSec * 0.46);
+        } else if (figureId === "cuartina") {
+          playAudioClip("ti", t, 1.0, beatSec * 0.23);
+          playAudioClip("ri", t + beatSec * 0.25, 0.95, beatSec * 0.23);
+          playAudioClip("ti", t + beatSec * 0.50, 1.0, beatSec * 0.23);
+          playAudioClip("ri", t + beatSec * 0.75, 0.95, beatSec * 0.23);
+        } else if (figureId === "galopa") {
+          playAudioClip("ti", t, 1.0, beatSec * 0.46);
+          playAudioClip("ti", t + beatSec * 0.50, 1.0, beatSec * 0.23);
+          playAudioClip("ri", t + beatSec * 0.75, 0.95, beatSec * 0.23);
+        } else if (figureId === "galopa_inv") {
+          playAudioClip("ti", t, 1.0, beatSec * 0.23);
+          playAudioClip("ri", t + beatSec * 0.25, 0.95, beatSec * 0.23);
+          playAudioClip("ti", t + beatSec * 0.50, 1.0, beatSec * 0.46);
+        } else if (figureId === "sincopa") {
+          playAudioClip("ti", t, 1.0, beatSec * 0.23);
+          playAudioClip("ta", t + beatSec * 0.25, 1.0, beatSec * 0.46);
+          playAudioClip("ti", t + beatSec * 0.75, 1.0, beatSec * 0.23);
+        } else if (figureId === "cuartina_sh_junto") {
+          playAudioClip("sh", t, 0.70, beatSec * 0.22);
+          playAudioClip("ri", t + beatSec * 0.25, 0.95, beatSec * 0.23);
+          playAudioClip("ti", t + beatSec * 0.50, 1.0, beatSec * 0.23);
+          playAudioClip("ri", t + beatSec * 0.75, 0.95, beatSec * 0.23);
+        } else if (figureId === "silencio_redonda" || figureId === "silencio_blanca" || figureId === "silencio_negra") {
+          playAudioClip("sh", t, 0.75, beatSec * 0.45);
+        }
       }
 
       function playPitchTone(freq, durationSec) {
@@ -2910,37 +2965,21 @@
           const isDownbeat = (b === 0 || b === 4);
           playMetronomeClick(t, isDownbeat);
 
-          // Disparo exacto de la voz humana masculina real (.mp3 en audio/)
+          // Disparo exacto respetando las subdivisiones matemáticas del pulso (BPM)
           if (card.id === "redonda") {
             if (b === 0 || b === 4) {
-              playAudioClip("ta", t, 1.0);
+              playAudioClip("ta", t, 1.0, beatSec * 0.85);
             } else {
-              playAudioClip("a", t, 0.85);
+              playAudioClip("a", t, 0.85, beatSec * 0.85);
             }
           } else if (card.id === "blanca") {
             if (b % 2 === 0) {
-              playAudioClip("ta", t, 1.0);
+              playAudioClip("ta", t, 1.0, beatSec * 0.85);
             } else {
-              playAudioClip("a", t, 0.85);
+              playAudioClip("a", t, 0.85, beatSec * 0.85);
             }
-          } else if (card.id === "negra") {
-            playAudioClip("ta", t, 1.0);
-          } else if (card.id === "doble_corchea") {
-            playAudioClip("ti-ti", t, 1.0);
-          } else if (card.id === "silencio_redonda" || card.id === "silencio_blanca" || card.id === "silencio_negra") {
-            playAudioClip("sh", t, 0.95);
-          } else if (card.id === "silencio_corchea") {
-            playAudioClip("sh-ti", t, 1.0);
-          } else if (card.id === "cuartina") {
-            playAudioClip("ti-ri-ti-ri", t, 1.0);
-          } else if (card.id === "galopa") {
-            playAudioClip("ti-ti-ri", t, 1.0);
-          } else if (card.id === "galopa_inv") {
-            playAudioClip("ti-ri-ti", t, 1.0);
-          } else if (card.id === "sincopa") {
-            playAudioClip("ti-ta-ti", t, 1.0);
-          } else if (card.id === "cuartina_sh_junto") {
-            playAudioClip("sh-ri-ti-ri", t, 1.0);
+          } else {
+            scheduleRhythmBeat(card.id, t, beatSec);
           }
 
           // Sincronización visual milisegundo a milisegundo con el pentagrama y la franja de 8 bloques
@@ -3404,28 +3443,16 @@
             for (let b = 0; b < pal.beats; b++) {
               playMetronomeClick(evTime + b * beatSec, b === 0);
             }
-            if (itemId === "silencio_negra") {
-              playAudioClip("sh", evTime, 0.95);
-            } else if (itemId === "doble_corchea") {
-              playAudioClip("ti-ti", evTime, 1.0);
-            } else if (itemId === "cuartina") {
-              playAudioClip("ti-ri-ti-ri", evTime, 1.0);
-            } else if (itemId === "galopa") {
-              playAudioClip("ti-ti-ri", evTime, 1.0);
-            } else if (itemId === "galopa_inv") {
-              playAudioClip("ti-ri-ti", evTime, 1.0);
-            } else if (itemId === "sincopa") {
-              playAudioClip("ti-ta-ti", evTime, 1.0);
-            } else if (itemId === "blanca") {
-              playAudioClip("ta", evTime, 1.0);
-              playAudioClip("a", evTime + beatSec, 0.85);
+            if (itemId === "blanca") {
+              playAudioClip("ta", evTime, 1.0, beatSec * 0.85);
+              playAudioClip("a", evTime + beatSec, 0.85, beatSec * 0.85);
             } else if (itemId === "redonda") {
-              playAudioClip("ta", evTime, 1.0);
-              playAudioClip("a", evTime + beatSec, 0.85);
-              playAudioClip("a", evTime + 2 * beatSec, 0.85);
-              playAudioClip("a", evTime + 3 * beatSec, 0.85);
+              playAudioClip("ta", evTime, 1.0, beatSec * 0.85);
+              playAudioClip("a", evTime + beatSec, 0.85, beatSec * 0.85);
+              playAudioClip("a", evTime + 2 * beatSec, 0.85, beatSec * 0.85);
+              playAudioClip("a", evTime + 3 * beatSec, 0.85, beatSec * 0.85);
             } else {
-              playAudioClip("ta", evTime, 1.0);
+              scheduleRhythmBeat(itemId, evTime, beatSec);
             }
             localBeat += pal.beats;
           });
@@ -4051,15 +4078,7 @@
         q.audio.events.forEach(ev => {
           const t = start + ev.b * beatSec;
           playMetronomeClick(t, ev.b === 0);
-          if (ev.kind === "cuartina") {
-            playAudioClip("ti-ri-ti-ri", t, 1.0);
-          } else if (ev.kind === "galopa") {
-            playAudioClip("ti-ti-ri", t, 1.0);
-          } else if (ev.kind === "doble_corchea") {
-            playAudioClip("ti-ti", t, 1.0);
-          } else {
-            playAudioClip("ta", t, 1.0);
-          }
+          scheduleRhythmBeat(ev.kind || "negra", t, beatSec);
         });
       }
 
